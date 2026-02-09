@@ -16,7 +16,7 @@ I am a fifth-year PhD student in Economics at University of Maryland, College Pa
 
 Working Paper
 -------------
-[Communication Friction, Expectation, and Aggregate Productivity](files/NF_draft_July_2025.pdf) <br>
+[Communication Friction, Managerial Expectation, and Firm Dynamics](files/NF_draft_202602.pdf) <br>
 [Last updated: July 2025]
 
 Work In Progress
