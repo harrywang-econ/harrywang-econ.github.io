@@ -25,3 +25,5 @@ Work In Progress
 Endogenous Innovation with Knightian Uncertainty: Perspectives from Reinforcement Learning
 
 Setting the Wrong Price for the Right Reason: Consequences for Inflation and Monetary Policy (with Camilo Morales-Jimenez and Luminita Stevens)
+
+Labor Wedges under Adjustment Costs (with Martim Leitão)
