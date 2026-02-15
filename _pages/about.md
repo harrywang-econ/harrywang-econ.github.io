@@ -16,7 +16,7 @@ I am a fifth-year PhD student in Economics at University of Maryland, College Pa
 
 Working Paper
 -------------
-[Communication Friction, Managerial Expectation, and Firm Dynamics](files/NF_draft_202602.pdf) <br>
+[Communication Friction, Managerial Expectation, and Firm Dynamics](files/NF_draft_20260212.pdf) <br>
 [Last updated: February 2026]
 
 Work In Progress
