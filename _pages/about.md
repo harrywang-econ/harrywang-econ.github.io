@@ -9,7 +9,9 @@ redirect_from:
 
 -----------
 
-I am a fifth-year PhD student in Economics at University of Maryland, College Park. I am a macroeconomist with a focus on the implications of behavioral and informational frictions for firm dynamics and macroeconomic policy. 
+I am a fifth-year PhD student in Economics at University of Maryland and a Special Sworn Status (SSS) Researcher at U.S. Census Bureau. 
+
+I am a macroeconomist with a focus on the implications of behavioral and informational frictions for firm dynamics and macroeconomic policy. 
 
 [CV](files/Haoran_Wang_CV_202602.pdf) (Last updated: February 2026) | Email: [hw2688@umd.edu](hw2688@umd.edu)
 
