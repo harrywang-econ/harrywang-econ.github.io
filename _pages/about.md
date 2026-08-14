@@ -13,7 +13,7 @@ I am a fifth-year PhD student in Economics at University of Maryland and a Speci
 
 I am a macroeconomist with a focus on the implications of behavioral and informational frictions for firm dynamics and macroeconomic policy. 
 
-[CV](files/Haoran_Wang_CV.pdf) (Last updated: February 2026) | Email: [hw2688@umd.edu](hw2688@umd.edu)
+[CV](files/Haoran_Wang_CV.pdf) (Last updated: February 2026) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
 
 Job Market Paper
 -------------
