@@ -13,7 +13,7 @@ I am a fifth-year PhD student in Economics at University of Maryland and a Speci
 
 I am a macroeconomist with a focus on the implications of behavioral and informational frictions for firm dynamics and macroeconomic policy. 
 
-[CV](files/Haoran_Wang_CV.pdf) (Last updated: February 2026) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
+[CV](files/Haoran_Wang_CV.pdf) (Last updated: August 2026) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
 
 Job Market Paper
 -------------
@@ -22,11 +22,11 @@ Communication Frictions, Managerial Expectations, and Firm Dynamics <br>
 
 Working Paper
 -------------
-Endogenous Innovation with Knightian Uncertainty: Perspectives from Reinforcement Learning <br>
+Endogenous Innovation with Uncertainty: Perspectives from Reinforcement Learning <br>
 [Paper](files/RL_draft_20260810.pdf). August 2026.
 
 Setting the Wrong Price for the Right Reason: Consequences for Inflation and Monetary Policy (with Camilo Morales-Jimenez and Luminita Stevens) <br>
-[Paper]. August 2026. 
+[Updated Draft Coming Soon]
 
 Work In Progress
 ----------------
