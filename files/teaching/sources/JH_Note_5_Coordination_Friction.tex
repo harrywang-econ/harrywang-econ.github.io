@@ -1,0 +1,412 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON602 TA Notes: Coordination Friction}
+\author{Haoran Wang}
+\date{February 24, 2025}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents 
+	
+	This session covers coordination frictions in macroeconomics. It is a theoretically appealing yet challenging topic in macro.
+	
+		Many macroeconomic problems have the following structure: individual decision-makers account for aggregate outcomes, such as prices, when making their own decisions. These individual decisions are aggregated in the market, producing outcomes that in turn affect individual choices. The dependence of individual payoffs on aggregate outcomes, or more generally on the behavior of others, creates a coordination motive. This motive is an important determinant of equilibrium properties such as multiplicity and stability and is therefore a key mechanism behind severe business-cycle events, such as banking and currency crises. 
+	
+		The mathematical tool used in the literature to study this coordination problem is the global game. I begin with global games under complete information, as in Cooper and John (1988), and present applications to bank runs and firms' pricing problems. I then discuss the modern approach of modeling coordination frictions through asymmetric information across agents. The latter part is largely exploratory and will not appear on the exam.
+		
+	\section{Global Game in Cooper and John (1988)}
+	
+		Cooper and John (1988) propose a parsimonious static framework for addressing coordination problems in macroeconomics, often referred to as ``global games" or ``coordination games" in the literature. The 2016 Handbook of Macroeconomics chapter by Angeletos and Lian provides an excellent review. 
+	
+	\subsection{Global Game with Complete Information}
+	
+	There is a continuum $i \in [0,1]$ of agents in the economy. Each individual $i$'s payoff is given by
+	\begin{equation}
+		U_i = U(a_i, A, \theta)
+	\end{equation}
+where $a_i \in \mathcal{A}$ is the action taken by the agent $i$, $A$ is the average or aggregate action taken by the population, defined as
+\begin{equation}
+	A = \int_0^1 a_i \, di
+\end{equation}
+and $\theta \in \Theta$ is a decision-relevant fundamental that is exogenous to each agent. We assume that $U$ is increasing and concave in $a_i$.
+
+Although we are only focusing on the static case, this simple setup already nests a number of interesting macroeconomic problems. Here are two examples.
+
+\paragraph{Example 1: Bank Runs \\ [6pt]} 
+Suppose the action set $\mathcal{A}$ contains only two values: 0 (do not run) and 1 (run). Thus, $A$ is the fraction of the population choosing to run on the bank. Interpret $\theta \in (0,1)$ as an indicator of the bank's financial health (i.e., solvency). Suppose that utility is
+\begin{equation}
+	U_i = U(a_i, A, \theta) = a_i (\mathbf{1}\{A > \theta\} - c)
+\end{equation}
+where $c \in (0,1)$ is a parameter that captures the cost of running. 
+
+\paragraph{Example 2: Price Setting of Monopolistically Competitive Firms \\ [6pt]}
+
+Recall the New Keynesian session last semester, where we discuss the price setting problem of a monopolistically competitive firm in absence of price rigidity. Each intermediate good producer $i$ faces a demand function
+\begin{equation}
+	P_i Y_i^{1/\epsilon} = P Y^{1/\epsilon} 
+\end{equation} 
+Suppose the intermediate good producer uses only labor in the production function, which is constant return to scale:
+\[Y_i = N_i\]
+Suppose household utility is given by
+\[u(c) + v(n)\]
+we know that real wage $w$ is equal to the household's marginal rate of substitution between leisure and consumption:
+\[w = \frac{v'(n)}{u'(c)} = \frac{v'(Y)}{u'(Y)}\]
+where the last equality follows from plugging in the labor market clearing condition $n = \int_0^1 N_i \, di = \int_0^1 Y_i \, di = Y$ and goods market clearing condition $C = Y$.
+
+Hence, the payoff of producer $i$ is the nominal profit function, which can be written as 
+\begin{equation} \label{eq:profit_firm}
+	\Pi(P_i, P, Y) =  P_i Y_i - P w N_i = P^\epsilon Y P_i^{1-\epsilon} - P \frac{v'(Y)}{u'(Y)} P^\epsilon Y P_i^{-\epsilon}
+\end{equation}
+We are interested in how money supply changes the firm's pricing behavior. Suppose the aggregate demand is given by 
+\begin{equation}
+	M = PY
+\end{equation}
+where $M$ is the quantity of money in circulation, which is determined by the Fed and exogenous to the firms. Plug it into the producer's profit function, we get
+\begin{equation}
+	U(P_i, P, M) = \Pi(P_i, P, M/P) = P^{\epsilon-1} M P_i^{1-\epsilon} - \frac{v'(M/P)}{u'(M/P)} P^\epsilon M P_i^{-\epsilon}
+\end{equation}
+Treat $a_i \equiv P_i$, $A \equiv P$ and $\theta \equiv M$. 
+
+\paragraph{Example 3: Diamond (1982) \\ [6pt]}
+
+The lecture note introduced one version of Diamond (1982). Here I further simplify the problem. 
+
+Let $Y$ denote aggregate output. There is a unit measure of individual producers in the economy. Each individual firm's decision $y \in \{0,1\}$ can only be $y=0$ (not produce) or $y=1$ (produce). If the firm produces, it can produce only one unit of output. 
+
+If the firm produces, it faces the risk of being unable to sell its output. The probability of a sale is $p(Y)$, a function of aggregate output. Its expected payoff from production is
+\begin{equation}
+	p(Y) - b
+\end{equation}
+where $b \sim h(b)$ is an idiosyncratic cost parameter with density $h(\cdot)$. If the firm does not produce, it receives a payoff of zero. The firm's payoff can therefore be written as
+\begin{equation}
+	U(y, Y) = (p(Y) - b) y
+\end{equation}
+
+Each individual firm solves $\max_{y \in \{0,1\}} U(y, Y)$. It will choose to produce if and only if
+\begin{equation}
+	p(Y) - b \geq 0 \implies b \leq p(Y)
+\end{equation}
+Aggregate output $Y$ is the sum of all individual firms' decisions:
+\begin{equation}
+	Y = \int h(b) \mathbf{1}\{b \leq p(Y) \} \, db = \int_0^{p(Y)} h(b) \, db = H(p(Y))
+\end{equation}
+where $H$ is the corresponding CDF of density $h$. Again, this defines a fixed point for equilibrium $Y$. 
+
+\subsection{Externality and Strategic Complementarity}
+
+It is important to distinguish the concepts of externality and strategic complementarity. 
+
+\begin{definition}[Externality]
+	A global game is said to present externality if $U_2(a, A, \theta) \neq 0$, i.e. the individual payoff function is affected by the aggregate action. If $U_2(a, A,\theta) > 0$, the game is said to present positive externality; and if $U_2(a, A, \theta) < 0$, the game is said to present negative externality. 
+\end{definition}
+ 
+\begin{definition}[Strategic Complementarity/substitutability]
+	Assuming that $U_1(a, A, \theta) > 0$ and $U_{11}(a, A, \theta) < 0$. A global game is said to present strategic complementarity if $U_{12}(a, A, \theta) > 0$, and strategic substitutability if $U_{12} (a, A, \theta) < 0$.
+\end{definition}
+
+We will discuss the concept of strategic complementarity in detail after we define the equilibrium of the game. 
+
+\subsection{Nash Equilibrium of the Global Game}
+
+Although the game theory languages are not popular in macroeconomics, the equilibrium that macroeconomists are referring to in this literature is essentially Nash equilibrium. There is only one simplification taken by macro: in game theory, the payoff function is usually written as
+\[U(a_i, a_{-i}, \theta)\]
+where $a_{-i}$ is a vector of all other players' actions. In the global game, each agent is atomistic, so its action cannot alter the aggregate outcome $A$. Other players' behavior affects an individual's payoff only through this aggregate outcome. As a result, $A$ can be regarded as a ``sufficient statistic" summarizing other players' behavior, thereby reducing the dimension of the state space for each individual's problem.\footnote{In applications, some agents are less atomistic than others, especially when the agents are firms. Information and coordination frictions with non-atomistic agents are underexplored in macroeconomics but standard in industrial organization.}
+
+Nash equilibrium requires that, given aggregate outcome $A$ and fundamental $\theta$, each individual optimizes his own payoff 
+\begin{equation}
+	a^*_i(A, \theta) = \arg \max_{a} U(a, A, \theta)
+\end{equation}
+and the equilibrium aggregate outcome $A^*(\theta)$ should satisfy
+\begin{equation}
+	A^*(\theta) = \int_0^1 a_i^*(A^*(\theta), \theta) \, di = a^*(A^*(\theta), \theta) 
+\end{equation} 
+In other words, for a given $\theta$, the aggregate outcome $A^*(\theta)$ is the fixed point of the function $a^*(A, \theta)$.
+
+\underline{Notes:}
+\begin{itemize}
+	\item We are interested in how aggregate action $A$ affects individual action $a_i^*$. This can be easily done by applying implicit function theorem to the FOC
+	\[U_1(a^*(A, \theta), A, \theta) = 0\]
+	\[\implies U_{11}(a^*(A, \theta), A, \theta) \frac{\partial a^*(A, \theta)}{\partial A} + U_{12}(a^*(A, \theta), A, \theta) = 0 \]
+	\[\implies \frac{\partial a^*(A, \theta)}{\partial A} = - \frac{U_{12}(a^*(A, \theta), A, \theta)}{U_{11}(a^*(A, \theta), A, \theta)}\]
+	We can easily see that (recall that $U_{11} < 0$)
+	\begin{itemize}
+		\item $\frac{\partial a^*(A, \theta)}{\partial A} > 0$ if $U_{12}(a^*(A, \theta), A, \theta) > 0$ (strategic complementarity), and
+		\item $\frac{\partial a^*(A, \theta)}{\partial A} < 0$ if $U_{12}(a^*(A, \theta), A, \theta) < 0$ (strategic substitutability).
+	\end{itemize}
+\item In other words, in a global game with strategic complementarity, the individual agents have a motive to conform to other's behavior. This is because the marginal benefit of individual action is increasing with the aggregate outcome: others choosing high $A$ will increase my marginal benefit, and due to the concavity, I need to increase my action to rebalance marginal benefit and marginal cost. 
+\item Denote $\rho(A, \theta) \equiv \frac{\partial a^*(A, \theta)}{\partial A}$. We say that the global game exhibits \textbf{strong strategic complementarity} if $\rho(A, \theta) > 1$ for some $(A, \theta)$ such that $A = a^*(A, \theta) \in [0,1]$, and \textbf{weak strategic complementarity} if $0< \rho(A, \theta) < 1$ for all $(A, \theta)$.
+\end{itemize}
+
+Let's look into the examples.
+
+\paragraph{Example 1: Bank Run \\ [6pt]}
+
+In the bank run example, it is clear that the individual policy function $a^*(A, \theta)$ is a step function:
+\begin{equation}
+	a^*(A, \theta) = \begin{cases}
+		1 & \text{ if } A > \theta \\
+		0 & \text{ if } A \leq \theta
+	\end{cases}
+\end{equation}
+It's clear that there are two fixed points for $a^*(A, \theta)$: either $A = 0$ or $A = 1$. Hence, there are two (pure-strategy) Nash equilibria in this global game: either nobody runs ($a_i = 0$ for all $i$), or everybody runs ($a_{i} = 1$ for all $i$). Hence, we get multiple equilibria in this case.
+
+Note that we cannot directly compute $\rho$, $U_{11}$ and $U_{12}$ since the payoff function is not continuous and hence not differentiable (some of the above assumptions/arguments need to be reframed to accommodate non-differentiability, e.g. $U_{12} > 0$ needs to be changed to supermodularity --- ask a micro theorist if you want to know what this is). Here, we can roughly regard the policy function $a^*(A, \theta)$ as an example for strong strategic complementarity: at $A = \theta$, the slope of $a^*(A, \theta)$ is positive infinity.
+
+\paragraph{Example 2: Firm's Pricing Problem as Beauty Contest \\ [6pt]}
+
+In the pricing example, we know that each individual firm's pricing policy is governed by taking FOC on the profit function (\ref{eq:profit_firm}):
+\begin{equation} \label{eq:foc_prices}
+	\Pi_1(P_i, P, Y) = 0
+\end{equation}
+We can log linearize (\ref{eq:foc_prices}) around some steady state $(\bar{Y}, \bar{P}, \bar{M})$:
+\[\Pi_{11}(\bar{P}, \bar{P}, \bar{Y}) \bar{P} (\exp(p_i) - 1) + \Pi_{12}(\bar{P}, \bar{P}, \bar{Y}) \bar{P} (\exp(p) - 1) + \Pi_{13}(\bar{P}, \bar{P}, \bar{Y}) \bar{Y} (\exp(y) - 1) = 0  \]
+and use the approximation $\exp(x) \approx 1 + x$, we get a linear decision rule for logged prices $p_i$:
+\[p_i^* = - \frac{\Pi_{12}}{\Pi_{11}} p - \frac{\Pi_{13}\bar{Y}}{\Pi_{11}\bar{P}} y\]
+It turns out that (at the steady state, $P_i = P = \bar{P}$)
+\[- \frac{\Pi_{12}}{\Pi_{11}} = -\frac{\epsilon \bar{P}^{\epsilon-1} \bar{P}^{-\epsilon} \bar{Y} (1-\epsilon + \bar{P} (1+\epsilon) \frac{v'(\bar{Y})}{u'(\bar{Y})} \bar{P}^{-1})}{(-\epsilon) \bar{P}^\epsilon \bar{Y} \bar{P}^{-\epsilon -1} (1-\epsilon + \bar{P} (1+\epsilon) \frac{v'(\bar{Y})}{u'(\bar{Y})} \bar{P}^{-1}) } = 1\]
+and let $\zeta \equiv -\frac{\Pi_{13}\bar{Y}}{\Pi_{11}\bar{P}} > 0$. Use the log-linearized aggregate demand function 
+\[m = p + y\]
+we can write the optimal individual pricing rule as
+\begin{equation} \label{eq:linear_dr}
+	p_i^*(p, m) = (1-\zeta) p + \zeta m
+\end{equation}
+The parameter $\zeta$ is usually referred to as ``real rigidity" in the literature. It gives us the responsiveness of relative price $p_i - p$ to variations in real output. In this global game setting, we can see that $\zeta$ is closely related to the strategic complementarity: if $\zeta < 1$, we can see that $\frac{\partial p_i^*}{\partial p} = 1- \zeta > 0$, i.e. individual prices will increase as aggregate prices increases, and hence the pricing game features strategic complementarity. Additionally, since $\zeta >0$, we can see that $\rho = 1 - \zeta < 1$, i.e. the game features weak strategic complementarity. On the other hand, if $\zeta > 1$, the game features strategic substituability. 
+
+With complete information, the Nash equilibrium of this game is unique, regardless of the pricing problem being weakly strategic complement or strategic substitute. The equilibrium aggregate price $p^*$ can be solved by
+\[p^* = \int p_i^* \, di = (1-\zeta) p + \zeta m \]
+\begin{equation}
+	\implies p^* = m
+\end{equation} 
+In other words, the prices should go up one for one with the quantity of money supply. Money is neutral.
+
+\paragraph{Example 3: Diamond (1982) \\ [6pt]}
+
+We can see that the strategic complementarity is controlled by $p'(\cdot)$:
+\begin{itemize}
+	\item If $p'(Y) > 0$, higher aggregate output will make individual firms more inclined to produce because the probability of making the deal is higher;
+	\item If $p'(Y) < 0$, higher aggregate output will make individual firms less likely to produce because the probability of making the deal is smaller. 
+\end{itemize}
+
+
+\subsection{Properties of Nash Equilibria}
+
+Now I discuss several properties of Nash equilibria. 
+
+\paragraph{Multiplicity \\ [6pt]}
+
+As we can see from above, it seems that a global game that features strong strategic complementarity has multiple equilibria, and the game with weak strategic complementarity or strategic substitutability features unique equilibrium. We could prove that this is indeed true.
+
+If a global game features strong strategic complementarity, i.e. at a fixed point $A = a^*(A, \theta)$, the slope $\rho(a, \theta) \equiv \frac{\partial a^*(A, \theta)}{\partial A} > 1$. This implies that in a neighbourhood of $A$, there exists a point $A' < A$, such that $a^*(A', \theta) < A'$. We also know that when evaluated at $A = 0$, $a^*(0, \theta) \geq 0$. Hence, if the continuity of $a^*$ is guaranteed or assumed between the interval $[0,A]$, then by intermediate value theorem there must be a root of function $a^*(x, \theta) - x = 0$ on the interval $[0,A]$.
+
+The uniqueness of the Nash equilibrium under weak complementarity or substitutability can be shown by contradiction. If another distinct equilibrium existed, it would violate the definition of weak complementarity---the slope of $a^*$ is uniformly below 1 for any given $\theta$---because the intermediate value theorem implies that there must be an intervening point at which $\rho(A, \theta) > 1$. A similar argument applies under substitutability.
+
+\paragraph{Equilibrium Selection and Coordination Failure \\ [6pt]}
+
+In the case of multiplicity, we are interested in the welfare implications of the equilibria. We can rank the multiple equilibria by some welfare criterion. For instance, in the example of bank run, if we use the aggregate payoff 
+\[W = \int U_i \, di = \int a_i (\mathbf{1}\{A > \theta\} -c) \, di \]
+We can easily see that the welfare for the equilibrium $A = 0$ is equal to 0, and the welfare for the equilibrium $A = 1$ is equal to $1-c > 0$. In this case, we say that $A = 1$ is superior to $A = 0$. 
+
+Cooper and John (1988) defines coordination failure as ``the economy gets stuck at an inefficient equilibrium with a low level of economic activity, even though a better equilibrium exists". In the bank run example, if the economy is stuck at the inefficient equilibrium $A = 1$, it would be an example of coordination failure in the sense of Cooper and John.
+
+\paragraph{Stability of Equilibrium \\ [6pt]}
+
+We are interested in how a small, temporary perturbation to the fundamental $\theta$ would affect the Nash equilibrium of the global game. 
+
+[Draw graphs]
+
+\section{Incomplete Information as Coordination Friction (Optional)}
+
+So far we have been working with complete information, i.e. the fundamental $\theta$ is common knowledge and known by all agents in the economy. If we deviate from this assumption and allow agents to have private, noisy information about the fundamental $\theta$, then
+\begin{itemize}
+	\item because of the noisy information, agents may not respond directly to the variations in $\theta$, as now they cannot distinguish between variations in $\theta$ and the variations in noises (same intuition as Lucas Island);
+	\item moreover, because of private information, agents are uncertain about other agents' behavior in the game; hence, they are uncertain about the aggregate action $A$. 
+\end{itemize}
+This strategic uncertainty about other agents' behavior is the notion of coordination friction taken by the modern macroeconomics literature. George-Marios Angeletos and his students (especially Jennifer La'O and Chen Lian) have developed a very successful agenda on this topic in the past two decades, with theoretical and quantitative applications to topics such as solving the forward guidance puzzle, quantifying sentiments and confidence, etc. 
+
+\subsection{Global Game with Incomplete Information}
+
+Assume that each agent $i$ receives a vector of private, noisy signals $s_i$ about the fundamental $\theta$. Let $\mathbb{E}_i$ denote the conditional expectation $\mathbb{E}[\cdot|s_i]$.   
+
+It is natural to use Bayesian Nash equilibrium as the solution concept for this static game of incomplete information. An action profile $(\{a_i^*\}, A^*)$ constitutes a Bayesian Nash equilibrium when 
+\begin{itemize}
+	\item Each individual $i$ chooses $a_i^*$ by
+	\begin{equation}
+		a_i^*(s_i) = \arg \max_a \mathbb{E}_i [U(a, A^*, \theta)]
+	\end{equation}
+\item Aggregate action $A^*$ satisfies
+\begin{equation}
+	A^* = \underbrace{\int_0^1 a_i^*(s_i) \, di}_{\equiv G(A^*, \theta)}
+\end{equation}
+\end{itemize}
+
+\underline{Note:}
+\begin{itemize}
+	\item The BNE nests the full-information and noisy-common-information benchmarks, both of which feature complete information and perfect coordination. 
+	\item For example, if we shut off private signals (e.g., set their precision to zero), agents restrict their attention to the public signal and the prior, both of which are common knowledge. We are then back in the complete-information setting. 
+	\item Under incomplete information, the mapping that defines equilibrium aggregate action is no longer $a^*(\theta, A)$ in the complete-information benchmark. Instead, the equilibrium aggregate action is the fixed point of $G(A, \theta)$, a function that aggregates the individual decision rules.
+\end{itemize}
+
+%\subsection{Application to Bank Run}
+%Suppose that each depositor $i$ receives a private signal $x_i$ of the fundamental $\theta$:
+%\[x_i = \theta + \sigma_\epsilon \epsilon_i\]
+%and a public signal $z$
+%\[z = \theta + \sigma_\xi \xi \]
+%We are interested in how this modification changes the equilibrium.
+%
+%Each individual's problem becomes
+%\[\max_{a_i \in \{0,1\}} \mathbb{E}\left[a_i (\mathbf{1}\{A > \theta\} - c)|x_i, z\right] = \max_{a_i \in \{0,1\}} a_i \left(\mathbb{E}\left[\mathbf{1}\{A > \theta\} |x_i, z\right] - c\right)\]
+%It turns out that the BNE strategy takes the form 
+%\[a_i = \begin{cases}
+%	1 & \text{ if } x_i \leq \bar{x}(z) \\
+%	0 & \text{ if } x_i > \bar{x}(z)
+%\end{cases}\]
+%where the threshold $\bar{x}(z)$ is a function of public signal $z$.
+%
+%\[A = \phi\left(\frac{\bar{x}(z) - \theta}{\sigma_\epsilon}\right)\]
+%
+%\[\theta^* = \bar{x}(z) - \phi^{-1}(A) \sigma_\epsilon \]
+%
+%\[\mathbb{E}_i[\mathbf{1}\{A > \theta\}] = \phi \left(\frac{A - \delta_x x_i - \delta_z z}{\left(\frac{1}{\sigma_\xi^{-2} + \sigma^2_{\epsilon}}\right)^{1/2}}\right)\]
+
+\subsection{Application to Firm's Pricing Problem}
+
+Let's revisit the firm's pricing problem. 
+
+Suppose that the monetary policy shock $m \sim N(0, \sigma^2_m)$. Assume that each firm $i$ receives two signals about the money supply $m$: one private signal
+\[x_i = m + \sigma_\epsilon \epsilon_i\]
+where $\epsilon_i \sim N(0,1)$, and one public signal
+\[z = m + \sigma_{\xi} \xi\]
+whose realization is commonly known by all the agents and $\xi \sim N(0,1)$. As I mentioned before, the complete information benchmark is the case where private signal is extremely noisy, i.e. $\sigma_\epsilon \to \infty$. 
+
+The linearized decision rule (\ref{eq:linear_dr}) should be rewritten as
+\begin{equation} \label{eq:bne}
+	p_i^*(x_i, z) = (1-\zeta)\mathbb{E}[p|x_i, z] + \zeta \mathbb{E}[m|x_i, z]
+\end{equation}
+From the signal extraction lecture, we already know how to calculate
+\[\mathbb{E}_i[m] \equiv \mathbb{E}[m|x_i, z] = \frac{\eta_x}{\eta_x + \eta_z + \eta_\theta} x_i + \frac{\eta_z}{\eta_x + \eta_z + \eta_\theta} z = \delta_x x_i + \delta_z z\]
+where $\eta$'s are precisions of signals (the inverse of variances), as defined in the signal extraction notes.
+
+It remains to characterize agent $i$'s expectation of the aggregate price level, $\mathbb{E}_i[p]$.
+
+\paragraph{Solving the Symmetric BNE: Guess and Verify \\ [6pt]}
+Guess that the solution $p_i^*(x_i, z)$ takes a linear form:
+\begin{equation} \label{eq:guess}
+	p^*_i(x_i, z) = \alpha x_i + \beta z 
+\end{equation}
+where $\alpha$ and $\beta$ are undetermined coefficients.
+
+The guess (\ref{eq:guess}) implies that aggregate price level takes the form
+\[p = \int_0^1 p^*_i \, di = \alpha \int x_i \, di + \beta z = \alpha m + \beta z\]
+and hence agent $i$'s expectation of the aggregate price level can be written as
+\[\mathbb{E}_i[p] = \mathbb{E}[p|x_i, z] = \mathbb{E}_i[\alpha m + \beta z] = \alpha (\delta_x x_i + \delta_z z) + \beta z = \alpha \delta_x x_i + (\alpha \delta_z + \beta)z\]
+Plug it into the right-hand side of (\ref{eq:bne}):
+\begin{align*}
+	\alpha x_i + \beta z & = (1-\zeta) (\alpha \delta_x x_i + (\alpha \delta_z + \beta)z) + \zeta  (\delta_x x_i + \delta_z z) \\
+	& = \left[(1-\zeta) \alpha \delta_x + \zeta \delta_x\right] x_i + \left[(1-\zeta)(\alpha \delta_z + \beta) + \zeta \delta_z \right] z 
+\end{align*}
+We know that the left-hand side and the right-hand side should always be equal to each other for any realization of $z$ and $x_i$. This is only possible when the coefficients on $z$ and on $x_i$ are same on both sides:
+\begin{eqnarray*}
+	\alpha &=& (1-\zeta) \alpha \delta_x + \zeta \delta_x \\
+	\beta &=& (1-\zeta) (\alpha \delta_z + \beta) + \zeta \delta_z
+\end{eqnarray*}
+Hence
+\begin{equation}
+	\alpha = \frac{\zeta \delta_x}{1 - (1-\zeta) \delta_x} \text{ and } \beta = \frac{\delta_z}{1 - (1-\zeta) \delta_x }
+\end{equation}
+and the equilibrium aggregate price level is given by
+\begin{equation} \label{eq:eqm_price}
+	p^* = \alpha m + \beta z = \frac{\zeta \delta_x}{1 - (1-\zeta) \delta_x} m + \frac{\delta_z}{1 - (1-\zeta) \delta_x } (m + \sigma_\xi \xi) = \frac{\zeta \delta_x + \delta_z}{1 - (1-\zeta) \delta_x} m + \frac{\delta_z}{1 - (1-\zeta) \delta_x }\sigma_\xi \xi
+\end{equation}
+
+\paragraph{Result 1: Strategic Complementarity and Attention \\ [6pt]}
+
+The weights $\alpha$ and $\beta$ can be interpreted as individual firms' sensitivity, or attention, to private and public signals, respectively. We have the following result:
+\begin{equation}
+	\frac{\partial \alpha}{\partial \zeta} > 0 \text{ and } \frac{\partial \beta}{\partial \zeta} < 0
+\end{equation}
+In other words, the firm pays more attention to the public signal $z$ when strategic complementarity of pricing is stronger (i.e. $1-\zeta$ gets larger). 
+
+This result is the main contribution of Morris and Shin (2002, AER). It illustrates the role of public information in coordinating agents' behavior under imperfect common knowledge. Because the aggregate price level affects a firm's marginal profit, the firm has a strong incentive to form beliefs about that price. With private information, however, firms do not know precisely what others observe or believe about the money supply. All firms observe the same realization of the public signal $z$, so they can use it to predict other firms' beliefs and the aggregate price level. The public signal therefore serves as a coordinating device.
+
+\paragraph{Result 2: Information-driven Price Rigidity and Non-neutrality \\ [6pt]}
+
+It follows immediately from (\ref{eq:eqm_price}) that
+\begin{equation}
+	\frac{\partial p^*}{\partial m} = \frac{\zeta \delta_x + \delta_z}{1 - (1-\zeta) \delta_x} \leq \frac{\zeta \delta_x + 1 - \delta_x}{1 - (1-\zeta) \delta_x} = 1
+\end{equation}
+In other words, because of the information friction, the price level does not respond one-for-one to a money-supply shock. The information friction generates nominal rigidity. The intuition is similar to that in Lucas (1972).
+
+We can see how coordination friction allows strategic complementarity to play a role in the nominal rigidity. Suppose we mute incomplete information, so that $\delta_x \to 0$ (private signals are very noisy, and agents only pay attention to the public signal), we can see that 
+\[\frac{\partial p^*}{\partial m} = \delta_z\]
+which is independent of strategic complementarity.   
+
+It is also straightforward to show that $\frac{\partial p^*}{\partial m}$ increases with $\zeta$ and hence decreases with the degree of strategic complementarity $1- \zeta$. This result relies on incomplete information: we need $0 < \delta_x < 1$ for the correlation between prices and the money supply to depend on strategic complementarity.
+
+If we write down the equilibrium output $y^*$ in this economy:
+\[y^* = m - p^* = \left(1 - \frac{\zeta \delta_x + \delta_z}{1 - (1-\zeta) \delta_x}\right) m - \frac{\delta_z}{1 - (1-\zeta) \delta_x }\sigma_\xi \xi\] 
+We get non-neutrality of money as monetary disturbances generate output variations.
+
+\paragraph{Result 3: Non-fundamental Volatility \\ [6pt]}
+
+Examining $p^*$ and $y^*$ further shows that the equilibrium price level and output depend on noise in the public signal. In other words, the model generates noise-driven fluctuations or business cycles. Variation in $\xi$ is independent of variation in the fundamental $m$ and is usually called ``non-fundamental volatility" in the literature.
+
+It would be useful to compute the unconditional variance of $y^*$:
+\[var(y^*) = \underbrace{\left(1 - \frac{\zeta \delta_x + \delta_z}{1 - (1-\zeta) \delta_x}\right)^2 \sigma_m^2}_{\text{Fundamental Vol.}} + \underbrace{\frac{\delta_z^2}{(1 - (1-\zeta) \delta_x )^2}\sigma_\xi^2}_{\text{Non-fundamental Vol.}} \]
+Under incomplete information, $\delta_x > 0$, hence if $1-\zeta$ is larger, the strategic complementarity is larger, then the non-fundamental volatility $\frac{\delta_z^2}{(1 - (1-\zeta) \delta_x )^2}\sigma_\xi^2$ becomes larger.
+
+Note that the noises of private signals do not affect the equilibrium aggregate variables since they wash out in aggregation, but these private noises can potentially be an important source of heterogeneity across firms and contribute to the firm-level volatility. In other words, the private noises provide an easy way to ``disconnect" micro and macro volatility. This trick has been played a lot in the recent literature (e.g. Bordalo Gennaioli Ma Shleifer 2020 AER).
+
+
+\paragraph{Result 4: High-order Beliefs \\ [6pt]}
+
+Define the average (first-order) belief as
+\begin{equation}
+	\bar{\mathbb{E}}[m] = \int_{0}^{1} \mathbb{E}_i[m] \, di = \delta_x m + \delta_z z
+\end{equation}
+This average belief depends on $m$, which is not known by the individual firms. Firms could form expectation on this average belief:
+\begin{equation}
+	\mathbb{E}_i\bar{\mathbb{E}}[m] = \delta_x \mathbb{E}_i[m] + \delta_z z = \delta_x^2 x_i + \delta_z(\delta_x + 1)z
+\end{equation}
+This is called the second-order belief of agent $i$. Again, we could aggregate these second-order beliefs to get the average second-order belief of the economy:
+\begin{equation}
+	\bar{\mathbb{E}}^{(2)}[m] \equiv \int_{0}^1 \mathbb{E}_i\bar{\mathbb{E}}[m] \, di = \delta_x^2 m + \delta_z(\delta_x + 1)z
+\end{equation}	
+
+By induction, we can get the average $k-$th order belief of the economy:
+\begin{equation}
+	\bar{\mathbb{E}}^{(k)}[m] = \delta_x^k m + \delta_z(\delta_x^{k-1} + \cdots + 1)z = \delta_x^k m + \delta_z \frac{1 - \delta_x^{k}}{1-\delta_x}z
+\end{equation}
+
+We are interested in the relationship between these high-order beliefs and the equilibrium aggregate price $p^*$. Note that according to (\ref{eq:bne}), we have
+\begin{equation} \label{eq:fob}
+	p^* = \int_0^1 p_i^* \, di = (1-\zeta) \bar{\mathbb{E}}[p^*] + \zeta \bar{\mathbb{E}}[m]
+\end{equation}
+The agent can form expectation on (\ref{eq:fob}):
+\begin{equation}
+	\mathbb{E}_i[p^*] = (1-\zeta) \mathbb{E}_i\bar{\mathbb{E}}[p^*] + \zeta \mathbb{E}_i\bar{\mathbb{E}}[m]
+\end{equation} 
+Aggregate it
+\[\bar{\mathbb{E}}[p^*] = (1-\zeta) \bar{\mathbb{E}}^{(2)}[p^*] + \zeta \bar{\mathbb{E}}^{(2)}[m]\]
+Plug it into (\ref{eq:fob}):
+\begin{equation}
+	p^* =(1-\zeta) \bar{\mathbb{E}}[p^*] + \zeta \bar{\mathbb{E}}[m] = (1-\zeta)^2 \bar{\mathbb{E}}^{(2)}[p^*] + (1-\zeta)\zeta \bar{\mathbb{E}}^{(2)}[m] + \zeta \bar{\mathbb{E}}[m]
+\end{equation}
+By induction, aggregate price $p^*$ can be expressed as an infinite regress of all high-order beliefs:
+\begin{equation} \label{eq:eqm_price_hob_sum}
+	p^* = \zeta \sum_{k=0}^{\infty} (1-\zeta)^k \bar{\mathbb{E}}^{(k+1)}[m]
+\end{equation}
+Equation (\ref{eq:eqm_price_hob_sum}) is the main contribution of Woodford (2001). Again, we can think about what (\ref{eq:eqm_price_hob_sum}) would look like in absence of incomplete information. Suppose $\delta_x = 0$ and $\delta_z \in (0,1)$. We can see that in this case,
+\[\bar{\mathbb{E}}[p^*] =\bar{\mathbb{E}}^{(2)}[p^*] = \cdots = \bar{\mathbb{E}}^{(k)}[p^*] = \delta_z z = \mathbb{E}_i[p^*] \] 
+and the infinite regression (\ref{eq:eqm_price_hob_sum}) collapses to 
+\[p^* = \delta_z z = \mathbb{E}_i[p^*] = \bar{\mathbb{E}}[p^*]\]
+In other words, it suffices for the firm to use first-order expectations about the fundamental to forecast aggregate activity under complete information. Under incomplete information, the agents need more than first-order beliefs about the fundamental to predict the equilibrium outcome because now they need to forecast the forecast of others in a game of strategic complementarity. We can see that the weights on higher-order beliefs gets higher if the strategic complementarity $1-\zeta$ is larger: in this case, the agents have a larger coordination motive in the global game, and hence there are stronger motives to forecast what others think about the aggregate variable. 
+
+
+\end{document}

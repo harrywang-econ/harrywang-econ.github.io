@@ -1,0 +1,387 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON602 TA Notes: Hsieh and Klenow (2009)}
+\author{Haoran Wang}
+\date{February 10, 2025}
+\onehalfspacing
+
+
+\begin{document}
+	
+	\maketitle
+	
+	\tableofcontents
+	
+		This document presents the details of Hsieh and Klenow (2009, QJE). It is one of the most cited QJE papers of the past decade and has generated a large subsequent literature on misallocation. However, the paper contains several errors: roughly one-quarter of its equations are not exactly correct. The main objective of this document is to clarify these issues.
+	
+	\section{Theoretical Framework}
+	
+	There are three layers of production in the model: final good $Y$, sectoral good $Y_s$, and differentiated good $Y_{si}$.
+	
+	\subsection{Layers of Firms}
+	
+	\paragraph{Final Good Producer \\ [6pt]}
+	Final good $Y$ is competitively produced from sectoral goods $Y_s$:
+	\begin{equation} \label{eq:final_prod}
+		Y = \prod_{s} Y_s^{\theta_s}
+	\end{equation}
+		where $\sum_{s} \theta_s = 1$, implying constant returns to scale.
+	
+		Given the final-good price $P$ and sectoral-good prices $P_s$, the final-good producer solves
+	\[\max_{Y_s} PY - \sum_s P_s Y_s\]
+	subject to (\ref{eq:final_prod}). FOC is therefore 
+	\begin{equation}
+		\theta_s PY = P_s Y_s
+	\end{equation}
+	
+	\paragraph{Sectoral Good Producer \\ [6pt]}
+	
+	Each sectoral good $Y_s$ is produced from differentiated goods $Y_{si}$, using a CES production technology:
+	\begin{equation} \label{eq:sector_prod}
+		Y_s = \left(\sum_{i=1}^{M_s} Y_{si}^{\frac{\sigma -1}{\sigma}}\right)^{\frac{\sigma}{\sigma-1}}
+	\end{equation}
+	The sectoral good producer solves
+	\[\max_{Y_{si}}P_s Y_s - \sum_{i=1}^{M_s} P_{si} Y_{si}\]
+	subject to (\ref{eq:sector_prod}). FOC gives the demand for differentiated good $Y_{si}$:
+	\begin{equation} \label{eq:demand_si}
+		P_s Y_s^{1/\sigma} = P_{si} Y_{si}^{1/\sigma}
+	\end{equation}
+	
+	\paragraph{Differentiated Good Producer \\ [6pt]}
+		The differentiated-good producer chooses output $Y_{si}$, price $P_{si}$, capital input $K_{si}$, and labor input $L_{si}$ to maximize profit:
+	\[(1-\tau_{Ysi})P_{si} Y_{si} - (1+\tau_{Ksi})R K_{si} - wL_{si}\]
+	subject to the demand function (\ref{eq:demand_si}) and the production function
+	\begin{equation} \label{eq:prod_func_si}
+		A_{si} K_{si}^{\alpha_s} L_{si}^{1-\alpha_s} \geq Y_{si}
+	\end{equation} 
+For now, interpret $\tau_{Ksi}$ and $\tau_{Ysi}$ as taxes imposed on the capital acquisition and revenue of firm $i$ in industry $s$.  
+	
+	As usual, the optimization can be carried out in two stages. In the first stage, for any given output $Y_{si}$, the differentiated good producer solves the cost minimization problem
+	\[\min_{K_{si},L_{si}} (1+\tau_{Ksi}) RK_{si} + wL_{si}\]
+	subject to the production function (\ref{eq:prod_func_si}).
+	
+		Combining the FOCs for capital and labor gives the standard ``MRTS = price" condition:
+	\begin{equation} \label{eq:FOC_KL}
+		\frac{(1+\tau_{Ksi}) R}{w} = \frac{\alpha_s K_{si}^{\alpha_s-1}L_{si}^{1-\alpha_s}}{(1-\alpha_s) K_{si}^{\alpha_s}L_{si}^{-\alpha_s}} = \frac{\alpha_s}{1-\alpha_s} \frac{L_{si}}{K_{si}}
+	\end{equation}
+	and marginal cost is simply the Lagrange multiplier of this cost minimization problem
+	\begin{equation}
+		\lambda_{si} = \frac{(1+\tau_{Ksi})R}{\alpha_s A_{si}K_{si}^{\alpha_s-1}L_{si}^{1-\alpha_s}} = \frac{w}{(1-\alpha_s) A_{si}K_{si}^{\alpha_s}L_{si}^{-\alpha_s}}
+	\end{equation}
+The cost minimization problem above implies a cost function $\mathcal{C}(Y_{si})$, with $\mathcal{C}'(Y_{si}) = \lambda_{si}$.
+
+\underline{Note:}
+\begin{itemize}
+		\item $\tau_{Ksi}$ is akin to a tax on capital acquisition. More generally, it is a ``wedge" in the first-order condition for input acquisition (\ref{eq:FOC_KL}): it prevents the marginal rate of technological substitution $\frac{\alpha_s}{1-\alpha_s}\frac{L_{si}}{K_{si}}$ from equaling the relative input price $\frac{R}{W}$. 
+		\item In other words, any mechanism that prevents the MRTS from equaling the relative price contributes to the wedge $\tau_{Ksi}$. For instance, the firm may face financial frictions that restrict capital adjustment or labor-adjustment costs associated with hiring and layoffs. Such mechanisms can generate variation in $\tau_{Ksi}$ both in the cross-section and over time. The wedge $\tau_{Ksi}$ is a reduced-form representation of these mechanisms.
+		\item Wedges are useful diagnostic tools for identifying the dominant frictions that prevent the MRTS from equaling the relative price. For instance, if $\tau_{Ksi}$ is countercyclical in the data, mechanisms that generate countercyclical distortions may dominate those that generate procyclical distortions. For an example, see Chari, Kehoe, and McGrattan's ``Business Cycle Accounting" paper.  
+	\item Also, note that different firms face different $\tau_{Ksi}$. Hence, these idiosyncratic distortions are an important source of heterogeneity.
+		\item Finally, the paper is not explicit about the relationship between $\tau_{Ksi}$ and $A_{si}$. In the literature, a distortion correlated with productivity is called a ``correlated distortion." Antitrust policy is one example: large, highly productive firms may face higher taxes. Correlated and uncorrelated distortions have different implications for firm dynamics (see the discussion in ECON 701). 
+\end{itemize}
+
+
+	Now I go to the second stage of the firm's problem where prices and quantities are chosen:
+	\[\max_{P_{si}, Y_{si}} (1-\tau_{Ysi})P_{si}Y_{si} - \mathcal{C}(Y_{si})\]
+	subject to (\ref{eq:demand_si}).
+	
+	FOC:
+	\begin{equation}
+		(1-\tau_{Ysi}) P_{si} = \frac{\sigma}{\sigma - 1}\lambda_{si} = \frac{\sigma}{\sigma - 1} \frac{(1+\tau_{Ksi})R}{\alpha_s A_{si}K_{si}^{\alpha_s-1}L_{si}^{1-\alpha_s}} =  \frac{\sigma}{\sigma - 1} \frac{w}{(1-\alpha_s) A_{si}K_{si}^{\alpha_s}L_{si}^{-\alpha_s}}
+	\end{equation}
+	or equivalently
+	\begin{equation} \label{eq:FOC_P}
+		(1-\tau_{Ysi}) P_{si} = \frac{\sigma}{\sigma -1} \frac{(1+\tau_{Ksi}) R}{\alpha_s Y_{si}/K_{si}} = \frac{\sigma}{\sigma -1} \frac{w}{(1-\alpha_s) Y_{si}/L_{si}}
+	\end{equation}
+
+\underline{Note:} 
+\begin{itemize}
+		\item $\tau_{Ysi}$ should be interpreted as any distortion that prevents the markup from reaching its desired level $\frac{\sigma}{\sigma-1}$. 
+		\item It affects both $K_{si}$ and $L_{si}$ but does not change $\frac{K_{si}}{L_{si}}$ if we assume that $\tau_{Ysi}$ and $\tau_{Ksi}$ are independent of each other.
+	\item In the derivations of FOCs, I used repeatedly the property of Cobb-Douglas production function $\text{MPK} = \alpha \frac{Y}{K}$ and $\text{MPL} = (1-\alpha) \frac{Y}{L}$. This simplifies the algebra by a lot, but at some cost (will see more in 701).
+		\item Finally, I establish the relationship between firm-level variables ($K_{si}, L_{si}, Y_{si}$) and sector-level variables ($K_s, L_s, Y_s$) for future use. Using (\ref{eq:FOC_KL}) to replace $L_{si}$ with $K_{si}$ gives
+	\[Y_{si} = A_{si} K_{si} \left(\frac{(1+\tau_{Ksi})R}{w} \frac{1-\alpha_s}{\alpha_s}\right)^{1-\alpha_s}\]
+	 Substituting this expression into (\ref{eq:FOC_P}) and replacing $P_{si}$ with $Y_{si}$ using the demand function (\ref{eq:demand_si}) gives
+	\[(1-\tau_{Ysi}) P_s Y_s^{1/\sigma} \left(A_{si} K_{si}\left(\frac{(1+\tau_{Ksi})R}{w} \frac{1-\alpha_s}{\alpha_s}\right)^{1-\alpha_s}\right)^{-\sigma} = \frac{\sigma}{\sigma -1} \frac{(1+\tau_{Ksi}) R}{\alpha_s A_{si}\left(\frac{(1+\tau_{Ksi})R}{w} \frac{1-\alpha_s}{\alpha_s}\right)^{1-\alpha_s}}\]
+	and therefore
+	\[K_{si} \propto (1-\tau_{Ysi})^\sigma A_{si}^{\sigma -1} (1+\tau_{Ksi})^{(1-\alpha_s) (\sigma -1) - \sigma}\]
+	Here I ``drop" all the terms that are common across firms (i.e. model parameters and sectoral variables) because these terms will also show up in the aggregate capital $K_s$ so that they will cancel out when we take $K_{si}/K_s$, and I keep only the firm-level variables. Hence, we know that
+	\begin{equation}
+		\frac{K_{si}}{K_s} = \frac{(1-\tau_{Ysi})^\sigma A_{si}^{\sigma -1} (1+\tau_{Ksi})^{(1-\alpha_s) (\sigma -1) - \sigma}}{\sum_i (1-\tau_{Ysi})^\sigma A_{si}^{\sigma -1} (1+\tau_{Ksi})^{(1-\alpha_s) (\sigma -1) - \sigma}}
+	\end{equation} 
+Similarly, we get
+\begin{equation}
+	\frac{L_{si}}{L_s} = \frac{(1-\tau_{Ysi})^\sigma A_{si}^{\sigma -1} (1+\tau_{Ksi})^{\alpha_s (1- \sigma)}}{\sum_i (1-\tau_{Ysi})^\sigma A_{si}^{\sigma -1} (1+\tau_{Ksi})^{\alpha_s (1- \sigma)}}
+\end{equation}
+\begin{equation}
+	\frac{Y_{si}}{Y_s} = \frac{(1-\tau_{Ysi})^\sigma A_{si}^{\sigma} (1+\tau_{Ksi})^{(1-\alpha_s) \sigma - \sigma}}{\sum_{i} (1-\tau_{Ysi})^\sigma A_{si}^{\sigma} (1+\tau_{Ksi})^{(1-\alpha_s) \sigma - \sigma}}
+\end{equation}
+\begin{equation}
+	\frac{P_{si}}{P_s} = \frac{(1-\tau_{Ysi})^{-1} A_{si}^{-1} (1+\tau_{Ksi})^{-(1-\alpha_s) + 1}}{\sum_{i} (1-\tau_{Ysi})^{-1} A_{si}^{-1} (1+\tau_{Ksi})^{-(1-\alpha_s) + 1}}
+\end{equation}
+The takeaway from these equations is that the share of each firm in sectoral aggregates depends on how the firm-level productivity and the firm-level distortion compare to the average level in the sector. 
+
+From the last two equations, I can derive a ratio $\frac{P_{si}Y_{si}}{P_s Y_s}$: since
+\[P_{si} Y_{si} \propto (1-\tau_{Ysi})^{\sigma-1} A_{si}^{\sigma-1} (1+\tau_{Ksi})^{\alpha_s (1-\sigma)}\]
+hence
+\begin{equation} \label{eq:weight}
+	\frac{P_{si} Y_{si}}{P_s Y_s} = \frac{(1-\tau_{Ysi})^{\sigma-1} A_{si}^{\sigma-1} (1+\tau_{Ksi})^{\alpha_s (1-\sigma)}}{\sum_i (1-\tau_{Ysi})^{\sigma-1} A_{si}^{\sigma-1} (1+\tau_{Ksi})^{\alpha_s (1-\sigma)}}
+\end{equation}
+This will be used later when we define sectoral MRPL and MRPK.
+\end{itemize}
+%	Take advantage of CRS: 
+%	\[(1-\tau_{Ysi})P_{si}Y_{si} = \frac{\sigma}{\sigma -1} \frac{w}{ A_{si}F_l}A_{si}\left(F_k K_{si} + F_l L_{si}\right) = \frac{\sigma}{\sigma - 1} \left(wL_{si} + (1+\tau_{Ksi}) R K_{si}\right)\] 
+	
+	\subsection{Productivity Measures}
+	
+		Before proceeding, I introduce several concepts that are useful for thinking about productivity. The pre-tax revenue of firm $i$ is $P_{si} Y_{si}$. We can compute the partial derivatives of revenue with respect to capital and labor; these derivatives are called the ``marginal revenue product of capital" and ``marginal revenue product of labor," respectively:
+	\begin{align}
+		\text{MRPL}_{si} & \equiv \frac{\partial P_{si} Y_{si}}{\partial L_{si}} \nonumber \\
+		& = \frac{P_t Y_t^{1/\sigma} Y_{si}^{1-1/\sigma}}{\partial L_{si}} \nonumber \\
+		& = P_t Y_t^{1/\sigma} \left(1-1/\sigma\right) Y_{si}^{-1/\sigma} \frac{\partial Y_{si}}{L_{si}} \nonumber \\
+		& = \underbrace{P_t Y_t^{1/\sigma}  Y_{si}^{-1/\sigma}}_{= P_{si}}\left(1-1/\sigma\right) (1-\alpha_s) \frac{Y_{si}}{L_{si}} \nonumber \\
+		& = P_{si} \frac{\sigma -1}{\sigma} (1-\alpha_s) \frac{Y_{si}}{L_{si}} \nonumber \\
+		& = \frac{w}{1-\tau_{Ysi}}
+	\end{align}
+	Similarly
+	\begin{align}
+		\text{MRPK}_{si} & \equiv \frac{\partial P_{si} Y_{si}}{\partial K_{si}} \nonumber \\
+		& = P_{si} \frac{\sigma-1}{\sigma} \alpha_s \frac{Y_{si}}{K_{si}} \nonumber \\
+		& = \frac{(1+\tau_{Ksi})R}{1-\tau_{Ysi}}
+	\end{align}
+
+\underline{Note:}
+\begin{itemize}
+		\item If $\tau_{Ysi} = 0$ for every $i$, then $\text{MRPL}_{si}$ is the same for all firms in industry $s$. In other words, there is no within-industry dispersion in $\text{MRPL}$. Hence, within-industry MRPL dispersion in the data indicates the presence of distortions. For this reason, the misallocation literature usually refers to dispersion in MRPL as ``labor misallocation."
+	\item Similarly, dispersion in MRPK is referred to as ``capital misallocation" in the literature, for exactly the same reason. The only difference is that now there is another contributor to the capital misallocation, which is the capital-specific distortion $\tau_{Ksi}$. If $\tau_{Ysi} = 0$ and $\tau_{Ksi} = 0$, there would be no within-industry dispersion in MRPK. 
+\end{itemize}
+
+Next, we go to the productivity measures. TFPQ is the Solow residual of the quantity production function:
+\begin{equation}
+	\text{TFPQ}_{si} = \frac{Y_{si}}{K_{si}^{\alpha_s}L_{si}^{1-\alpha_s}}= A_{si}
+\end{equation}
+TFPR, on the other hand, is the Solow residual of the revenue function:
+\begin{equation} \label{eq:TFPR}
+	\text{TFPR}_{si} = \frac{P_{si} Y_{si}}{K_{si}^{\alpha_s}L_{si}^{1-\alpha_s}} = P_{si} A_{si}
+\end{equation}
+
+\underline{Note:}
+\begin{itemize}
+	\item Since we allow firms to have different productivity, we should expect that there would be within-industry TFPQ dispersion regardless of the distortions.
+	\item However, it is no longer the case for TFPR. We will illustrate this later. 
+\end{itemize}
+
+The quantities defined thus far are at the firm level, and we can define their sector-level counterparts. Aggregate firm-level capital and labor to the sector level:
+\[K_s = \sum_{i \in s} K_{si} \text{ and } L_s = \sum_{i \in s} L_{si} \]
+Then we can define sectoral TFPQ as 
+\begin{equation}
+	\text{TFP}_s = \frac{Y_s}{K_s^{\alpha_s}L_s^{1-\alpha_s}}
+\end{equation}
+and sectoral TFPR as
+\begin{equation}
+	\text{TFPR}_s = \frac{P_{s} Y_{s}}{K_s^{\alpha_s}L_s^{1-\alpha_s}}
+\end{equation}
+In the paper, $\text{TFPR}_s$ has a bar over it, so I will use $\overline{\text{TFPR}}_s$ from now on. 
+
+Lastly, I can aggregate the sectoral output into the aggregate output 
+\[Y = \prod_{s} Y_s^{\theta_s} = \prod_s \left(\text{TFP}_s K_s^{\alpha_s} L_s^{1-\alpha_s}\right)^{\theta_s} = \prod_s \text{TFP}_s^{\theta_s} \prod_s K_s^{\alpha_s \theta_s} \prod_s L_s^{(1-\alpha_s)\theta_s}\]
+We define the non-input component in aggregate output as aggregate TFP:
+\begin{equation}
+	\text{TFP} = \prod_s \text{TFP}_s^{\theta_s}
+\end{equation} 
+
+
+	
+%	Solve for $L_{si}$ and $K_{si}$:
+%	\[K_{si} = \frac{\alpha_s w}{(1-\alpha_s) (1+\tau_{Ksi}) R} L_{si}\]
+%	\[P_{si} = \frac{\sigma}{\sigma - 1} \left(\frac{w}{1-\alpha_s}\right)^{1-\alpha_s} \left(\frac{R}{\alpha_s}\right)^{\alpha_s}\frac{(1+\tau_{Ksi})^{\alpha_s}}{A_{si}(1-\tau_{Ysi})}\]
+%	\[Y_{si} = A_{si}\left(\frac{\alpha_s w}{(1-\alpha_s) (1+\tau_{Ksi}) R}\right)^{\alpha_s} L_{si} = P_s^\sigma Y_s P_{si}^{-\sigma} \]
+%	\[\implies L_{si} = P_s^\sigma Y_s \left(\frac{\sigma}{\sigma-1}\right)^{-\sigma} \left(\frac{w}{1-\alpha_s}\right)^{-\sigma + \alpha_s (\sigma-1)} \left(\frac{R}{\alpha_s}\right)^{-\alpha_s (\sigma-1)} \frac{A_{si}^{\sigma-1} (1-\tau_{Ysi})^{\sigma}}{(1+\tau_{Ksi})^{\alpha_s (\sigma-1)}}\]
+%	\[Y_{si} = P_s^\sigma Y_s \left(\frac{\sigma}{\sigma-1}\right)^{-\sigma} \left(\frac{w}{1-\alpha_s}\right)^{-(1-\alpha_s)\sigma} \left(\frac{R}{\alpha_s}\right)^{-\alpha_s \sigma} \frac{A_{si}^\sigma (1-\tau_{Ysi})^{\sigma}}{(1+\tau_{Ksi})^{\alpha_s \sigma}}\]
+%	\[K_{si} = P_s^\sigma Y_s \left(\frac{\sigma}{\sigma-1}\right)^{-\sigma} \left(\frac{w}{1-\alpha_s}\right)^{1-\sigma + \alpha_s (\sigma-1)} \left(\frac{R}{\alpha_s}\right)^{-1-\alpha_s (\sigma-1)} \frac{A_{si}^{\sigma-1} (1-\tau_{Ysi})^{\sigma}}{(1+\tau_{Ksi})^{\alpha_s (\sigma-1)+1}}\]
+
+\subsection{Relationship between Productivity Measures}
+
+\paragraph{TFPR vs. MRPL and MRPK  \\ [6pt]}
+
+First, consider the relationship between total factor revenue productivity and the factor revenue products. Using the definition of TFPR and the penultimate lines in the definitions of MRPL and MRPK, we obtain
+	\begin{equation} \label{eq:tfpr}
+		\text{TFPR}_{si} = \frac{\sigma}{\sigma -1} \left(\frac{\text{MRPL}_{si}}{1-\alpha_s}\right)^{1-\alpha_s} \left(\frac{\text{MRPK}_{si}}{\alpha_s}\right)^{\alpha_s} = \frac{\sigma}{\sigma-1} \frac{(1+\tau_{Ksi})^{\alpha_s}}{1-\tau_{Ysi}} \left(\frac{w}{1-\alpha_s}\right)^{1-\alpha_s} \left(\frac{R}{\alpha_s}\right)^{\alpha_s}
+	\end{equation}
+\underline{Note:}
+\begin{itemize}
+		\item Equation (\ref{eq:tfpr}) shows that dispersion in $\text{TFPR}$ comes only from the plant-specific distortions $\tau_{Ysi}$ and $\tau_{Ksi}$; it is independent of plant-level productivity dispersion. 
+	\item Hence, dispersion in TFPR is a better proxy than dispersion in TFPQ for the degree of misallocation in the economy. The smaller the variance of TFPR is, the more efficient is the economy.
+\end{itemize}
+
+\paragraph{Sectoral TFP vs firm-level TFP \\ [6pt]}
+		Next, consider the relationship between sectoral TFP and firm-level productivity measures. Equation (15) in the paper is probably the most important equation for the empirical analysis:
+	\begin{equation}
+		\text{TFP}_s = \left(\sum_{i=1}^{M_s} \left(A_{si} \frac{\overline{\text{TFPR}}_s}{\text{TFPR}_{si}}\right)^{\sigma -1}\right)^{\frac{1}{\sigma -1}}
+	\end{equation}
+	where
+	\[\overline{\text{TFPR}}_s \equiv \left(\frac{\sigma}{\sigma -1}\right) \left(\frac{\overline{\text{MRPK}}_s}{\alpha_s}\right)^{\alpha_s}\left(\frac{\overline{\text{MRPL}}_s}{1-\alpha_s}\right)^{1-\alpha_s} \]
+	and
+	\[\overline{\text{MRPK}}_s \equiv \frac{R}{\sum_i \frac{1-\tau_{Ysi}}{1+\tau_{Ksi}} \frac{P_{si}Y_{si}}{P_s Y_s}}\]
+	\[\overline{\text{MRPL}}_s \equiv \frac{w}{\sum_i (1-\tau_{Ysi}) \frac{P_{si}Y_{si}}{P_s Y_s}}\]
+	
+	Let's derive this equation. First, let's derive the expression for $\overline{\text{TFPR}}_s$. To do that, we first compute the denominator, $K_s^{\alpha_s} L_s^{1-\alpha_s}$. Recall the FOC (\ref{eq:FOC_P}) implies that 
+	\[K_{si} = \left(1-\frac{1}{\sigma}\right) \frac{1-\tau_{Ysi}}{1+\tau_{Ksi}} \frac{\alpha_s}{R} P_{si} Y_{si}\]
+	and 
+	\[L_{si} = \left(1-\frac{1}{\sigma}\right) \frac{1-\tau_{Ysi}}{1} \frac{1-\alpha_s}{w} P_{si} Y_{si}\]
+	 Hence, sector-level capital and labor can be aggregated as
+	\[K_s = \sum_i K_{si} = \left(1-\frac{1}{\sigma}\right)\frac{\alpha_s}{R} \sum_i \frac{1-\tau_{Ysi}}{1+\tau_{Ksi}} P_{si} Y_{si} \]
+	and
+	\[L_s = \sum_i L_{si} = \left(1-\frac{1}{\sigma}\right)\frac{1-\alpha_s}{w} \sum_i \frac{1-\tau_{Ysi}}{1} P_{si} Y_{si} \]
+	Hence 
+	\[K_s^{\alpha_s} L_s^{1-\alpha_s} = \left(1-\frac{1}{\sigma}\right) \left(\frac{\alpha_s}{R}\right)^{\alpha_s} \left(\frac{1-\alpha_s}{w}\right)^{1-\alpha_s} \left(\sum_i \frac{1-\tau_{Ysi}}{1+\tau_{Ksi}} P_{si} Y_{si}\right)^{\alpha_s} \left(\sum_i \frac{1-\tau_{Ysi}}{1} P_{si} Y_{si} \right)^{1-\alpha_s}\]
+	and therefore
+	\begin{align}
+		\overline{\text{TFPR}}_s & = \frac{P_s Y_s}{K_s^{\alpha_s} L_s^{1-\alpha_s}} \nonumber \\
+		& = \frac{P_s Y_s}{\left(1-\frac{1}{\sigma}\right) \left(\frac{\alpha_s}{R}\right)^{\alpha_s} \left(\frac{1-\alpha_s}{w}\right)^{1-\alpha_s} \left(\sum_i \frac{1-\tau_{Ysi}}{1+\tau_{Ksi}} P_{si} Y_{si}\right)^{\alpha_s} \left(\sum_i \frac{1-\tau_{Ysi}}{1} P_{si} Y_{si} \right)^{1-\alpha_s}} \nonumber \\
+		& = \frac{\sigma}{\sigma -1} \left(\frac{R}{\alpha_s \sum_i \frac{1-\tau_{Ysi}}{1+\tau_{Ksi}} \frac{P_{si} Y_{si}}{P_s Y_s} }\right)^{\alpha_s} \left(\frac{w}{(1-\alpha_s) \sum_i \frac{1-\tau_{Ysi}}{1} \frac{P_{si} Y_{si}}{P_s Y_s} }\right)^{1-\alpha_s} \nonumber \\
+		& = \left(\frac{\sigma}{\sigma -1}\right) \left(\frac{\overline{\text{MRPK}}_s}{\alpha_s}\right)^{\alpha_s}\left(\frac{\overline{\text{MRPL}}_s}{1-\alpha_s}\right)^{1-\alpha_s}
+	\end{align}
+	
+		Next, we move from $\overline{\text{TFPR}}_s$ to $\text{TFP}_s$ using the price index
+	\begin{equation}
+		P_s = \left(\sum_i P_{si}^{1-\sigma}\right)^{\frac{1}{1-\sigma}}
+	\end{equation}
+	Since 
+	\[P_{si} = \frac{\text{TFPR}_{si}}{A_{si}}\]
+	and
+	\[P_s = \frac{\overline{\text{TFPR}}_s}{\text{TFP}_s}\]
+	Plug them into the price index:
+	\begin{equation*}
+		\frac{\overline{\text{TFPR}}_s}{\text{TFP}_s} = \left(\sum_i \left(\frac{\text{TFPR}_{si}}{A_{si}}\right)^{1-\sigma}\right)^{\frac{1}{1-\sigma}}
+	\end{equation*}
+	Rearranging terms gives
+\begin{equation} \label{eq:tfp_s}
+	\text{TFP}_s = \left(\sum_i A_{si}^{\sigma -1} \frac{\overline{\text{TFPR}}_s^{\sigma -1}}{\text{TFPR}_{si}^{\sigma-1}}\right)^{\frac{1}{\sigma-1}}
+\end{equation}
+	
+%	\[P_s^{1-\sigma} = \sum_{i} P_{si}^{1-\sigma}   \]
+%	imply that
+%	\begin{equation} \label{eq:P_s_A_si}
+%		P_s^{1-\sigma} = \sum_i \frac{A_{si}^{\sigma -1}}{\text{TFPR}_{si}^{\sigma -1}} 
+%	\end{equation}
+%	
+%	Next, calculate $K_s^{\alpha_s} L_s^{1-\alpha_s}$:
+%	\begin{align}
+%		K_s^{\alpha_s} L_s^{1-\alpha_s} = & P_s^\sigma Y_s \left(\frac{\sigma}{\sigma-1}\right)^{-\sigma} \left(\frac{w}{1-\alpha_s}\right)^{-(1-\alpha_s)\sigma} \left(\frac{R}{\alpha_s}\right)^{-\alpha_s \sigma} \left(\sum_i \frac{A_{si}^{\sigma-1} (1-\tau_{Ysi})^{\sigma}}{(1+\tau_{Ksi})^{\alpha_s (\sigma-1)}}\right)^{1-\alpha_s} \left(\sum_i \frac{A_{si}^{\sigma-1} (1-\tau_{Ysi})^{\sigma}}{(1+\tau_{Ksi})^{\alpha_s (\sigma-1)+1}}\right)^{\alpha_s} \nonumber \\
+%		= & P_s^\sigma Y_s \left[\left(\frac{\sigma}{\sigma-1}\right)\left(\frac{w}{1-\alpha_s}\right)^{1-\alpha_s}\left(\frac{R}{\alpha_s}\right)^{\alpha_s} \right]^{1-\sigma} \nonumber
+%		\\ & \times \left(\sum_i \frac{A_{si}^{\sigma-1} (1-\tau_{Ysi})^{\sigma-1}}{(1+\tau_{Ksi})^{\alpha_s (\sigma-1)}} \frac{1-\alpha_s}{\text{MRPL}_{si}}\right)^{1-\alpha_s} \left(\sum_i \frac{A_{si}^{\sigma-1} (1-\tau_{Ysi})^{\sigma-1}}{(1+\tau_{Ksi})^{\alpha_s (\sigma-1)}}\frac{\alpha_s}{\text{MRPK}_{si}}\right)^{\alpha_s} \nonumber \\
+%		= & \left(\sum_i P_{si} Y_{si} \frac{1-\alpha_s}{\text{MRPL}_{si}}\right)^{1-\alpha_s} \left(\sum_i P_{si} Y_{si} \frac{\alpha_s}{\text{MRPK}_{si}}\right)^{\alpha_s} \frac{\sigma -1}{\sigma} \label{eq:agg_K_times_L}
+%	\end{align}
+%	where the last step comes from the fact that
+%	\[P_{si}Y_{si} = P_s^\sigma Y_s \left[\frac{\sigma}{\sigma -1} \left(\frac{w}{1-\alpha_s}\right)^{1-\alpha_s} \left(\frac{R}{\alpha_s}\right)^{\alpha_s}\right]^{1-\sigma} \frac{A_{si}^{\sigma-1}(1-\tau_{Ysi})^{\sigma-1}}{(1+\tau_{Ksi})^{\alpha_s(\sigma-1)}}\]
+%	Inspired by the definition of average marginal revenue products $\overline{\text{MRPL}}_s$ and $\overline{\text{MRPK}}_s$, divide (\ref{eq:agg_K_times_L}) by $P_s Y_s$:
+%	\begin{align*}
+%		\frac{K_s^{\alpha_s}L_s^{1-\alpha_s}}{P_s Y_s}  = \frac{1}{P_s \text{TFP}_s}  & =  \left(\sum_i \frac{P_{si} Y_{si}}{P_sY_s} \frac{1-\alpha_s}{\text{MRPL}_{si}}\right)^{1-\alpha_s} \left(\sum_i \frac{P_{si} Y_{si}}{P_sY_s} \frac{\alpha_s}{\text{MRPK}_{si}}\right)^{\alpha_s} \frac{\sigma -1}{\sigma}\\
+%		& = \left[\left(\overline{\text{MRPL}}_s\right)^{1-\alpha_s}\left(\overline{\text{MRPK}}_s\right)^{\alpha_s} \frac{\sigma}{\sigma -1}\right]^{-1} \\
+%		& = \overline{\text{TFPR}}_s^{-1}
+%	\end{align*}
+%	Hence
+%	\begin{equation} \label{eq:Ps_TFP_s}
+%		P_s = \frac{\overline{\text{TFPR}}_s}{\text{TFP}_s}
+%	\end{equation}
+%	Plug (\ref{eq:Ps_TFP_s}) into (\ref{eq:P_s_A_si}):
+%	\[\frac{\overline{\text{TFPR}}_s}{\text{TFP}_s} = \left(\sum_i A_{si}^{\sigma -1} \text{TFPR}_{si}^{1-\sigma}\right)^{\frac{1}{1-\sigma}}\]
+%	Hence
+%	\begin{equation}
+%		\text{TFP}_s = \left(\sum_i A_{si}^{\sigma -1} \frac{\overline{\text{TFPR}}_s^{\sigma -1}}{\text{TFPR}_{si}^{\sigma-1}}\right)^{\frac{1}{\sigma-1}}
+%	\end{equation}
+\underline{Note:}
+\begin{itemize}
+		\item As discussed above, if there were no distortions, then $\tau_{Ysi} = \tau_{Ksi} = 0$ and $\text{TFPR}_{si} = \overline{\text{TFPR}}_s$. We can then define the efficient benchmark for sectoral TFP as
+	\begin{equation}
+		\text{TFP}_s^* = \left(\sum_i A_{si}^{\sigma -1} \right)^{\frac{1}{\sigma-1}}
+	\end{equation}
+		It is simply an unweighted average of firm-level productivity $A_{si}$. 
+	\item If we shut off capital-specific distortion, i.e. $\tau_{Ksi} = 0$, we can simplify (\ref{eq:tfp_s}) by combining the definitions of $\overline{\text{TFPR}}_s$, $\text{TFPR}_{si}$ and the weights $\frac{P_{si}Y_{si}}{P_s Y_s}$ in equation (\ref{eq:weight}):
+	\begin{equation} \label{eq:tfp_s_simplified}
+		\text{TFP}_s = \frac{\left(\sum_i A_{si}^{\sigma -1} (1-\tau_{Ysi})^{\sigma-1}\right)^{\frac{\sigma}{\sigma-1}}}{\sum_{i} (1-\tau_{Ysi})^{\sigma} A_{si}^{\sigma -1}}
+	\end{equation} 
+	\item We are interested in how the sectoral $\text{TFP}_s$ deviates from the efficient benchmark $\text{TFP}_s^*$. The ratio 
+	\[\frac{\text{TFP}_s}{\text{TFP}_s^*}\] 
+	helps us quantify the percentage loss of sectoral TFP from its efficient benchmark. When there are a lot of firms in the sector (so that $\sum_i$ can be replaced by integral $\int_0^1$), capital-specific distortion is shut off ($\tau_{Ksi} = 0$) and the joint distribution of $\log (1-\tau_{Ysi})$ and $\log A_{si}$ is a Gaussian distribution 
+	\[\begin{bmatrix}
+		\log (1-\tau_{Ysi}) \\ \log A_{si}
+	\end{bmatrix} \sim N \left(
+\begin{bmatrix}
+	\bar{\tau} \\ \bar{a} 
+\end{bmatrix}, \begin{bmatrix}
+\sigma^2_{\tau} & \sigma_{a\tau} \\
+\sigma_{a\tau} & \sigma^2_{a}
+\end{bmatrix}
+\right)\]
+then we can show from (\ref{eq:tfp_s_simplified}) that
+\begin{align*}
+	\text{TFP}_s & \approx \frac{\mathbb{E}\left[A_{si}^{\sigma -1} (1-\tau_{Ysi})^{\sigma-1}\right]^{\frac{\sigma}{\sigma-1}}}{\mathbb{E}[(1-\tau_{Ysi})^\sigma A_{si}^{\sigma -1}]} \\
+	& = \frac{\mathbb{E}\left[\exp\left((\sigma-1) \log A_{si} + (\sigma -1) \log (1-\tau_{Ysi})\right)\right]^{\frac{\sigma}{\sigma-1}}}{\mathbb{E}\left[\exp(\sigma \log (1-\tau_{Ysi}) + (\sigma-1) \log A_{si})\right]} \\
+	& = \frac{\exp\left((\sigma-1) \bar{a} + (\sigma -1) \bar{\tau} + \frac{1}{2} (\sigma-1)^2 (\sigma^2_\tau + \sigma^2_a + 2 \sigma_{a \tau})\right)^{\frac{\sigma}{\sigma-1}}}{\exp\left(\sigma \bar{\tau} + (\sigma -1) \bar{a} + \frac{1}{2} (\sigma^2 \sigma^2_\tau + (\sigma-1)^2 \sigma^2_a + 2 \sigma (\sigma-1) \sigma_{a \tau}) \right)} \\
+	& = \exp\left(\bar{a} - \frac{1}{2} \sigma \sigma^2_\tau + \frac{1}{2} (\sigma-1) \sigma^2_a\right)
+\end{align*}
+and the efficient $\text{TFP}^*_s$ is 
+\[\text{TFP}_s^* = \exp\left(\bar{a} + \frac{1}{2} (\sigma-1) \sigma^2_a\right)\]
+Hence
+\begin{equation} \label{eq:tfp_s_loss}
+	\log \text{TFP}_s - \log \text{TFP}_s^* = - \frac{1}{2} \sigma \sigma^2_\tau
+\end{equation}
+This is equation (16) in the paper, and it is the main equation for the quantitative analysis in the paper. Note that this does not hold for the case where $\tau_{Ksi} = 0$. Equation (\ref{eq:tfp_s_loss}) gives us the percentage loss of sectoral TFP from its efficient benchmark. The TFP loss gets larger when $\sigma$ is larger and when $\sigma^2_\tau$ is larger (i.e. when the distortion is more dispersed). \\
+Note that from the second line to the third line in the derivation of $\text{TFP}_s$ above, we have used the property of log normal distribution: if $\log X \sim N(\mu, \sigma^2)$, then $\mathbb{E}[X] = \exp(\mu + \frac{1}{2} \sigma^2)$.
+\end{itemize}
+	
+\paragraph{Aggregate TFP, Sectoral TFP and Firm-level TFP \\ [6pt]}
+	Lastly, we define allocative efficiency at aggregate level by the ratio of aggregate TFP and the desired TFP (in which each sector is efficient with $\text{TFP}_s = \text{TFP}_s^*$):
+	\begin{equation} \label{eq:agg_tfp_loss}
+		\text{AE}
+		\equiv \frac{\prod_s \text{TFP}_s^{\theta_s}}{\prod_s (\text{TFP}_s^*)^{\theta_s}} 
+		= \prod_s \left(\sum_i \left(\frac{A_{si}}{\text{TFP}^*_s}\frac{\overline{\text{TFPR}}_s}{\text{TFPR}_{si}}\right)^{\sigma -1}\right)^{\frac{\theta_s}{\sigma-1}}
+	\end{equation}
+\underline{Note}:
+\begin{itemize}
+	\item Equation (\ref{eq:agg_tfp_loss}) helps quantify the aggregate TFP loss of the economy and it is the equation (20) in the paper. Note that the left-hand side of the equation in the paper is wrong - aggregate TFP loss is not the same as aggregate output loss $Y/Y_{\text{efficient}}$. 
+		\item If there is no TFPR dispersion, i.e., $\text{TFPR}_{si} = \overline{\text{TFPR}}_s$, allocative efficiency equals 1. TFPR dispersion leads to $\text{AE}<1$. 
+		\item The percentage improvement in aggregate TFP from removing TFPR dispersion can therefore be calculated as $1/\text{AE} -1$.
+\end{itemize}
+	
+	
+	\section{Empirics (Very Brief)}
+		From the U.S. Census, obtain the following variables:
+	\begin{itemize}
+		\item industry;
+		\item labor compensation ($wL_{si}$);
+		\item value added ($P_{si}Y_{si}$);
+			\item export revenues;
+		\item capital stock $K_{si}$.
+	\end{itemize}
+		One can also work with more accessible data containing these variables, such as Compustat data for U.S. public firms.
+	
+	Set
+	\begin{itemize}
+		\item rental price of capital $R = 0.1$; can do so because the efficiency gain does not depend on $R$;
+		\item elasticity of substitution $\sigma = 3$ (low, compared to the literature, but also gives us a conservative quantification of misallocation);
+		\item elasticity of output with respect to capital in each sector, $\alpha_s$, is set to be 1 minus labor share in the corresponding sector, which can be retrieved from NBER Productivity Database (Census/ASM). There are better ways in the literature to uncover $\alpha_s$ from production function estimation (e.g. Olley and Pakes, Levinsohn and Petrin, ACF... more in 701).
+	\end{itemize}
+		Hence, we can infer the wedges or distortions from the data:
+	\begin{eqnarray}
+		1+\tau_{Ksi} &=& \frac{\alpha_s}{1-\alpha_s} \frac{wL_{si}}{RK_{si}} \\
+		1-\tau_{Ysi} &=& \frac{\sigma}{\sigma -1} \frac{wL_{si} + RK_{si}}{P_{si}Y_{si}} \\
+		A_{si} &=& \frac{Y_{si}}{K_{si}^{\alpha_s} L_{si}^{1-\alpha_s}} = \kappa_s \frac{(P_{si}Y_{si})^{\frac{\sigma}{\sigma -1}}}{K_{si}^{\alpha_s} (wL_{si})^{1-\alpha_s}}
+	\end{eqnarray}
+	where 
+	\[\kappa_s \equiv w^{1-\alpha_s} (P_sY_s)^{-\frac{\sigma}{\sigma-1}} Y_s\]
+	The last equation recovers TFPQ. Since $Y_{si}$ is not directly observable in the data, we need to transform it into the observables. Need to take advantage of the fact that
+	\[P_s Y_s^{1/\sigma} = P_{si} Y_{si}^{1/\sigma}\]
+	one can easily check that the last equality is correct.
+	
+	Again, $\kappa_s$ is not directly observable, but it does not contribute to the distortions. Hence, the authors normalize $\kappa_s = 1$ for all industries. 
+	
+		One can perform a similar analysis for China and India. The empirical section of the paper presents the resulting implications.
+	
+\end{document}

@@ -1,0 +1,144 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON602 TA Notes: Inventory}
+\author{Haoran Wang}
+\date{February 3, 2025}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	
+	This note discusses Blinder and Fisher (1981, JME). The paper is accessible on ELMS.
+	
+		Introducing inventories into a firm's decision-making process is similar to allowing consumers to save. It gives the firm a way to allocate resources intertemporally and prepare for unforeseen contingencies (e.g., avoiding stockouts when there is an abrupt shortage). 
+	
+	\paragraph{Setup \\ [6pt]}
+	
+		Firm $i$ faces downward-sloping demand:
+	\begin{equation}
+		P_{it} = v_{it}P_{t}D(X_{it})
+	\end{equation}
+		where $P_{it}$ is the firm's nominal price, $v_{it}$ is an idiosyncratic shock, $P_{t}$ is the general price level, and $D(X_{it})$ is a demand function in which $X_{it}$ represents sales. We assume that $D$ is downward-sloping: $D'(\cdot) < 0$. 
+	
+	The (real) revenue of the firm can therefore be written as 
+	\begin{equation}
+		R_{it} = \frac{P_{it} X_{it}}{P_t} = v_{it} D(X_{it}) X_{it}
+	\end{equation}
+	We require that $R$ is increasing and concave in $X_{it}$.
+	
+		Firm $i$ faces costs
+	\begin{equation}
+		C_{it} = P_{t}c(Y_{it}), \hspace{2mm} c'>0, \hspace{2mm} c''>0
+	\end{equation}
+		so nominal costs equal the general price level times real costs. The cost function is increasing and convex. Note that production $Y_{it}$ can differ from sales $X_{it}$.
+	
+	Let $N_{it}$ denote the inventory of firm $i$ at the beginning of period $t$. It evolves according to
+	\begin{equation}
+		N_{i,t+1} = N_{it} + Y_{it} - X_{it}
+	\end{equation} 
+	so next period's inventory stock equals today's inventory plus production minus sales. Note that inventory $N_{it}$ can take negative numbers, which can be interpreted as a queue of unfilled orders or stockouts. 
+	
+	It is assumed that there is a cost $B(N_{it})$ involved in holding inventory. The cost function $B(\cdot)$ is assumed to be convex and 
+	\[B'(N_{it}) < 0 \text{ if $N_{it} < 0$ and } B'(N_{it}) > 0 \text{ otherwise.}\] 
+		This captures the fact that both holding inventories and experiencing stockouts are costly for the firm. 
+	
+	\paragraph{Firm's Decision Problem \\ [6pt]}
+	
+		The firm chooses production $Y_{it}$, sales $X_{it}$, and next period's inventory $N_{i,t+1}$ to maximize lifetime profits:
+	\begin{equation}
+		\mathbb{E}_0 \sum_{t=0}^\infty (1+r)^{-t} \left[R_{it} - \frac{C_{it}}{P_t} - B(N_{it})\right] 
+	\end{equation}
+We can write the Bellman equation by following the same steps used last semester. First, identify the state and control variables. There is one endogenous state, inventory $N$, and one exogenous state, the idiosyncratic shock $v_{it}$; the value function therefore takes these two arguments. The controls are production $Y$ and sales $X$. Hence, the Bellman equation is
+\begin{equation}
+	V(N; v) = \max_{X, Y, N'} v D(X) X - c(Y) - B(N) + \frac{1}{1+r} \mathbb{E}[V(N'; v')]
+\end{equation}
+subject to 
+\[N' = N + Y - X\]
+
+We follow the standard procedure to solve this Bellman equation. Substituting the law of motion for inventory into the right-hand side and eliminating $N'$ as a control yields two FOCs for $X$ and $Y$, respectively:
+\begin{equation} \label{eq:foc_x}
+	v D'(X) X + v D(x) - \frac{1}{1+r} \mathbb{E}[V_N(N'; v')] = 0
+\end{equation}
+and 
+\begin{equation} \label{eq:foc_y}
+	-c'(Y) + \frac{1}{1+r} \mathbb{E}[V_N(N'; v')] = 0
+\end{equation}
+The envelope condition is
+\begin{equation} \label{eq:envelope}
+	V_N(N; v) = - B'(N) + \frac{1}{1+r} \mathbb{E}[V_N(N';v')]
+\end{equation}
+
+\paragraph{Implications \\ [6pt]}
+
+Here are several observations:
+\begin{itemize}
+	\item Combining (\ref{eq:foc_x}) and (\ref{eq:foc_y}), we get 
+	\begin{equation} \label{eq:mr_mc}
+		v D'(X) X + v D(X) = c'(Y)
+	\end{equation}
+which says, roughly, that marginal revenue equals marginal cost.
+\item Combining (\ref{eq:foc_x}) with the envelope condition (\ref{eq:envelope}):
+\[v D'(X) X + v D(X) - B'(N) = V_N(N; v)\]
+and hence
+\begin{equation}
+	v D'(X) X + v D(X) = \frac{1}{1+r} \mathbb{E}[v' D'(X') X' + v' D(X') - B'(N')]
+\end{equation}
+which is an Euler equation for sales and inventory. A similar Euler equation can be derived for output and inventory as well:
+\[c'(Y) - B'(N) = V_N(N; v) \]
+and hence
+\begin{equation} \label{eq:cost_EE}
+	c'(Y) = \frac{1}{1+r} \mathbb{E}[c'(Y') - B'(N')]
+\end{equation}
+In these equations, $B'(N')$ can be taken outside the expectation because $N'$ is determined in the current period.
+
+\item Our goal is to illustrate the conditions under which inventories generate persistence in output---that is, how tomorrow's production $Y'$ is affected by a temporary shock to $v$ today. To show this, first apply the implicit function theorem to (\ref{eq:mr_mc}):
+\[v(D''(X)X + D'(X) + D'(X))\frac{\partial X}{\partial v} + (D'(X) X + D(X)) = c''(Y) \frac{\partial Y}{\partial v }\]
+which implies that
+\[\frac{\partial X}{\partial v} = - \frac{D'(X) X + D(X)}{v (D''(X)X + D'(X) + D'(X))} +\frac{c''(Y)}{v(D''(X)X + D'(X) + D'(X))} \frac{\partial Y}{\partial v}\]
+so that
+\[\frac{\partial Y}{\partial v} - \frac{\partial X}{\partial v} = \left(1 - \frac{c''(Y)}{v(D''(X)X + D'(X) + D'(X))}\right) \frac{\partial Y}{\partial v} + \frac{D'(X) X + D(X)}{v (D''(X)X + D'(X) + D'(X))}\]
+Similarly, apply the implicit function theorem to (\ref{eq:cost_EE}):
+\[c''(Y)\frac{\partial Y}{\partial v} = \frac{1}{1+r} \mathbb{E}\left[c''(Y') \frac{\partial Y'}{\partial v}\right] - \frac{1}{1+r}B''(N + Y - X) \left[\frac{\partial Y}{\partial v} - \frac{\partial X}{\partial v}\right]\]
+which implies that
+\begin{align}
+	\mathbb{E}\left[\frac{\partial Y'}{\partial v}\right] &= (1+r)\frac{\partial Y}{\partial v} + B''(N') \left[\frac{\partial Y}{\partial v} - \frac{\partial X}{\partial v}\right] \nonumber \\
+	& = (1+r)\frac{\partial Y}{\partial v} + B''(N')\left[\left(1 - \frac{c''(Y)}{v(D''(X)X +2 D'(X) )}\right) \frac{\partial Y}{\partial v} + \frac{D'(X) X + D(X)}{v (D''(X)X + 2D'(X))}\right] \nonumber \\
+	& = \left[1+r + B''(N') \left(1 - \frac{c''(Y)}{v(D''(X)X +2 D'(X) )}\right)  \right] \frac{\partial Y}{\partial v} + B''(N')\frac{D'(X) X + D(X)}{v (D''(X)X + 2D'(X))}
+\end{align}
+Since we assumed that $c''(\cdot) > 0$, $B''(\cdot) > 0$, and 
+\[D'(X) X + D(X) > 0 \text{ and } D''(X) X + D'(X) + D'(X) < 0\]
+that is, the revenue function is increasing and concave, the coefficient on $\frac{\partial Y}{\partial v}$ is strictly positive. In other words, variation in $Y'$ caused by today's shock $v$ partly reflects the variation in $Y$ generated by that shock.
+
+\end{itemize}
+%
+%	Instead of assuming functional forms and finding a closed form solution, the authors do comparative statics $$0<  \dfrac{\partial X_{0}}{\partial N_{0}} < 1, \hspace{9mm} \dfrac{\partial X_{0}}{\partial v_{0}} >0, \hspace{9mm} \dfrac{\partial X_{0}}{\partial (1+r)} > 0$$ $$0<\dfrac{\partial N_{1}}{\partial N_{0}} < 1, \hspace{9mm} \dfrac{\partial N_{1}}{\partial v_{0}} <0, \hspace{9mm} \dfrac{\partial N_{1}}{\partial (1+r)} < 0$$ $$-1<\dfrac{\partial Y_{0}}{\partial N_{0}} < 0, \hspace{9mm} \dfrac{\partial Y_{0}}{\partial v_{0}} >0, \hspace{9mm} \dfrac{\partial Y_{0}}{\partial (1+r)} < 0$$
+%	
+%	So suppose there is a shock and $v_{0} \uparrow$. By the $(2,2)$ and the $(3,2)$ terms, current output rises and next period inventories fall. So the firm is responding to the increase in aggregate demand by increasing output a little and also reducing their inventory stock. If you update term $(3,1)$, we see that next period, output will rise again to replenish some of the inventory stock that was depleted last period. Thus, output is rising in both periods (also indeed in future periods, but less and less), so we get \textbf{persistence}.The key to all these comparative statics is the shape of the cost curve, namely $c''>0$ (convexity). Even if $P_{t}$ is unknown and must be extracted, we will get the same result because part of a nominal price jump is due to their idiosyncratic component (therefore $v_{t}$ moves). They answer Lucas' challenge of getting output persistence out of serially uncorrelated nominal shocks.\\
+%	
+%	The punchline of the model is a prediction $$Var(Y_{t} < Var(X_{t})$$ So by using inventories to buffer, we should see less variation in output than in sales.
+%	
+%The data, however, shows the opposite. What are possible explanations for this?
+%	
+%	\begin{itemize}
+%		\item Data problems
+%		\begin{itemize}
+%			\item LIFO/FIFO: Accounting method is crucial
+%			\item Physical unit data unavailable
+%			\item Plant-level price heterogeneity: prices fairly different even within industry
+%		\end{itemize}
+%		\item Model problems
+%		\begin{itemize}
+%			\item Non-convexities: The cost structure in reality is not convex, there are fixed costs, in reality, lots of production bunching and production smoothing.
+%			\item Cost/Technology shocks as in Long and Plosser
+%			\item Stock-out avoidance ("precautionary-saving-type" of argument) and serially correlated shocks: 
+%		\end{itemize}
+%	\end{itemize}
+%	
+	
+\end{document}

@@ -1,0 +1,235 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON602 TA Notes: Signal Extraction, Lucas Island }
+\author{Haoran Wang}
+\date{February 3, 2025}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents 
+	
+		This note reviews Bayesian signal extraction with Gaussian signals and revisits the information friction in the Lucas islands model. In the macroeconomic literature on information frictions, Gaussian signal extraction is a useful benchmark for developing an illustrative model or obtaining an analytical solution.
+	
+	\section{Signal Extraction with Gaussian Signals}
+	Although there are many ways of doing this, my preferred way of doing signal extraction with Gaussian signals is to make use of the formula for a conditional Gaussian distribution. 
+	
+	\subsection{Conditional Distribution Formula}
+		Consider a vector of jointly Gaussian random variables $X \in \mathbb{R}^n$; that is,
+	\begin{equation}
+		X \sim N(\mu, \Sigma)
+	\end{equation}  
+		If we partition $X$ into two subvectors, $X \equiv [X_1, X_2]'$, then, by the properties of a multivariate Gaussian distribution,
+	\begin{equation}
+		X = \begin{bmatrix}
+			X_1 \\ X_2
+		\end{bmatrix} \sim N\left(\begin{bmatrix}
+		\mu_1 \\ \mu_2
+	\end{bmatrix}, \begin{bmatrix}
+	\Sigma_{11} & \Sigma_{12} \\
+	\Sigma_{21} & \Sigma_{22}
+\end{bmatrix}\right)
+	\end{equation}
+where the dimensions of $X_1$ and $X_2$ are $n_1$ and $n_2$, respectively, with $n_1 + n_2 = n$. One can show that the conditional distribution $X_1|X_2$ is also Gaussian, with mean and variance
+\begin{equation}
+	\mathbb{E}[X_1|X_2] = \mu_1 + \Sigma_{12} \Sigma_{22}^{-1}(X_2 - \mu_2)
+\end{equation} 
+and
+\begin{equation}
+	var[X_1|X_2] = \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21}
+\end{equation}
+Similarly, the conditional distribution $X_2|X_1$ is a Gaussian distribution, with mean and variance
+\begin{equation}
+	\mathbb{E}[X_2|X_1] = \mu_2 + \Sigma_{21} \Sigma_{11}^{-1}(X_1 - \mu_1)
+\end{equation}
+and
+\begin{equation}
+	var[X_2|X_1] = \Sigma_{22} - \Sigma_{21} \Sigma_{11}^{-1} \Sigma_{12}
+\end{equation}
+Proofs of these formulas can be found in advanced undergraduate statistics textbooks. These equations are useful because they underlie Bayesian updating algorithms with Gaussian random variables, such as the Kalman filter.  
+
+\subsection{Application to Signal Extraction Problem}
+
+Now, apply the equations above to a signal-extraction problem. For simplicity, suppose that $x \sim N(\bar{x}, \sigma_x^2)$ is a variable that the agent cares about but cannot observe perfectly. Interpret $\bar{x}$ and $\sigma_x^2$ as the prior mean and variance. The agent knows the prior distribution but does not observe the realization of $x$.
+
+\paragraph{Case 1: Signal Extraction from One Noisy Signal  \\ [6pt]}
+Suppose that the agent receives a noisy signal $s$ of variable $x$ (``receive" = observe the realization of $s$):
+\begin{equation}
+	s = x + \epsilon
+\end{equation}
+where $\epsilon \sim N(0,\sigma_{\epsilon}^2)$ is a Gaussian noise orthogonal to $x$. It is easy to get the unconditional distribution of $s$: 
+\begin{equation}
+	\mathbb{E}[s] = \mathbb{E}[x+\epsilon] = \mathbb{E}[x] = \bar{x} 
+\end{equation}
+and
+\begin{equation}
+	var[s] = var[x + \epsilon] = \sigma_x^2 + \sigma_\epsilon^2
+\end{equation}
+Besides, we can compute the covariance between $x$ and $s$:
+\begin{equation}
+	cov(s,x) = cov(x+ \epsilon, x) = cov(x,x) = \sigma^2_x
+\end{equation}
+
+We are interested in how the agent would update his belief about $x$ after observing some realization of signal $s$. Basically, this requires us to compute $\mathbb{E}[x|s]$ and $var(x|s)$. We know that the joint distribution of $(x,s)$ is given by
+\begin{equation}
+	\begin{bmatrix}
+		x \\ s
+	\end{bmatrix} \sim N\left(\begin{bmatrix}
+	\bar{x} \\ \bar{x}
+\end{bmatrix}, \begin{bmatrix}
+\sigma^2_x & \sigma^2_x \\
+\sigma^2_x & \sigma^2_x + \sigma^2_\epsilon
+\end{bmatrix}\right)
+\end{equation}
+Now we can apply the conditional distribution formula to get the posterior mean and variance:
+\begin{equation} \label{eq:posterior_mean}
+	\mathbb{E}[x|s] = \bar{x} + \sigma^2_x (\sigma^2_x + \sigma^2_\epsilon)^{-1} (s - \bar{x}) = \frac{\sigma_\epsilon^2}{\sigma^2_\epsilon + \sigma^2_x} \bar{x} + \frac{\sigma_x^2}{\sigma^2_\epsilon + \sigma^2_x} s
+\end{equation}
+and
+\begin{equation} \label{eq:posterior_var}
+	var[x|s] = \sigma^2_x - \sigma^2_x (\sigma^2_x + \sigma^2_\epsilon)^{-1} \sigma^2_x = \frac{\sigma^2_x(\sigma^2_x + \sigma^2_\epsilon) - \sigma^4_x}{\sigma^2_x + \sigma^2_\epsilon} = \frac{\sigma^2_\epsilon \sigma^2_x}{\sigma^2_x + \sigma^2_\epsilon}
+\end{equation}
+\underline{Note:}
+\begin{itemize}
+	\item In the signal extraction literature, sometimes people define precision $\eta$ as the inverse of variance $\sigma^{-2}$. If we use this definition, then the above equations can be rewritten as 
+	\begin{equation} \label{eq:precision_mean}
+		\mathbb{E}[x|s] = \frac{\eta_{x}}{\eta_\epsilon + \eta_x} \bar{x} + \frac{\eta_\epsilon}{\eta_\epsilon + \eta_x} s
+	\end{equation} 
+and
+\begin{equation} \label{eq:precision_var}
+	var[x|s] = \frac{1}{\eta_x + \eta_\epsilon}
+\end{equation}
+	\item The posterior mean (\ref{eq:posterior_mean}) is a weighted average of prior mean $\bar{x}$ and the realized signal $s$. The weight on the signal, $\frac{\sigma^2_x}{\sigma^2_\epsilon + \sigma^2_x}$ or $\frac{\eta_\epsilon}{\eta_\epsilon + \eta_x}$, is sometimes called the Kalman gain.
+	\item If $\sigma^2_{\epsilon}$ is lower (or $\eta_\epsilon$ is higher), the signal is more precise and the Kalman gain is larger. The agent then puts more weight on the signal realization and revises its belief further from the prior. When $\sigma^2_\epsilon \to 0$ (or $\eta_\epsilon \to \infty$), the signal $s$ tracks $x$ almost perfectly and the Kalman gain approaches 1. In this limiting case, the agent effectively has full information about $x$. 
+	\item If $\sigma^2_x$ is lower (or $\eta_x$ is higher), the prior is more precise. The agent then relies more on the prior and revises its belief to a lesser extent. If $\sigma^2_x \to 0$, the Kalman gain approaches 0, so the agent effectively ignores the signal because the prior is sufficiently precise.
+	\item The posterior variance is sometimes interpreted as the agent's posterior uncertainty about $x$. By definition, it is the second moment of the forecast error $x-\mathbb{E}[x|s]$. We can double-check:
+	\begin{align}
+		\mathbb{E}\left[(x-\mathbb{E}[x|s])^2\right] & = \mathbb{E}\left[\left(x -\frac{\sigma_\epsilon^2}{\sigma^2_\epsilon + \sigma^2_x} \bar{x} - \frac{\sigma_x^2}{\sigma^2_\epsilon + \sigma^2_x} s \right)^2\right] \nonumber \\
+		& = \mathbb{E}\left[\left(\frac{\sigma_\epsilon^2}{\sigma^2_\epsilon + \sigma^2_x} (x-\bar{x}) + \frac{\sigma_x^2}{\sigma^2_\epsilon + \sigma^2_x} (x-s) \right)^2\right] \nonumber \\
+		& = \frac{\sigma_\epsilon^4}{(\sigma^2_\epsilon + \sigma^2_x)^2} \sigma^2_x + \frac{\sigma_x^4}{(\sigma^2_\epsilon + \sigma^2_x)^2} \sigma^2_\epsilon + 2 \frac{\sigma^2_\epsilon \sigma^2_x}{(\sigma^2_\epsilon + \sigma^2_x)^2} \underbrace{\mathbb{E}[(x-\bar{x})(s-x)]}_{= 0} \nonumber \\
+		& = \frac{\sigma^2_\epsilon \sigma^2_x (\sigma^2_x + \sigma^2_\epsilon)}{(\sigma^2_\epsilon + \sigma^2_x)^2} = \frac{\sigma^2_\epsilon \sigma^2_x}{\sigma^2_\epsilon + \sigma^2_x}
+	\end{align} 
+\item The posterior uncertainty increases with both the prior uncertainty $\sigma^2_x$ and the signal noise $\sigma^2_\epsilon$.
+%\item (Bonus Point) It is interesting to think about the relationship between the forecast error $x - \mathbb{E}[x|s]$ and the forecast revision $\mathbb{E}[x|s] - \bar{x}$. Note that
+%\[x - \mathbb{E}[x|s] = \frac{\sigma_\epsilon^2}{\sigma^2_\epsilon + \sigma^2_x} (x-\bar{x}) + \frac{\sigma_x^2}{\sigma^2_\epsilon + \sigma^2_x} (x-s) = (x-\bar{x}) + \frac{\sigma_x^2}{\sigma^2_\epsilon + \sigma^2_x} (\bar{x}-s)\]
+%and
+%\[\mathbb{E}[x|s] - \bar{x} = \frac{\sigma_\epsilon^2}{\sigma^2_\epsilon + \sigma^2_x} \bar{x} + \frac{\sigma_x^2}{\sigma^2_\epsilon + \sigma^2_x} s - \bar{x} = \frac{\sigma_x^2}{\sigma^2_\epsilon + \sigma^2_x} (s-\bar{x})\]
+
+\end{itemize}
+
+\paragraph{Case 2: Signal Extraction from Two Noisy Signals \\ [6pt]}
+The agent may use multiple signals to infer $x$. Suppose now that the agent receives two signals
+\begin{eqnarray}
+s_1 &=& x + \epsilon_1 \\
+s_2 &=& x + \epsilon_2
+\end{eqnarray}
+and again we are interested in the posterior mean $\mathbb{E}[x|s_1, s_2]$ and variance $var[x|s_1, s_2]$. 
+
+We apply the same trick. First, start with the joint distribution $(x, s_1, s_2)$:
+\begin{equation}
+	\begin{bmatrix}
+		x \\ s_1 \\ s_2
+	\end{bmatrix} 
+\sim N\left(\begin{bmatrix}
+	\bar{x} \\ \bar{x} \\ \bar{x}
+\end{bmatrix}, 
+\begin{bmatrix}
+	\sigma^2_x & \sigma^2_x & \sigma^2_x \\
+	\sigma^2_x & \sigma^2_x + \sigma^2_{\epsilon,1} & \sigma^2_x \\
+	\sigma^2_x & \sigma^2_x & \sigma^2_x + \sigma^2_{\epsilon,2}
+\end{bmatrix}\right)
+\end{equation}
+Therefore, we have
+\begin{align}
+	\mathbb{E}[x|s_1, s_2] & = \bar{x} + [\sigma^2_x, \sigma^2_x] \begin{bmatrix}
+		\sigma^2_x + \sigma^2_{\epsilon,1} & \sigma^2_x \\ \sigma^2_x & \sigma^2_x + \sigma^2_{\epsilon,2}
+	\end{bmatrix}^{-1} \begin{bmatrix}
+	s_1 - \bar{x} \\ s_2 - \bar{x}
+\end{bmatrix} \nonumber \\
+& = \bar{x} + \frac{1}{(\sigma^2_x + \sigma^2_{\epsilon,1})(\sigma^2_x + \sigma^2_{\epsilon,2}) - \sigma^4_x} [\sigma^2_x, \sigma^2_x] \begin{bmatrix}
+	\sigma^2_x + \sigma^2_{\epsilon, 2} & - \sigma^2_x \\ -\sigma^2_x & \sigma^2_x + \sigma^2_{\epsilon, 1}\end{bmatrix}
+    \begin{bmatrix}
+		s_1 - \bar{x} \\ s_2 - \bar{x}
+	\end{bmatrix} \nonumber \\
+& = \bar{x} + \frac{1}{(\sigma^2_{\epsilon,1} + \sigma^2_{\epsilon,2}) \sigma^2_x + \sigma^2_{\epsilon,1}\sigma^2_{\epsilon,2}} [\sigma^2_x \sigma^2_{\epsilon,2}, \sigma^2_x \sigma^2_{\epsilon, 1}]
+ \begin{bmatrix}
+s_1 - \bar{x} \\ s_2 - \bar{x}
+\end{bmatrix} \nonumber  \\
+& = \bar{x} + \frac{\sigma^2_x \sigma^2_{\epsilon, 2}}{\sigma^2_x \sigma^2_{\epsilon, 1} + \sigma^2_x \sigma^2_{\epsilon, 2} + \sigma^2_{\epsilon, 1} \sigma^2_{\epsilon_2}} (s_1 - \bar{x}) + \frac{\sigma^2_x \sigma^2_{\epsilon, 1}}{\sigma^2_x \sigma^2_{\epsilon, 1} + \sigma^2_x \sigma^2_{\epsilon, 2} + \sigma^2_{\epsilon, 1} \sigma^2_{\epsilon_2}} (s_2 - \bar{x}) \label{eq:posterior_mean_2_signals}
+\end{align}
+and
+\begin{align}
+	var[x|s_1, s_2] & = \sigma^2_x - [\sigma^2_x, \sigma^2_x] \begin{bmatrix}
+		\sigma^2_x + \sigma^2_{\epsilon,1} & \sigma^2_x \\ \sigma^2_x & \sigma^2_x + \sigma^2_{\epsilon,2}
+	\end{bmatrix}^{-1} \begin{bmatrix}
+	\sigma^2_x \\ \sigma^2_x
+\end{bmatrix} \nonumber \\
+& = \sigma^2_x - \frac{\sigma^4_x(\sigma^2_{\epsilon, 2} + \sigma^2_{\epsilon_1})}{(\sigma^2_{\epsilon,1} + \sigma^2_{\epsilon,2}) \sigma^2_x + \sigma^2_{\epsilon,1}\sigma^2_{\epsilon,2}} \nonumber \\
+& = \frac{\sigma^4_x(\sigma^2_{\epsilon, 2} + \sigma^2_{\epsilon_1}) + \sigma^2_x \sigma^{2}_{\epsilon, 1} \sigma^2_{\epsilon,2} - \sigma^4_x(\sigma^2_{\epsilon, 2} + \sigma^2_{\epsilon_1})}{\sigma^2_x \sigma^2_{\epsilon, 1} + \sigma^2_x \sigma^2_{\epsilon, 2} + \sigma^2_{\epsilon, 1} \sigma^2_{\epsilon_2}} \nonumber \\
+& = \frac{ \sigma^2_x \sigma^{2}_{\epsilon, 1} \sigma^2_{\epsilon,2}}{\sigma^2_x \sigma^2_{\epsilon, 1} + \sigma^2_x \sigma^2_{\epsilon, 2} + \sigma^2_{\epsilon, 1} \sigma^2_{\epsilon_2}} 
+\end{align}
+At first glance, these equations look cumbersome, but they become simpler when expressed in terms of precision rather than variance. Define $\eta_x \equiv \sigma_x^{-2}$, $\eta_1 \equiv \sigma^{-2}_{\epsilon,1}$, and $\eta_2 \equiv \sigma^{-2}_{\epsilon,2}$. The equations above can then be rewritten as
+\begin{equation} \label{eq:precision_mean_2signal}
+	\mathbb{E}[x|s_1, s_2] = \frac{\eta_x}{\eta_x + \eta_1 + \eta_2}\bar{x} + \frac{\eta_1}{\eta_x + \eta_1 + \eta_2} s_1 + \frac{\eta_2}{\eta_x + \eta_1 + \eta_2} s_2 
+\end{equation}
+and 
+\begin{equation} \label{eq:precision_var_2signal}
+	var[x|s_1, s_2] = \frac{1}{\eta_x + \eta_1 + \eta_2}
+\end{equation}
+We can immediately see the similarity of these equations with (\ref{eq:precision_mean}) and (\ref{eq:precision_var}):
+\begin{itemize}
+	\item Again, the posterior mean (\ref{eq:precision_mean_2signal}) is a linear combination of the prior mean and received signals, and the weights are again given by the relative precision of the signals. Among the prior, signal 1 and signal 2, the one with the highest precision (or lowest variance) will be weighted more heavily in the posterior mean. 
+	\item And again, (\ref{eq:precision_var_2signal}) shows that the posterior uncertainty is equal to the inverse of the sum of precision of the prior and the signals, and by definition, it is again the second moment of the forecast error. 
+\end{itemize}
+None of the intuition changed from the one-signal case.  
+
+
+\section{Lucas Island Model}
+Here, I work through the algebra of the Lucas islands model. To simplify the analysis, suppose that each producer $i$ receives two signals about the aggregate price level $p_t$. One is a public signal,
+\[\tilde{p}_t = p_t + \epsilon_t \text{ where $\epsilon_t \sim N(0, \sigma^2_\epsilon)$}\]
+whose realization is known to all producers in the economy. The other is a private signal,
+\[p_t^i = p_t + z_t^i \text{ where $z_t^i \sim N(0, \sigma^2_z)$}\]
+whose realization is known only to the producer on island $i$. Suppose that the prior distribution of $p_t$ is $N(\bar{p}, \sigma^2_{prior})$. 
+
+Using the equations derived in the previous section, we can write producer $i$'s expectation of $p_t$ as
+\begin{equation} \label{eq:island_forecast}
+	\mathbb{E}[p_t|\tilde{p}_t, p_t^i] = \frac{\eta_{prior}}{\eta_{prior} + \eta_\epsilon + \eta_{z}} \bar{p} + \frac{\eta_\epsilon}{\eta_{prior} + \eta_\epsilon + \eta_{z}} \tilde{p}_t + \frac{\eta_z}{\eta_{prior} + \eta_\epsilon + \eta_{z}} p_t^i
+\end{equation}
+and the ``average" expectation $\mathbb{E}[p_t|\tilde{p}_t]$ (i.e. forecasting the price level using only the public information):
+\begin{equation} \label{eq:public_forecast}
+	\mathbb{E}[p_t|\tilde{p}_t] = \frac{\eta_{prior}}{\eta_{prior} + \eta_\epsilon} \bar{p} + \frac{\eta_\epsilon}{\eta_{prior} + \eta_\epsilon} \tilde{p}_t
+\end{equation}
+Define 
+\[\eta_p \equiv \eta_{prior} + \eta_\epsilon\]
+or equivalently
+\[\sigma^2_p \equiv \frac{1}{\sigma^{-2}_{prior} + \sigma^{-2}_\epsilon}\]
+We can combine (\ref{eq:island_forecast}) and (\ref{eq:public_forecast}):
+\begin{equation}
+	\mathbb{E}[p_t|\tilde{p}_t, p_t^i] = \frac{\eta_p}{\eta_p + \eta_z} \mathbb{E}[p_t|\tilde{p}_t] + \frac{\eta_z}{\eta_p + \eta_z} p_t^i
+\end{equation}
+or equivalently
+\begin{equation}
+	\mathbb{E}[p_t|\tilde{p}, p_t^i] = \frac{\sigma^2_z}{\sigma^2_z + \sigma^2_p} \mathbb{E}[p_t|\tilde{p}_t] + \underbrace{\frac{\sigma^2_p}{\sigma^2_p + \sigma^2_z}}_{\equiv \theta} p_t^i
+\end{equation}
+This is the key equation in the lecture notes. 
+
+The paper assumes an ad-hoc, reduced-form supply curve for the producer:
+\begin{equation}
+	y_t^i = b (p_t^i - \mathbb{E}[p_t|\tilde{p}_t, p_t^i])
+\end{equation}
+Aggregating it, we get
+\begin{align}
+	y_t & = \int_0^1 y_t^i \, di = b \left(\int_0^1 p_t^i \, di - \int_0^1 \mathbb{E}[p_t|\tilde{p}_t, p_t^i] \,di\right) \nonumber \\
+	& = b \left(p_t - (1-\theta) \mathbb{E}[p_t|\tilde{p}_t] - \theta p_t\right) \nonumber \\
+	& = b(1-\theta) (p_t - \mathbb{E}[p_t|\tilde{p}_t])
+\end{align}
+This is the aggregate supply curve. The degree of information friction, captured by $\theta$, affects its slope. If $\theta$ is large ($\theta \to 1$), idiosyncratic information tracks the aggregate price level well and the slope $b(1-\theta)$ approaches zero; output then does not respond to the price level. Conversely, if $\theta$ is small, idiosyncratic information is noisy and the aggregate supply curve becomes steeper, making output more responsive to price changes.
+
+
+\end{document}

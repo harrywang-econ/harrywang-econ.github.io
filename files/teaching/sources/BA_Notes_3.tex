@@ -1,0 +1,1344 @@
+\documentclass[12pt]{article}
+
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\newcommand{\E}{\mathbb{E}}
+\title{ECON601 TA Notes: Primal Approach to Optimal Policy}
+	\author{Haoran Wang \thanks{A substantial part of this note is based on Lixi Wang's first-year notes and Kanat Isakov's handwritten TA notes from the past four years. I am grateful for their help and contributions. All errors are mine.}}
+\date{November 11, 2024}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents
+	
+	\section{Optimal Policy: Static Ramsey Problem}
+		A \textbf{Ramsey planner} is benevolent. The planner is subject to technology and expenditure shocks, and the goal is to finance government expenditure using only distortionary taxes, with no lump-sum taxes. This is a general-equilibrium setting with implementability requirements; that is, agents in the economy must have an incentive to realize the allocation.
+	
+	\subsection{(Revisiting) Definitions and Environments}
+		First, we review the notation:
+	\begin{itemize}
+		\item $\bold{p}$ is the price vector
+		\item $\bold{z}$ is the exogenous variable vector (technology shocks, government expenditures)
+		\item $\boldsymbol{\pi}$ is the government policies (taxes)
+		\item $\bold{x}$ is the allocation
+	\end{itemize}
+	
+	\begin{definition}
+		A \textbf{competitive equilibrium} is $(\bold{p}, \bold{x})$ given $(\bold{z}, \boldsymbol{\pi})$, where $\bold{x}$ is feasible, optimal for the agents in the economy given $(\bold{p}, \bold{z}, \boldsymbol{\pi})$ and markets clear.
+	\end{definition}
+	
+	\begin{definition}
+		The solution to the \textbf{social planner's problem} is an allocation $\bold{x}$ which is feasible and maximizes the social welfare function given $\bold{z}$
+	\end{definition}
+	
+	\begin{definition}
+		The solution to the \textbf{Ramsey planner's problem} is $(\bold{p}, \boldsymbol{\pi}, \bold{x})$ where $\bold{x}$ maximizes the social welfare function given $\bold{z}$, subject to $(\bold{p}, \bold{x})$ being a competitive equilibrium given $(\bold{z}, \boldsymbol{\pi})$
+	\end{definition}
+	
+	\begin{proposition}
+		If $\bold{x}$ is a solution to the social planner's problem given $\bold{z}$ and there is a $\bold{p}, \boldsymbol{\pi}$ where $(\bold{p}, \bold{x})$ is a competitive equilibrium given $\bold{z}$ and $\boldsymbol{\pi}$, then $(\bold{p}, \boldsymbol{\pi}, \bold{x})$ is a solution to the Ramsey planner's problem given $\bold{z}$
+	\end{proposition}
+	
+	\noindent
+	Now, for the environment of the economy, we assume that there are $n$ goods in the economy produced by labor using a production function
+	\begin{equation*}
+		F(x_1, ..., x_n, h) \leq 0
+	\end{equation*}
+	\begin{itemize}
+			\item $x_i$: output of good $i$;
+			\item $h$: labor;
+			\item $F$: a constant-returns-to-scale (CRS) technology;
+		\item Possibility of intermediate goods
+			\item One-good example: $F(x, h) =x-h\leq 0$. 
+	\end{itemize}
+	
+	\noindent
+	Consumer's problem:
+	\begin{equation} \label{eq:static_consumer_obj}
+		\max_{c_1, ..., c_n, h} u(c_1, ..., c_n, 1-h)
+	\end{equation}
+	subject to
+	\begin{equation} \label{eq:static_consumer_bc}
+		\sum_{i} p_i(1+\tau_i) c_i = h
+	\end{equation}
+	Note that here we assume:
+	\begin{itemize}
+			\item $\tau_i$ is the consumption tax on consumption good $i$;
+			\item $p_i$ is the price of good $i$;
+			\item the wage rate is normalized to one;
+			\item the CRS technology implies zero profits for the firm, which are therefore omitted below.
+	\end{itemize}
+	
+	\noindent
+	Firm's Problem:
+	\begin{equation} \label{eq:static_firm_obj}
+		\max_{\bold{x},h} \sum_{i}p_ix_i - h
+	\end{equation}
+	subject to
+	\begin{equation} \label{eq:static_firm_prod}
+		F(\bold{x}, h) \leq 0
+	\end{equation}
+		Because of the CRS assumption, firms earn zero profits.
+	\begin{equation}
+		\sum_i p_ix_i = h
+	\end{equation}
+	
+	\noindent
+	Government's budget constraint is:
+	\begin{equation} \label{eq:static_gbc}
+		\sum_{i} p_ig_i = \sum_{i} p_i \tau_i c_i
+	\end{equation}
+	where $(g_i)_{i=1}^n$ are given.\\
+	
+	\noindent
+	Market clearing requires that for $i=1, 2, ..., n$:
+	\begin{equation} \label{eq:static_market_clearing}
+		c_i + g_i = x_i
+	\end{equation}
+	
+	\subsection{Competitive Equilibrium}
+	Now, we can formally define competitive equilibrium in this environment.
+	\begin{definition}
+			A \textbf{competitive equilibrium} is a policy $\boldsymbol{\pi} = (\tau_i)_{i=1}^n$, a set of exogenous government expenditures $\bold{g}$, allocations $\bold{c}, h, \bold{x}$, and a price system $\bold{p}$ such that the following conditions hold:
+		\begin{itemize}
+				\item Given $\boldsymbol{\pi}$ and $\bold{p}$, $\bold{c}$ and $h$ solve the consumer's problem (\ref{eq:static_consumer_obj}), subject to (\ref{eq:static_consumer_bc}).
+			\item Given $\bold{p}$, $\bold{x}$ and $\bold{h}$ solve the firm's problem (\ref{eq:static_firm_obj}) subject to (\ref{eq:static_firm_prod})
+			\item $\boldsymbol{\pi}, \bold{p}, \bold{g}, \bold{c}$ satisfy the government budget constraint (\ref{eq:static_gbc})
+				\item $\bold{c}$, $\bold{g}$, and $\bold{x}$ satisfy the market-clearing condition (\ref{eq:static_market_clearing}) for every good $i$.
+		\end{itemize}
+	\end{definition}
+	
+	\noindent
+		We assume all necessary concavity, monotonicity, and Inada conditions to ensure that the FOCs are necessary and sufficient.\\
+	Household Lagrangian is:
+	\begin{equation*}
+		\mathcal{L}_h = u(c_1, ..., c_n, 1-h) - (\lambda \sum_{i} p_i(1+\tau_i) c_i - h)
+	\end{equation*}
+	The first-order condition yields:
+	\begin{align}
+		u_i &= \lambda (1+\tau_i)p_i, \forall i = 1, ..., n\\
+		u_l &= \lambda\\
+		\sum_{i} p_i(1+\tau_i) c_i &= h
+	\end{align}
+	This leads to the characterization of:
+	\begin{align}
+		\frac{u_i}{u_j} &= \frac{p_i}{p_j}\frac{1 + \tau_i}{1+\tau_j}\\
+		\frac{u_i}{u_l} &= p_i(1+\tau_i)\\
+		\sum_{i} p_i(1+\tau_i) c_i &= h
+	\end{align}
+	For the firm,
+	\begin{equation*}
+		\mathcal{L}_f = \sum_{i} p_i x_i - h - \mu F(x_1, x_2, ..., x_n, h)
+	\end{equation*}
+	FOC yields:
+	\begin{align}
+		p_i &= \mu F_i\\
+		-1 &= \mu F_h
+	\end{align}
+	Thus, we have
+	\begin{align}
+		p_i &= -\frac{F_i}{F_h} \forall i = 1, 2, ..., n\\
+		F(x_1, x_2, ..., x_n, h) &= 0
+	\end{align}
+	Then the full characterization of a competitive equilibrium is as follows:
+	\begin{definition} (Competitive Equilibrium)
+		Given $\{\tau_i, g_i\}$, the equilibrium is a sequence $\{x_i, c_i, p_i\}_{i=1}^n$ and $h$ such that
+		\begin{align}
+			\frac{u_i}{u_l} &= p_i(1+\tau_i) \forall i = 1, 2, ..., n \label{eq:static_CE_start}\\
+			\sum_{i} p_i(1+\tau_i) c_i &= h \label{eq:static_hhbc}\\
+			p_i &= -\frac{F_i}{F_h} \forall i = 1, 2, ..., n \label{eq:mrts_p}\\
+			F(x_1, x_2, ..., x_n, h) &= 0 \label{eq:static_prod_copied}\\
+			c_i + g_i &= x_i \forall i = 1, 2, ..., n \label{eq:static_CE_end}
+		\end{align}
+	\end{definition}
+	
+	
+	\subsection{Optimal Policy}
+	Let $\Pi$ be the set of policies that the government can choose $\pi$ from for which a CE exists.\\
+	For every $\pi \in \Pi$, the allocations $\bold{c}(\pi^{'})$, $\bold{x}(\pi^{'})$, $h(\pi^{'})$ and price $\bold{p}(\pi^{'})$ and the policy $\pi^{'}$ constitute a competitive equilibrium, given $\bold{g}$.
+	Now a formal definition of Ramsey equilibrium.
+	\begin{definition}
+		A \textbf{Ramsey Equilibrium} is a policy $\pi \in \Pi$, allocation rules $\bold{c}(\pi^{'})$, $\bold{x}(\pi^{'})$, $h(\pi^{'})$ and price $\bold{p}(\pi^{'})$ such that policy $\pi$ solves $\max_{\pi^{'}\in Pi}u(\bold{c}(\pi^{'}), h(\pi^{'}))$.
+	\end{definition}
+	
+	\noindent
+	Alternatively, given $\bold{g}$,
+	\begin{equation} \label{eq:static_ramsey_obj}
+		\{(\tau_i)_{i=1}^n, (c_i)_{i=1}^n, (x_i)_{i=1}^n, (p_i)_{i=1}^n, h\} = \arg \max_{\pi, \bold{p}, \bold{x}, \bold{c}, h} u(c_1, c_2, ..., c_n, 1-h)
+	\end{equation}
+	subject to (\ref{eq:static_CE_start}) - (\ref{eq:static_CE_end}).
+	
+	\paragraph{Ramsey Planner's Problem: An Overview}
+		Generally, there are two approaches to solving (\ref{eq:static_ramsey_obj}):
+	\begin{itemize}
+			\item Dual approach: choose policies under which households optimize and social welfare is maximized.
+			\item Primal approach: convert the problem into one in which the only choice objects are allocations and equilibrium is represented by the \textbf{implementability constraint}.
+	\end{itemize}
+	We are going to illustrate how to solve the Ramsey problem by the primal approach. The basic idea is to express the price and policy vectors in terms of allocations and do the Ramsey planner's maximization problem (\ref{eq:static_ramsey_obj}) in the allocation space only. In order to implement this idea, we need to understand \textbf{what conditions make a particular allocation $\mathbf{x}$ part of a competitive equilibrium}. It sounds complicated, but eventually we will figure out that $\mathbf{x}$ only needs to satisfy two conditions: \textbf{feasibility} and \textbf{implementability}, to make itself part of a competitive equilibrium.
+	
+%	Recall the CE conditions (\ref{eq:static_CE_start}) - (\ref{eq:static_CE_end}):
+%	\begin{align*}
+%		\frac{u_i}{u_l} &= p_i(1+\tau_i) \forall i = 1, 2, ..., n\\
+%		\sum_{i} p_i(1+\tau_i) c_i &= h\\
+%		p_i &= -\frac{F_i}{F_h} \forall i = 1, 2, ..., n\\
+%		F(x_1, x_2, ..., x_n, h) &= 0\\
+%		c_i + g_i &= x_i \forall i = 1, 2, ..., n
+%	\end{align*}
+\paragraph{Derivation of Feasibility Constraint}
+		We define the \textbf{feasibility constraint} by substituting (\ref{eq:static_CE_end}) into (\ref{eq:static_prod_copied}):
+	\begin{equation} \label{eq:feasibility}
+		F(c_1 + g_1, ..., c_n + g_n, h) = 0
+	\end{equation}
+	\underline{Note:} 
+	\begin{itemize}
+		\item $g_i$ are not considered as policy in the current setup; they are taken as exogenous variables;
+		\item Essentially, this is the resource constraint.
+	\end{itemize}
+	
+
+\paragraph{Derivation of Implementability Constraint}
+		We define the \textbf{implementability constraint} by substituting (\ref{eq:static_CE_start}) into (\ref{eq:static_hhbc}) and multiplying both sides by $u_l$:
+	\begin{equation} \label{eq:implementability}
+		\sum_{i} u_ic_i - u_l h = 0
+	\end{equation}
+	\underline{Note:} 
+	\begin{itemize}
+			\item Here, we replace the price-and-policy terms $p_i (1+\tau_i)$ in the consumer's budget constraint with the marginal rate of substitution between good $i$ and leisure, which depends only on allocations. 
+			\item This is necessary for the allocation to be part of a competitive equilibrium because equilibrium prices must equal the corresponding marginal rates of substitution.
+	\end{itemize}
+	
+\paragraph{Where have all the prices gone?}
+Before discussing the Ramsey planner's optimization problem, I explain how to recover prices from allocations. For an allocation to be part of a competitive equilibrium, there must be a price vector that justifies it. 
+
+It turns out that it is sufficient for us to know the optimal allocation only because as long as we know what the optimal allocation is, we can back out prices and optimal policies easily from the optimal allocations:
+\begin{itemize}
+	\item First, notice that Equation (\ref{eq:mrts_p}), the optimality condition for the firm (reads ``marginal rate of technological substitution equals to relative price of inputs"), allows us to back out the price vector $\mathbf{p}$ from the allocation $\mathbf{x}$. 
+	\item Furthermore, combining (\ref{eq:static_CE_start}) and (\ref{eq:mrts_p}), we can back out the optimal policy from optimal allocation:
+	\begin{equation} \label{eq:static_optimal_policy}
+		1 + \tau_i = -\frac{F_h}{F_i}\frac{u_i}{u_l}, \forall i = 1, 2, .., n
+	\end{equation}
+	We usually call (\ref{eq:static_optimal_policy}) the policy that implements optimal allocation in a competitive equilibrium, or simply ``optimal policy".
+\end{itemize}
+
+	
+	Alternatively, the \textbf{implementability constraint} can also be derived from government spending side. Note that we can combine $c_i + g_i = x_i$ with $\sum_i p_i\tau_i c_i = \sum_{i} p_i g_i$, and get
+	\begin{equation*}
+		\sum_{i}p_i x_i = \sum_{i}p_i (1+\tau_i) c_i
+	\end{equation*}
+	Combine this with (4.18) and $\sum_i p_i x_i = h$(4.5), the CRS result from production function $F$, we get:
+	\begin{equation*}
+		\sum_i \frac{u_i}{u_l} c_i = h
+	\end{equation*}
+	Multiply both sides by $u_l$ we get:
+	\begin{equation*}
+		\sum_i u_i c_i - u_l h = 0
+	\end{equation*}
+	
+	\noindent
+	Now, we can leave out $\boldsymbol{\tau}$ and $\bold{p}$ as choice variables from the problem because now given other variables, those two are defined through the constraints. The following results are immediate:
+%	Now, let's rewrite the conditions we have, (4.20), (4.24), (4.25), (4.26):
+%	\begin{align*}
+%		p_i &= -\frac{F_i}{F_h} \forall i = 1, 2, ..., n\\
+%		F(c_1 + g_1, ..., c_n + g_n, h) &= 0\\
+%		\sum_{i} u_ic_i - u_l h &= 0\\
+%		1 + \tau_i &= -\frac{F_h}{F_i}\frac{u_i}{u_l}, \forall i = 1, 2, .., n
+%	\end{align*}
+	
+		\begin{proposition} (Necessity and sufficiency of feasibility and implementability.)
+			Any allocation $\mathbf{x}$ in the CE satisfies the feasibility constraint (\ref{eq:feasibility}) and the implementability constraint (\ref{eq:implementability}). Furthermore, given allocations that satisfy (\ref{eq:feasibility}) and (\ref{eq:implementability}), we can find a price system $\mathbf{p}$ and a policy $\mathbf{\pi}$ such that allocation $\mathbf{x}$ is part of a competitive equilibrium under price $\mathbf{p}$ and policy $\mathbf{\pi}$. Prices are defined by (\ref{eq:mrts_p}), and policy $\mathbf{\pi}$ is defined by (\ref{eq:static_optimal_policy}).
+	\end{proposition}
+	
+	\begin{proposition}
+		The Ramsey allocations $(\bold{c}, h)$ solve the Ramsey problem, which is to choose $\bold{c}$, $h$ to maximize $u(\bold{c}, 1-h)$ subject to the feasibility constraint (\ref{eq:feasibility}) and the implementability constraint (\ref{eq:implementability}).
+	\end{proposition}
+	
+	\subsection{Solving Ramsey Problem}
+	Ramsey problem is:
+	\begin{equation*}
+		\max_{c_1, ..., c_n, h}u(c_1, ..., c_n, h)
+	\end{equation*}
+	subject to
+	\begin{align*}
+		F(c_1 + g_1, ..., c_n + g_n, h) &= 0\\
+		\sum_{i} u_ic_i - u_l h &= 0
+	\end{align*}
+	We assign $\lambda$ to IC, and $\gamma$ to FC. Lagrangian:
+	\begin{equation*}
+		\mathcal{L}_{Ramsey} = u(c_1, ..., c_n, h) - \lambda(\sum_{i} u_ic_i - u_l h) - \gamma F(c_1 + g_1, ..., c_n + g_n, h)
+	\end{equation*}
+	FOC yields:
+	\begin{align*}
+		u_i &= \gamma F_i + \lambda \big(u_{1i}c_1 + ... +(u_{ii}c_i + u_i) + ... +u_{ni}c_n - u_{li}h \big)\\
+		&= \gamma F_i + \lambda \sum_{j}u_{ji} c_j + \lambda u_i - \lambda u_{li}h\\
+		u_l &= \lambda \sum_{j} u_{jl}c_j + \lambda (u_l- u_{ll}h) - \gamma F_h
+	\end{align*}
+	
+	\noindent
+	These can be simplified to
+	\begin{align}
+		(1-\lambda)u_i - \lambda \sum_j u_{ji}c_j + \lambda u_{li}h - \gamma F_i &= 0 \label{eq:foc_ui}\\
+		-(1-\lambda)u_l + \lambda \sum_j u_{jl}c_j - \lambda u_{ll}h - \gamma F_h &= 0 \label{eq:foc_ul}
+	\end{align}
+	For algebraic simplicity, we define:
+	\begin{align}
+		H_i &= -\frac{\sum_j u_{ji}c_j - u_{li}h}{u_i}\\
+		H_l &= \frac{\sum_j u_{jl}c_j - u_{ll}h}{u_l}
+	\end{align}
+	This simplifies (\ref{eq:foc_ui}), (\ref{eq:foc_ul}) to
+	\begin{align}
+		(1-\lambda) u_i + \lambda H_i u_i &= \gamma F_i \label{eq:foc_ui_simple}\\
+		-(1-\lambda) u_l + \lambda H_l u_l &= \gamma F_h \label{eq:foc_ul_simple}
+	\end{align}
+	There are 4 results that we will go into some details:
+	\begin{itemize}
+		\item If $H_i > H_j$, then $\tau_i > \tau_j$
+		\item If the utility function is separable and linear in leisure (quasi-linear), goods whose price elasticities of demand are higher are taxed less, i.e. GE result same as PE result
+		\item \textbf{Uniform commodity taxation} If $c_i$ enter the utility function homothetically, then $\tau_i = \tau$ for all $i$
+		\item \textbf{Non-Taxation of Intermediate Goods}: It is optimal to not tax intermediate goods
+	\end{itemize}
+	\subsubsection*{Result 1}
+	By combining (\ref{eq:foc_ui_simple}) and (\ref{eq:foc_ul_simple}), we get:
+	\begin{align*}
+		\frac{(1-\lambda + \lambda H_i)u_i}{(1-\lambda - \lambda H_l)u_l} &= -\frac{F_i}{F_h}, \forall i = 1, ..., n\\
+		\implies \left(1 + \frac{\lambda (H_i + H_l)}{1-\lambda - \lambda H_l}\right) \frac{u_i}{u_l} &= -\frac{F_i}{F_h}
+	\end{align*}
+	Recall from (\ref{eq:static_optimal_policy}), we have
+	\begin{equation*}
+		1 + \tau_i = -\frac{F_h}{F_i}\frac{u_i}{u_l}, \forall i = 1, 2, .., n
+	\end{equation*}
+	Combining these we get the condition under which optimal policy $\tau_i$ must satisfy:
+	\begin{align*}
+		1 + \frac{\lambda (H_i + H_l)}{1-\lambda - \lambda H_l} &= \frac{1}{1 + \tau_i}\\
+		\implies \frac{\lambda (H_i + H_l)}{1-\lambda - \lambda H_l} &= -\frac{\tau_i}{1 + \tau_i}
+	\end{align*}
+	Then take $j \neq i$, we have:
+	\[\begin{cases}
+		\frac{\lambda (H_i + H_l)}{1-\lambda - \lambda H_l} &= -\frac{\tau_i}{1 + \tau_i} = \frac{1}{1 + 1/\tau_i}\\
+		\frac{\lambda (H_j + H_l)}{1-\lambda - \lambda H_l} &= -\frac{\tau_j}{1 + \tau_j} = \frac{1}{1 + 1/\tau_j}
+	\end{cases}\]
+	Hence
+	\begin{align*}
+		\frac{H_i + H_l}{H_j + H_l} &= \frac{1+1/\tau_j}{1+1/\tau_i}
+	\end{align*}
+	Hence, it is clear that if $H_i > H_j$, we have $\tau_i > \tau_j$.
+	
+	\subsubsection*{Result 2: Higher Taxes on Goods with Inelastic Demand}
+	By assumption, the utility function takes the form of:
+	\begin{equation*}
+		u(c_1, ..., c_n, 1-h) = \sum_{i} v^{i}(c_i) + (1-h)
+	\end{equation*}
+	Then by our definition,
+	\begin{equation*}
+		H_i = -\frac{v_i^{''}(c_i) c_i}{v_i^{'}(c_i)}
+	\end{equation*}
+	since $u_{ji} = 0$ for $i \neq j$, by additive separability.
+	
+	Recall that the price elasticity of demand for good $i$ is defined as:
+	\begin{equation*}
+		\epsilon_p^i = -\frac{\frac{\partial c_i}{c_i}}{\frac{\partial p_i}{p_i}}
+	\end{equation*}
+	Now, going back to CE result, we have the household's FOC being:
+	\begin{align}
+		v_i^{'}(c_i) &= \lambda (1 + \tau_i)p_i\\
+		1 &= \lambda
+	\end{align}
+	From $\lambda= 1$ (from your micro class: if you work with a quali-linear utility, then all the income effects are absorbed by the linear good, which is essentially what $\lambda = 1$ is saying), we plug it into the FOC on $c_i$ and apply implicit function theorem with respect to $p_i$:
+	\begin{align*}
+		\frac{\partial v_i^{'}(c_i)}{\partial c_i} \cdot \frac{\partial c_i}{\partial p_i} &= (1+\tau_i)\\
+		\implies v_i^{''}(c_i) \cdot \frac{\partial c_i}{\partial p_i}   &=  (1+\tau_i) \\
+		\implies v_i^{''}(c_i) \cdot \underbrace{\frac{\partial c_i}{\partial p_i} \cdot \frac{p_i}{c_i}}_{\equiv - \epsilon_p^i} &= \underbrace{(1+\tau_i) \frac{p_i}{c_i}}_{= v'(c_i)/c_i} \\
+		\implies \epsilon_p^i &= -\frac{1}{\frac{v_i^{''}(c_i) c_i}{v_i^{'}(c_i)}} = \frac{1}{H_i}
+	\end{align*}
+	Then, by Result 1, if good $i$ is more price elastic than good $j$, then $\epsilon_p^i > \epsilon_p^j > 0$, then $0<H_i<H_j$. Then $\tau_i < \tau_j$. The government should levy higher taxes on more demand-inelastic goods.
+	
+	\subsubsection*{Result 3: Uniform Taxation under Homothetic Utility}
+	Suppose the utility function is in the following form:
+	\begin{equation*}
+		u(c_1, ..., c_n, 1-h) = W(G(c_1, ..., c_n), 1-h)
+	\end{equation*}
+	where $G$ satisfies homotheticity.\\
+	With this utility function we have:
+	\begin{equation*}
+		\frac{u_i(\alpha \bold{c}, 1-h)}{u_k(\alpha \bold{c}, 1-h)} = \frac{u_i( \bold{c}, 1-h)}{u_k( \bold{c}, 1-h)}
+	\end{equation*}
+	for any $\alpha > 0$.\\
+	
+	\noindent
+	Recall that from the household's problem and firm's problem,
+	\begin{align*}
+		\frac{u_i}{u_l} &= p_i (1 + \tau_i)\\
+		p_i &= -\frac{F_i}{F_h}
+	\end{align*}
+	This gives
+	\begin{equation*}
+		1 + \tau_i = - \frac{u_i}{u_l} \frac{F_h}{F_i}
+	\end{equation*}
+	We can also do this trick:
+	\begin{equation*}
+		u_i(\alpha \bold{c}, 1-h) = \frac{u_i(\bold{c}, 1-h)}{u_k(\bold{c}, 1-h)}u_k(\alpha \bold{c}, 1-h)
+	\end{equation*}
+	Also note that we have:
+	\begin{equation*}
+		\sum_{j=1}^n u_{ij}c_j = \frac{u_i(\bold{c}, 1-h)}{u_k(\bold{c}, 1-h)} \sum_{j=1}^n u_{kj}c_j
+	\end{equation*}
+	Then, $\forall i, k$,
+	\begin{equation*}
+		\frac{\sum_{j=1}^n u_{ij}c_j }{u_i} = \frac{\sum_{j=1}^n u_{kj}c_j }{u_k}:=A
+	\end{equation*}
+	where $A$ is just a constant.\\
+	Now, we have, from Ramsey's problem:
+	\begin{equation*}
+		(1-\lambda)u_i - \lambda\big(\sum_{j=1}^{n}u_{ij}c_j - u_{li}h \big) = \gamma F_i
+	\end{equation*}
+	Recall our setup on the utility function, we have the following derivatives:
+	\begin{align*}
+		u_i &= W_1G_i\\
+		u_{li} &= W_{12}G_i
+	\end{align*}
+	Substituting those back in and we get:
+	\begin{align*}
+		(1-\lambda)W_1G_i - \lambda \big(AW_1G_i - W_{12}G_ih \big) &= \gamma F_i\\
+		\frac{G_i}{F_i} = \frac{\gamma}{(1-\lambda)W_1 - \lambda A W_1 + \lambda W_{12}h}
+	\end{align*}
+	Note that this gives
+	\begin{equation*}
+		\frac{G_i}{G_j} = \frac{F_i}{F_j} = \frac{u_i}{u_j}
+	\end{equation*}
+	Thus, we have
+	\begin{equation*}
+		\tau_i = \tau_j = \tau, \forall i,j
+	\end{equation*}
+	\subsubsection*{Result 4: No Taxation for Intermediate Goods}
+	Consider the setup where there are 2 firms
+	\begin{itemize}
+		\item intermediate good producer with production function $k(z, h_2)\leq 0$, with $z$ being intermediate good output and $h_2$ being the labor input
+		\item final good producer with production function $f(x, z, h_1)\leq 0$, with $x$ being the final good output, $z$ being the input and $h_1$ being the labor input
+	\end{itemize}
+	Consumer takes the same form $u(c, 1-h)$, and market clearing is $c+g = x$ and $h = h_1 + h_2$.\\
+	To derive the implementability constraint, we see that the household yields the same result:
+	\begin{equation*}
+		u_c c - u_l (h_1 + h_2) \leq 0
+	\end{equation*}
+	For the final good producer, we have
+	\begin{equation*}
+		\max_{x, z, h_1} px - wh_1 - q(1+\eta)z
+	\end{equation*}
+	subject to $f(x, z, h_1) \leq 0$.\\
+	The condition yields:
+	\begin{equation} \label{eq:4.35}
+		\frac{f_z}{f_h} = \frac{q(1+\eta)}{w}
+	\end{equation}
+	For the intermediate good producer, we have
+	\begin{equation*}
+		\max_{z, h_2} qz - wh_2
+	\end{equation*}
+	subject to $k(z, h_2) \leq 0$.\\
+	The FOC yields:
+	\begin{equation} \label{eq:4.36}
+		\frac{k_z}{k_h} = -\frac{q}{w}
+	\end{equation}
+	With (\ref{eq:4.35}) and (\ref{eq:4.36}) we get:
+	\begin{equation}
+		\frac{f_z}{f_h} = (1+\eta)\frac{k_z}{k_h}
+	\end{equation}
+	Now going back to the Ramsey's problem, writing out the Lagrangian and we get:
+	\begin{equation*}
+		\mathcal{L}=u(x, 1-h_1 -h_2) - \lambda(u_x x - u_l(h_1 + h_2)) - \theta f(x, z, h_1) - \mu k(z, h_2)
+	\end{equation*}
+	FOC for $z$, $h_1$, $h_2$ yields:
+	\begin{align*}
+		-\theta f_z - \mu k_z &= 0\\
+		-u_l - \lambda(-u_{xl}x + u_{ll}(h_1 + h_2)) &= \theta f_h\\
+		-u_l - \lambda(-u_{xl}x + u_{ll}(h_1 + h_2)) &= \mu k_h
+	\end{align*}
+	Combining those together, we get $\frac{f_z}{f_h} =\frac{k_z}{k_h}$. Hence $\eta = 0$. The intermediate good is not taxed.
+	
+	\subsection{Social Planner's Problem}
+	Now, for social planner's problem, we have:
+	\begin{equation}
+		\max_{c_1, ..., c_n, h} u(c_1, ..., c_n, 1-h) - \gamma F(c_1 + g_1 , ..., c_n + g_n, h)
+	\end{equation}
+	FOC yields:
+	\begin{align*}
+		u_i &= \gamma F_i\\
+		-u_l &= \gamma F_h
+	\end{align*}
+	This gives:
+	\begin{equation}
+		\frac{u_i}{u_l} = -\frac{F_i}{F_h}
+	\end{equation}
+	Recall that Ramsey FOC before
+	\begin{align*}
+		(1-\lambda) u_i + \lambda H_i u_i &= \gamma F_i\\
+		-(1-\lambda) u_l + \lambda H_l u_l &= \gamma F_h
+	\end{align*}
+	Define
+	\begin{equation}
+		1 - \omega_i = \frac{1 - \lambda -\lambda H_l}{1 - \lambda + \lambda H_i}
+	\end{equation}
+	We have the Ramsey FOC yields:
+	\begin{equation}
+		\frac{u_i}{u_l} =  (1-\omega_i)\frac{-F_i}{F_h}
+	\end{equation}
+	Comparing social planner solution and Ramsey planner solution, we see that Ramsey planner wants to create a \textbf{wedge} between all $MRS$ and $MRT$ pairs, and wedge is defined by (\ref{eq:static_optimal_policy}):
+	\begin{equation*}
+		1 + \tau_i = -\frac{F_h}{F_i}\frac{u_i}{u_l}, \forall i = 1, 2, .., n
+	\end{equation*}
+%	and, in order for the solution to a Ramsey planner's problem (i.e. the best competitive-equilibrium allocation) to replicate the Pareto optimality (the solution to the social planner's problem), we need 
+Hence
+	\begin{equation}
+		1-\omega_i = 1 + \tau_i
+	\end{equation}
+	
+	\subsection{Completeness of the Tax System}
+	Suppose there is a labor income tax. The equilibrium condition is:
+	\begin{equation*}
+		\frac{u_i}{u_l} = \frac{p_i (1 + \tau_i)}{1-\tau_h}
+	\end{equation*}
+	This yields that for $i = 1, 2, ..., n$,
+	\begin{equation*}
+		\frac{1 + \tau_i}{1-\tau_h} = -\frac{u_i}{u_l}\frac{F_h}{F_i}
+	\end{equation*}
+	Then there is a problem to pin down all $n+1$ tax rate since we only have $n$ equations:
+	\begin{equation*}
+		1 - \omega _i = \frac{1 + \tau_i}{1-\tau_h}, \forall i = 1, ..., n
+	\end{equation*}
+	Now, suppose we set one of the instrument exogenously, for example, $\tau_1 = 0$. Then the equilibrium involves
+	\begin{equation*}
+		-\frac{F_1}{F_h} = \frac{u_1}{u_l}
+	\end{equation*}
+	Now the system has enough equations to solve the $n$ unknowns. We need to add this as a constraint on the Ramsey planner's problem.\\
+	
+	\noindent
+		\textbf{Remark}: The Ramsey problem is \textbf{not} about taxation per se, but about creating wedges between MRS--MRT pairs. The Ramsey solution specifies the optimal wedges or distortions given the government's financing (spending) requirement. There are $n$ margins in the economy, and the Ramsey planner wants to create wedges in all of them.\\
+	We will end the discussion of static Ramsey problem with a proposition describing when Ramsey problem's solution coincides with social planner's solution.
+	
+	\begin{proposition}
+		If $g_i >0$ for at least some $i = 1, ..., n$, then the IC multiplier $\lambda \neq 0$. If $g_i=0$ for all $i = 1, ..., n$, then $\lambda = 0$, then the solution to the Ramsey problem coincides with the solution to the social planner's problem.
+	\end{proposition}
+	
+	\section{Ramsey Application: Optimal Fiscal Policy}
+	\subsection{Setup}
+		We use the standard one-sector neoclassical growth model in a real environment (without money).\\
+	There are 2 sources of uncertainty:
+	\begin{itemize}
+		\item technology shocks
+		\item government spending
+	\end{itemize}
+	Here are the notations for the uncertainty setup:
+	\begin{itemize}
+		\item each period, the economy experiences one of the finitely many events $s_t\in S = \{e_1, ..., e_n\}$
+		\item history up to time $t$ is defined as $s^t = (s_0, s_1, ..., s_t)\in S\times S \times...\times S$ ($t+1$ times) and the probability as of $t=0$, of a particular history $s^t$ is $\mu(s^t)$
+		\item initial realization $s_0$ taken as given
+			\item we simplify the notation from Chari and Kehoe (1999) by using $x_t := x(s^t)$.
+	\end{itemize}
+	
+	\paragraph{Consumer}
+	Preferences of consumers are
+	\begin{equation} \label{eq:43}
+		\max_{c_t, h_t, k_t, b_t}\E_0 \sum_{t}\beta^t u(c_t, 1-h_t)
+	\end{equation}
+	The budget constraint is:
+	\begin{equation} \label{eq:44}
+		c_t + k_t + b_t \leq (1-\tau_t^h)w_t h_t + R_t^k k_{t-1} + R_t^b b_{t-1}
+	\end{equation}
+	where
+	\begin{itemize}
+		\item $R_{t}^k = 1 + (1-\tau_t^k)(r_t - \delta)$ is the return to capital
+		\item $\tau_t^k$ and $\tau_t^h$ are the tax rates on incomes from capital and labor
+		\item $b_t$ is the stock of government debt the consumer holds at time $t$(and state $s^t$), with return $R_{t+1}^b$
+	\end{itemize}
+	
+	\paragraph{Firm}
+	Firm's production at time $t$ is given by $z_tF(k_{t-1}, h_t)$, where $F$ is a CRS production function and $z_t$ is the technology shock.\\
+	Firm pays their marginal costs to factors of production
+	\begin{align}
+		r_t &= z_t F_k(k_{t-1}, h_t) \label{eq:45}\\
+		w_t &= z_t F_h(k_{t-1}, h_t)	\label{eq:46}
+	\end{align}
+	
+	\paragraph{Government}
+	The government's budget constraint is given by
+	\begin{equation}
+		b_t = R_t^{b}b_{t-1} + g_t - \tau_t^hw_th_t - \tau_t^k (r_t - \delta)k_{t-1} \label{eq:47}
+	\end{equation}
+	where $g_t$ is the stochastic government spending shock. This is essentially the market clearing condition for bond.
+	
+	\noindent
+	\paragraph{Market Clearing} Since we already (implicitly) required the bond, labor and capital market clearing in the government budget constraint, we no longer need to specify goods market clearing condition to define a competitive equilibrium. However, for the purpose of Ramsey Planner's problem and Social Planner's Problem, we still derive the goods market clearing condition/feasibility constraint/resource constraint:
+	\begin{equation} \label{eq:rc}
+		c_t + g_t + k_t = z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1}
+	\end{equation}
+
+	\noindent
+	Lastly, the laws of motion for the stochastic variables are:
+	\begin{equation*} 
+		[z_t, g_t] = \chi(z_{t-1}, g_{t-1}; \epsilon_t)
+	\end{equation*}
+	where $\epsilon_t$ are i.i.d. shocks.
+	
+	\paragraph{Competitive Equilibrium \\ [6pt]}
+	A few additional notations:
+	\begin{itemize}
+		\item $x_t = (c_t, h_t, k_t, b_t)$ denotes an allocation for consumer at $t$ (and $s^t$), and $x = \{x_t\}_{t=0}^\infty$ denotes an allocation for all $t$ and $s^t$ chosen at time 0
+		\item $p_t = (w_t, r_t, R_t^b)$ denotes a price system at time $t$ and $p = \{p_t\}_{t=0}^\infty$ denotes a price for all $t$ and $s^t$ chosen at time 0
+		\item $\pi_t = (\tau_t^h, \tau_t^k)$ denotes the government policy at $t$ and $\pi = \{\pi_t\}_{t=0}^\infty$ denotes an infinite sequence of policies for all $t$ and $s^t$ chosen at time 0
+		\item initial stock of debt and capital $b_{-1}$ and $k_{-1}$ are given.
+	\end{itemize}
+	
+	\begin{definition}
+		A competitive equilibrium for this economy is an allocation $x$, and a price system $p$, given a policy $\pi$ such that:
+		\begin{itemize}
+			\item Given $\pi$ and $p$, $x$ maximizes (\ref{eq:43}) subject to the sequence of budget constraint (\ref{eq:44})
+			\item $p$ satisfies (\ref{eq:45}) and (\ref{eq:46})
+			\item government budget constraint (\ref{eq:47}) is satisfied.
+		\end{itemize}
+	The above definition already stipulates labor, capital and bond market clearing, which implies goods market clearing condition (\ref{eq:rc}).
+	\end{definition}
+	
+	\noindent
+	Write them in equations: given $\{z_t, g_t, \tau_t^h, \tau_t^k\}$, allocation $\{c_t, h_t, b_t, k_t\}$ prices $\{w_t, r_t, R_t^b\}$ (in total 7 variables):
+	\begin{align}
+		u_l(t) &= u_c(t) (1-\tau_t^h) w_t \label{eq:intra}\\
+		u_c(t) &= \beta \E_t[u_c(t+1)R_{t+1}^k] \label{eq:euler_k}\\
+		u_c(t) &= \beta \E_t[u_c(t+1)R_{t+1}^b] \label{eq:euler_b}\\
+		r_t &= z_t F_k(k_{t-1}, h_t) \label{eq:foc_k}\\
+		w_t &= z_t F_h(k_{t-1}, h_t) \label{eq:foc_h}\\
+		c_t + g_t + k_t &= z_tF(k_{t-1}, h_t) + (1-\delta)k_{t-1} \label{eq:goods_clearing}\\
+		b_t &= R_{t}^b b_{t-1} + g_t - \tau_t^h w_th_t - \tau_t^k (r_t - \delta)k_{t-1} \label{eq:bonds_clearing}
+	\end{align}
+	and the Transversality conditions:
+	\begin{align*}
+		\lim_{t\rightarrow \infty} \beta^t u_c(t)k_t &= 0\\
+		\lim_{t\rightarrow \infty} \beta^t u_c(t)b_t &= 0
+	\end{align*}
+	
+	\subsection{Ramsey Problem: Main Result}
+		Before solving the model, we first recognize two potential problems raised by introducing dynamics:
+	\begin{itemize}
+			\item \textbf{time inconsistency}: in any period $t$, capital was predetermined in $t-1$, given $s^{t-1}$ and all government policies $\pi$ rather than only $\pi(s^t)$. From the perspective of period $t$, the government appears to have an incentive to tax capital at 100\% because doing so will not distort a predetermined decision. Thus, the period-$t$ government will find the policy set at $t=0$ suboptimal. To sidestep this issue, we assume that the government can commit perfectly and credibly to its policy at $t=0$.
+			\item \textbf{tax in period 0}: because $k_{-1}$ is in fixed supply, it is optimal for the government to tax it as much as possible. To avoid this issue, we assume that $\tau_0^k$ is fixed at a specified rate.
+	\end{itemize}
+	
+	\begin{definition}
+		A Ramsey equilibrium is a policy $\pi$, an allocation rule $x()$ and prices $p()$ such that
+		\begin{equation*}
+			\pi = \arg \max_{\pi^{'}} \E_0 \sum_{t} \beta^t u(c_t(\pi^{'}), 1-h_t(\pi^{'}))
+		\end{equation*}
+		where for every $\pi^{'}$, the allocation $x(\pi^{'})$ and prices $p(\pi^{'})$ constitute a competitive equilibrium given the policy $\pi^{'}$. 
+	\end{definition}
+
+Again, to use the primal approach to find the optimal policy, we must characterize the conditions under which an allocation can be supported as part of a competitive equilibrium. The following proposition is the main result and is essentially the dynamic counterpart of the static problem considered above:
+	
+	\begin{proposition}
+		The allocation $x$, capital tax rate and return on debt in period 0 in a competitive equilibrium satisfy the resource constraint
+		\begin{equation}\label{eq:fc}
+			c_t + g_t + k_t = z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1}
+		\end{equation}
+		and the \textbf{Present Value Implementability Constraint}(PVIC)
+		\begin{equation}\label{eq:pvic}
+			\E_0 \sum_{t=0}^\infty \beta^t[u_c(c_t, 1-h_t)c_t - u_l(c_t, 1-h_t)h_t] = u_c(c_0, 1-h_0)[R_0^k k_{-1} + R_0^b b_{-1}]
+		\end{equation}
+			Furthermore, given allocations and period-0 policies that satisfy (\ref{eq:fc}) and (\ref{eq:pvic}), we can construct policies, prices, and debt holdings that, together with the given allocations and period-0 policies, constitute a competitive equilibrium.
+	\end{proposition}
+	
+	\subsubsection{Derivation of PVIC}
+		(Lixi: This is one of the most important subjects covered in this course.) 
+	
+		Starting from the consumer's budget constraint in each period and multiplying by the Lagrange multiplier $\beta^t u_c(c_t, 1-h_t)$, or simply $\beta^tu_c(t)$, we obtain
+	\begin{align*}
+		\E_0 \Bigg\{ & \underbrace{\sum_{t=0}^\infty \beta^t u_c(t)(1-\tau_t^h) w_t h_t}_{\text{I}} + \underbrace{\sum_{t=0}^\infty \beta^t u_c(t) R_t^k k_{t-1}}_{\text{II}} + \underbrace{\sum_{t=0}^\infty \beta^t u_c(t) R_t^b b_{t-1}}_{\text{III}} \\ & - \underbrace{\sum_{t=0}^\infty \beta^t u_c(t) c_t}_{IV} - \underbrace{\sum_{t=0}^\infty \beta^t u_c(t) k_t}_{V} - \underbrace{ \sum_{t=0}^\infty \beta^t u_c(t) b_t}_{VI} \Bigg\} \geq 0
+	\end{align*}
+	There are 6 parts of the equation and we will use CE characterizations to simplify each part. Again, we use the FOCs of consumers and firms in the system of equations (\ref{eq:intra}) - (\ref{eq:bonds_clearing}) that defines a competitive equilibrium.
+	
+	First, notice that by (\ref{eq:intra}), we can replace $(1-\tau_t^h)w_t$ by the MRS between consumption and leisure and rewrite part I as 
+	\begin{equation*}
+		\sum_{t=0}^\infty \beta^t u_c(t)(1-\tau_t^h) w_t h_t = \sum_{t=0}^\infty \beta^t u_l(t) h_t
+	\end{equation*}
+		By the Euler equation for capital (\ref{eq:euler_k}), we can rewrite part V as
+	\begin{equation*}
+		\sum_{t=0}^\infty \beta^t u_c(t) k_t = \sum_{t=0}^\infty \beta^{t+1}u_c(t+1)R_{t+1}^k k_{t}
+	\end{equation*}
+		By the Euler equation for bonds (\ref{eq:euler_b}), we can rewrite part VI as
+	\begin{equation*}
+		\sum_{t=0}^\infty \beta^t u_c(t) b_t = \sum_{t=0}^\infty \beta^{t+1}u_c(t+1)R_{t+1}^b b_t
+	\end{equation*}
+	Now, notice that we can cancel out some terms in part II and part IV, and similarly for part III and part VI:
+	\begin{align}
+		\sum_{t=0}^\infty \beta^t u_c(t) R_t^b b_{t-1} - \sum_{t=0}^\infty \beta^{t+1}u_c(t+1)R_{t+1}^b b_t &= u_c(0)R_0^bb_{-1}\\
+		\sum_{t=0}^\infty \beta^t u_c(t) R_t^k k_{t-1} - \sum_{t=0}^\infty \beta^{t+1}u_c(t+1)R_{t+1}^k k_t &= u_c(0)R_0^kk_{-1}
+	\end{align}
+Therefore, we end up with the following equation 
+	\begin{equation*}
+		\E_0 \left\{\sum_{t=0}^\infty \beta^t \big(u_c(t) c_t - u_l(t) h_t \big) \right\} \leq u_c(0)R_0^bb_{-1} + u_c(0)R_0^kk_{-1}
+	\end{equation*}
+which is the PVIC.
+
+\paragraph{Alternative Derivation of PVIC from Government Budget Constraint \\ [6pt]}
+Alternatively, we can derive the PVIC from the government budget constraint. Proceed with the same multiplier $\beta^t u_c(t)$ for each period and sum up the government budget constraint, we get:
+	\begin{align*}
+		\E_0 \sum_{t=0}^\infty\beta^t u_c(t) \Big(b_t + \tau_t^h w_t h_t + \tau_t^k (r_t - \delta) k_{t-1} - R_t^b b_{t-1} - g_t \Big) &\geq 0\\
+		\E_0 \sum_{t=0}^\infty\beta^t u_c(t) \Big(-(1-\tau_t^h) w_t h_t + w_th_t + \tau_t^k (r_t - \delta) k_{t-1} + b_t  - R_t^b b_{t-1} - g_t \Big) &\geq 0\\
+		\E_0 \sum_{t=0}^\infty\beta^t \Big(-u_c(t)(1-\tau_t^h) w_t h_t \Big) + u_c(t) \Big(w_th_t + \tau_t^k (r_t - \delta) k_{t-1} + b_t  - R_t^b b_{t-1} - g_t \Big) &\geq 0
+	\end{align*} 
+	Substituting (\ref{eq:intra}) into the first part and we get:
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty\beta^t\Big\{ \big(-u_l(t) h_t \big) + u_c(t) \big(w_th_t + \tau_t^k (r_t - \delta) k_{t-1} + b_t  - R_t^b b_{t-1} - g_t \big)\Big\} \geq 0
+	\end{equation*}
+	Notice that,
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty\beta^t u_c(t)(b_t - R_t^b b_{t-1}) = \E_0\Big(u_c(0)b_0 - u_c(0)R_0^bb_{-1} + \beta u_c(1)b_1 - \beta u_c(1)R_1^bb_0 + \beta u_c(2)b_2 - \beta u_c(2)R_2^bb_1 + ... \Big)
+	\end{equation*}
+	And by (\ref{eq:euler_b}), we have $u_c(t) = \beta u_c(t+1) R_{t+1}^b$, so we can cancel everything except for the term
+	\begin{equation*}
+		-u_c(0)R_0^b b_{-1}
+	\end{equation*}
+	Now, our constraint looks like:
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty\beta^t\Big\{ \big(-u_l(t) h_t \big) + u_c(t) \big(w_th_t + \tau_t^k (r_t - \delta) k_{t-1} - g_t \big)\Big\} \geq u_c(0)R_0^b b_{-1}
+	\end{equation*}
+	Now, by feasibility constraint (\ref{eq:goods_clearing}), and $F$ being CRS, we have
+	\begin{align*}
+		c_t + g_t + k_t &= z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1}\\
+		c_t + k_t - w_th_t - r_t k_{t-1} - (1-\delta)k_{t-1} & = -g_t
+	\end{align*}
+	Now focus on this specific part
+	\begin{align*}
+		w_th_t + \tau_t^k (r_t - \delta) k_{t-1} - g_t &= w_th_t + \tau_t^k (r_t - \delta) k_{t-1} + c_t + k_t - w_th_t - r_t k_{t-1} - (1-\delta)k_{t-1}\\
+		&= \tau_t^k (r_t - \delta) k_{t-1} + c_t + k_t  - r_t k_{t-1} - (1-\delta)k_{t-1}\\
+		&= c_t + k_t + k_{t-1}(\tau_t^kr_t - \tau_t^k\delta - r_t - 1 + \delta)\\
+		&= c_t + k_t - (1 + (1-\tau_t^k)(r_t - \delta))k_{t-1}\\
+		&= c_t + k_t - R_t^k k_{t-1}
+	\end{align*}
+	Then the constraint looks like
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty\beta^t\Big\{ \big(-u_l(t) h_t \big) + u_c(t) \big(c_t + k_t - R_t^k k_{t-1} \big)\Big\} \geq u_c(0)R_0^b b_{-1}
+	\end{equation*}
+	Now, expand 
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty\beta^t u_c(t)(k_t - R_t^k k_{t-1}) = \E_0\Big(u_c(0)k_0 - u_c(0)R_0^kk_{-1} + \beta u_c(1)k_1 - \beta u_c(1)R_1^kk_0 + \beta u_c(2)k_2 - \beta u_c(2)R_2^kk_1 + ... \Big)
+	\end{equation*}
+	By (\ref{eq:euler_k}): $u_c(t) = \beta u_c(t+1) R_{t+1}^k$, we can cancel almost everything except
+	\begin{equation*}
+		-u_c(0)R_0^k k_{-1}
+	\end{equation*}
+	Now, our PVIC looks like:
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty\beta^t( -u_l(t) h_t  + u_c(t) c_t ) \geq u_c(0)R_0^k k_{-1} + u_c(0)R_0^b b_{-1}
+	\end{equation*}
+	Alongside with the PVIC from consumer's budget constraint, we now get the PVIC with equality
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty\beta^t( -u_l(t) h_t  + u_c(t) c_t ) = u_c(0)R_0^k k_{-1} + u_c(0)R_0^b b_{-1}
+	\end{equation*}
+
+\subsubsection{Solving Ramsey Planner's Problem}
+
+%	Notice that the right-hand-side of the PVIC is just a constant, by applying (5.8) and (5.9) again, we get
+%	\begin{equation*}
+%		u_c(0)R_0^k k_{-1} + u_c(0)R_0^b b_{-1} = \frac{u_c(-1)}{\beta}(k_{-1} + b_{-1}) := A_0
+%	\end{equation*}
+%	so it is now all in allocation term, and we can denote that as $A_0$ so in Ramsey problem we do not need to worry about the FOC of that.\\
+	
+	\noindent
+	Now, we can solve the Ramsey problem:
+	\begin{equation*}
+		\max_{c_t, h_t, k_t} \E_0 \sum_{t=0}^\infty \beta^t u(c_t, 1-h_t)
+	\end{equation*}
+	subject to
+	\begin{align}
+		\E_0 \sum_{t=0}^\infty \beta^t[u_c(c_t, 1-h_t)c_t - u_l(c_t, 1-h_t)h_t] &= u_c(0)R_0^k k_{-1} + u_c(0)R_0^b b_{-1} \label{eq:PVIC}\\
+		z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1} - c_t - g_t - k_t &= 0 \label{eq:RC}
+	\end{align}
+
+As before, we can set up a Lagrangian
+\begin{eqnarray}
+\mathcal{L} & = &\E_0 \sum_{t=0}^\infty \beta^t\Big\{ u(c_t, 1-h_t) + \lambda \big(u_c(t)c_t - u_l(t)h_t - u_c(0) R_0^k k_{-1} - u_c(0) R_0^b b_{-1} \big) \nonumber\\ & & + \gamma_t \big(z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1} - c_t - g_t - k_t \big)  \Big\} \label{eq:Lagrangian_ramsey}
+\end{eqnarray}
+
+\paragraph{A Further Investigation into Time Inconsistency \\ [6pt]}
+Neither the lecture notes nor the paper are clear about the time-inconsistency issue in the Ramsey planner's problem, but the issue is important. This section examines it further.
+
+By the Bellman optimality principle, (\ref{eq:Lagrangian_ramsey}) can be written recursively as
+\begin{align}
+	V_0(k_{-1}, b_{-1}) = \max_{c_0, h_0, k_0} & u(c_0, 1-h_0) + \lambda \big(u_c(0)c_0 - u_l(0)h_0 - u_c(0) R_0^k k_{-1} - u_c(0) R_0^b b_{-1} \big) \nonumber \\ & + \gamma_0 \big(z_0 F(k_{-1}, h_0) + (1-\delta)k_{-1} - c_0 - g_0 - k_0 \big) + \beta \E_0 V_1(k_0, b_0) \label{eq:bellman_period0}
+\end{align} 
+From the period-0 perspective, $V_1$ can be written recursively as
+\begin{align}
+	V_1(k_{0}, b_{0}) = \max_{c_1, h_1, k_1} & u(c_1, 1-h_1) + \lambda \big(u_c(1)c_1 - u_l(1)h_1 - u_c(0) R_0^k k_{-1} - u_c(0) R_0^b b_{-1} \big) \nonumber \\ & + \gamma_1 \big(z_1 F(k_{0}, h_1) + (1-\delta)k_{0} - c_1 - g_1 - k_1 \big) + \beta \E_1 V_2(k_1, b_1) \label{eq:bellman_period1_from0}
+\end{align}
+
+Equations (\ref{eq:bellman_period0}) and (\ref{eq:bellman_period1_from0}) represent fundamentally different problems. For instance, the envelope condition for $V_0$ with respect to $k$ is
+\begin{equation}
+	\frac{\partial V_0}{\partial k_{-1}} = - \lambda u_c(0) R_0^k + \gamma_0 (z_0 F_k(k_{-1}, h_0) + 1-\delta)
+\end{equation}
+whereas the envelope condition for $V_1$ with respect to $k$ is
+\begin{equation}
+	\frac{\partial V_1}{\partial k_{0}} = \gamma_1 (z_1 F_k(k_{0}, h_1) + 1-\delta)
+\end{equation}
+The difference is due to the presence of $k_{-1}$ and $b_{-1}$ in the period-0 problem. As long as $k_{-1}, b_{-1} > 0$, the first-order and envelope conditions for the period-0 problem (\ref{eq:bellman_period0}) are affected by the $u_c(0) R_0^k k_{-1}$ and $u_c(0) R_0^b b_{-1}$ terms. Moreover, from the period-0 perspective, the Ramsey planner anticipates that these terms in the implementability constraint should no longer matter when determining the optimal allocation from period 1 onward.  
+
+However, this is not true once the Ramsey planner reaches period 1. At that point, the planner takes $k_0$ and $b_0$, both of which were predetermined in period 0, as given. Following the same steps as above yields a PVIC from the period-1 perspective:
+\begin{equation}
+	\E_1 \sum_{t=1}^\infty\beta^t( -u_l(t) h_t  + u_c(t) c_t ) = u_c(1)R_1^k k_{0} + u_c(1)R_1^b b_{0}
+\end{equation}
+This leads the period-1 planner to solve a problem analogous to (\ref{eq:bellman_period0}) rather than (\ref{eq:bellman_period1_from0}). Thus, the planner will change the period-0 plan for period-1 allocations upon reaching period 1; without commitment, the period-0 plan is time-inconsistent.
+
+Intuitively, why does time inconsistency arise? The period-0 Ramsey planner enters with initial capital $k_{-1}$ and bonds $b_{-1}$ and can choose an allocation $c_0$ that changes the marginal utility of consumption in period 0, and hence the ``value" of those initial assets. However, from the period-0 perspective, using the PVIC (\ref{eq:pvic}) amounts to assuming that the planner will not or cannot alter the value of capital and bonds by changing the marginal utility of consumption in periods $t \geq 1$. 
+
+To resolve the time inconsistency, we focus on the optimal Ramsey plan \textit{under commitment}; that is, we assume that the Ramsey planner commits to the period-0 plan. Furthermore, we disregard the planner's ability to account for the effect of $u_c(0)$ on the right-hand side of the PVIC, so the planner treats that side of the constraint as a constant:
+\[\E_0 \sum_{t=0}^\infty \beta^t[u_c(c_t, 1-h_t)c_t - u_l(c_t, 1-h_t)h_t] = A_0\]
+that is, the Ramsey planner no longer attempts to manipulate the value of initial capital and bonds by changing $u_c(0)$.
+
+\paragraph{Solving Ramsey Planner's Problem under Commitment \\ [6pt]}
+	Now, we derive the first-order conditions:
+	\begin{align}
+		u_c(t) + \lambda (u_{cc}(t)c_t + u_c(t) - u_{lc}(t)h_t) &= \gamma_t \label{eq:foc_ramsey_c}\\
+		- u_l(t) + \lambda(-u_{cl}(t)c_t +u_{ll}(t)h_t - u_l(t)) + \gamma_t (z_t F_h(t)) &= 0 \label{eq:foc_ramsey_l}\\
+		\beta \E_t \Big(\gamma_{t+1} \big(z_{t+1} F_k(t+1) + 1 - \delta\big)\Big) &= \gamma_t \label{eq:foc_ramsey_k}
+	\end{align}
+		The transversality condition is
+	\begin{equation*}
+		\lim_{t \rightarrow \infty} \beta^t u_c(t)k_t = 0
+	\end{equation*}
+	\begin{proposition}
+		The solution to the Ramsey problem is sequences $\{c_t, h_t, k_t, \gamma_t\}_{t=0}^\infty$ and a constant $\lambda$ that satisfies (\ref{eq:foc_ramsey_c}), (\ref{eq:foc_ramsey_l}), (\ref{eq:foc_ramsey_k}), the PVIC (\ref{eq:PVIC}), the resource constraint (\ref{eq:RC}), and a transversality condition $\lim_{t \rightarrow \infty} \beta^t u_c(t)k_t = 0$, given $k_{-1}$.
+	\end{proposition}
+	
+	\noindent
+%	Next, we try to see the stead-state version of the problem. Suppose everything in $A_0$ are also in steady state. We have the following conditions
+%	\begin{align}
+%		\nonumber (1+\lambda) u_c + \lambda (u_{cc}c - u_l h) &= \gamma\\
+%		\nonumber (1 + \lambda) u_l + \lambda(u_{cl}c - u_{ll}h) &= \gamma F_h\\
+%		\beta (F_k + 1 -\delta) &= 1\\
+%		\nonumber \frac{u_cc - u_lh}{1-\beta} &= \frac{u_c}{\beta}(k+b)\\
+%		\nonumber c + g + k &= F
+%	\end{align}
+%	We have 5 equations, and 5 unknowns $\{c, k, h, \lambda, \gamma\}$, when we take $b$ as given.\\
+%	We solve this to get $\lambda$, as in dynamic version, $\lambda$ is also a constant. Then, we can use $\lambda$ to solve for $\{c_t, h_t, k_t, \gamma_t\}$ using (5.20), (5.21), (5.22), (5.19) and TVC.\\
+%	Once we have allocations $\{c_t, h_t, k_t\}$, we can characterize the rest of Ramsey equilibrium. We need
+%	\begin{equation*}
+%		\{c_t, h_t, k_t, b_t, w_t, r_t, R_t^b, \tau_t^h, \tau_t^k\}
+%	\end{equation*}
+%	given $k_{-1}, b_{-1}$.\\
+
+\paragraph{Back Out Prices and Policies from Allocations\\ [6pt]}
+		Once we obtain the optimal Ramsey allocation, prices can be calculated from the firm's FOCs:
+	\begin{align*}
+		r_t &= z_t F_k(k_{t-1}, h_t)\\
+		w_t &= z_t F_h(k_{t-1}, h_t)
+	\end{align*}
+		Labor income taxes follow from the intratemporal Euler equation:
+	\begin{align*}
+		1 - \tau_t^h &= \frac{u_l(c_t, 1- h_t)}{w_t u_c(c_t, 1- h_t)} = \frac{u_l(t)}{u_c(t) \cdot z_t F_h(t)}
+	\end{align*}
+		Government bonds are defined through a process similar to the derivation of the PVIC:
+	\begin{equation*}
+		b_t = \E_t \Bigg\{\sum_{s = t+1}^\infty \beta^{s-t} \frac{u_c(s)c_s - u_l(s)h_s}{u_c(t)} \Bigg\} - k_t
+	\end{equation*}
+	Lastly, we are left with
+	\begin{align*}
+		u_c(t) &= \beta \E_t [u_c(t+1)R_{t+1}^k]\\
+		u_c(t) &= \beta \E_t [u_c(t+1)R_{t+1}^b]
+	\end{align*}
+	to define $R_t^k$, i.e. to find $\tau_t^k$, and $R_t^b$. There is an indeterminacy between state-contingent capital income taxes and state-contingent returns on government bonds. There are 2 alternatives to fix this:
+	\begin{itemize}
+		\item assume capital income tax is not state-contingent, i.e. $\tau_k$ is pre-determined at time $t-1$
+		\item assume the return on bond is not state-contingent, i.e. $R_t^b$ is pre-determined at time $t-1$
+	\end{itemize}
+	
+	\subsection{Social Planner's Problem}
+	Social planner's problem here is
+	\begin{equation*}
+		\max_{c_t, h_t, k_t} \E_0 \sum_{t=0}^\infty \beta^t u(c_t, 1-h_t)
+	\end{equation*}
+	subject to
+	\begin{equation*}
+		z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1} - c_t - g_t - k_t = 0
+	\end{equation*}
+	Lagrangian looks like:
+	\begin{equation*}
+		\E_0 \sum_{t=0}^\infty \beta^t \Big\{u(c_t, 1-h_t) + \zeta_t (z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1} - c_t - g_t - k_t)  \Big\}
+	\end{equation*}
+	FOC yields:
+	\begin{align*}
+		u_c(t) &= \zeta_t\\
+		u_l(t) &= \zeta_t z_t F_h(t)\\
+		\zeta_t &= \beta \zeta_{t+1}\E_t (z_{t+1}F_k(k_t, h_{t+1}) + 1 - \delta)\\
+		z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1} &=  c_t + g_t + k_t
+	\end{align*}
+	Then the solution can be characterized by:
+	\begin{align*}
+		\frac{u_c(t)}{u_l(t)} &= \frac{1}{z_t F_k(t)}\\
+		u_c(t) &= \beta \E(u_c(t+1)z_{t+1} F_k(t+1) + 1 - \delta)\\
+		z_t F(k_{t-1}, h_t) + (1-\delta)k_{t-1} &=  c_t + g_t + k_t
+	\end{align*}
+	And transversality condition
+	\begin{equation*}
+		\lim_{t \rightarrow \infty} \beta^t u_c(t) k_t = 0
+	\end{equation*}
+	
+	\subsection{Completeness of Tax System}
+	From the social planner's problem, we see that there are 2 margins in this economy:
+	\begin{itemize}
+		\item intratemporal margin: consumption today vs leisure today
+		\item intertemporal margin: consumption today vs consumption tomorrow
+	\end{itemize}
+	To implement the Ramsey allocations, we have 2 instruments: labor income tax and capital income tax. This is a complete system, as there are 2 margins, and 2 instruments that can create wedges between those margins.\\
+	To illustrate this, recall the Ramsey problem characterizations:
+	\begin{align*}
+		u_c(t) + \lambda (u_{cc}(t)c_t + u_c(t) - u_{lc}(t)h_t) &= \gamma_t\\
+		u_l(t) - \lambda(-u_{cl}(t)c_t +u_{ll}(t)h_t - u_l(t)) &=  \gamma_t (z_t F_h(t)) 
+	\end{align*}
+	Combining both we get:
+	\begin{align*}
+		\frac{u_c(t) + \lambda (u_{cc}(t)c_t + u_c(t) - u_{lc}(t)h_t)}{u_l(t) - \lambda(-u_{cl}(t)c_t +u_{ll}(t)h_t - u_l(t))} &= \frac{1}{z_t F_h(t)}\\
+		\frac{(1 + \lambda)u_c(t) + \lambda (u_{cc}(t)c_t - u_{lc}(t)h_t)}{(1 + \lambda)u_l(t) + \lambda(u_{cl}(t)c_t - u_{ll}(t)h_t)} &= \frac{1}{z_t F_h(t)}
+	\end{align*}
+	It is possible to perform what we had in previous section, to see that by algebraic manipulations, we can create a wedge between $\frac{u_c(t)}{u_l(t)}$ and $\frac{1}{z_tF_h(t)}$, i.e. a wedge between $MRS_{c,l}$ and $MRT_{c,l}$.\\
+	
+	\noindent
+	Another important result is that it is possible to \textbf{replace} the \textbf{labor income tax} with a \textbf{consumption tax}, and this will not change the Ramsey allocations.\\
+	The new budget constraint for consumers becomes:
+	\begin{equation*}
+		(1 + \tau_t^c) c_t + k_t + b_t = w_t h_t + R_t^k k_{t-1} + R_t b_{t-1}
+	\end{equation*}
+	The new intratemporal Euler equation becomes;
+	\begin{equation*}
+		\frac{u_l(t)}{u_c(t)} = \frac{w_t}{1 + \tau_t^c}
+	\end{equation*}
+	Recall the labor income tax result, we see that if we set $\tau_t^c$ so that:
+	\begin{equation*}
+		1-\tau_t^h = \frac{1}{1+\tau_t^c}
+	\end{equation*}
+	The Ramsey problem allocations are exactly the same.\\
+		Similarly, it is possible to have all three taxes, introducing one more indeterminacy into the problem.
+	
+	\subsection{Capital Taxation Credit}
+	One of the most important results from this setup is the zero-capital taxation result. At the steady state, the FOC on $k_t$, (\ref{eq:foc_ramsey_k}), implies
+	\begin{equation*}
+		\beta (F_k + 1 - \delta) = 1
+	\end{equation*}
+	And in a steady-state competitive equilibrium, Euler equation implies
+	\begin{align*}
+		u_c &= \beta u_c [1 + (1-\tau^k)(F_k - \delta)] \implies 1 = \beta [1 + (1-\tau^k)(F_k - \delta)]
+	\end{align*}
+	Combining both, we get the Ramsey optimal plan requires the capital tax to be 0, namely $\tau^k = 0$.\\
+	
+	\noindent
+	Note that from the wedge interpretation from the intertemporal margin, we have the $MRT$ of consumption today vs consumption tomorrow is $F_k + 1 - \delta$, whereas the $MRS$ of such being $\frac{1}{\beta}$.\\
+	In the long  run, Ramsey planner wants to keep $MRT = MRS$. The no long-run intertemporal distortions is a more general result than the zero-capital taxation result.
+	
+%	\section{Ramsey Application: Optimal Monetary Policy}
+%	In this section, we adopt the Cash-Goods-Credit-Goods model illustrated earlier. We ignore the lump-sum taxes, but create a distortionary labor income tax.
+%	
+%	\subsection{Revisit of Model Setup}
+%	In this section, we follow the setup from Chari and Kehoe (1999):
+%	\begin{itemize}
+%		\item no uncertainty for each period: $m_{t-1}$ and $b_{t-1}$ are known to household entering $t$, where $m_{t-1} = (1-\tau_{t-1})p_{t-1}w_{t-1}h_{t-1}$
+%		\item bond market opens and household chooses $b_t$ (note here that the choice variable is $\tilde{m}_t$, i.e. $m(s^t)$)
+%		\begin{equation*}
+%			\tilde{m}_t = m_{t-1} + R_{t-1}b_{t-1} - b_t - p_{t-1}c_{2, t-1}
+%		\end{equation*}
+%		\item then household splits into the shopper and the worker
+%		\item shoppers uses $\tilde{m}_t$ for cash purchases, and issue nominal claims with zero interest (that the household will settle in the next bond market) for credit purchases
+%		\item worker works for the firm and get paid in cash at the end of the period
+%		\item the pair gets together: the money earned by the worker cannot be spent until next period; the money balances carried over to the next period is:
+%		\begin{equation*}
+%			m_t = \tilde{m}_t - p_t c_{1,t} + (1-\tau_t)p_t w_t h_t
+%		\end{equation*}
+%	\end{itemize}
+%	This setup yields a CIA constraint:
+%	\begin{equation}
+%		p_t c_{1,t} \leq \tilde{m}_t
+%	\end{equation}
+%	and the budget constraint is:
+%	\begin{equation}
+%		\tilde{m}_t + b_t = R_{t-1}b_{t-1} + \tilde{m}_{t-1} + (1-\tau_{t-1})p_{t-1}w_{t-1}h_{t-1} - p_{t-1} c_{1, t-1} - p_{t-1}c_{2, t-1}
+%	\end{equation}
+%	where the decisions are made in the bonds market.\\
+%	
+%	\noindent
+%	Household's problem is:
+%	\begin{equation*}
+%		\max_{\{c_{1,t}, c_{2,t}, h_t, \tilde{m}_t, b_t\}} \E_0 \sum_{t=0}^\infty \beta^t u(c_{1,t}, c_{2,t}, 1-h_t)
+%	\end{equation*}
+%	subject to CIA constraint (6.1) and budget constraint (6.2).\\
+%	Assigning multiplier $\beta^t\frac{\phi_t}{p_t}$ to CIA constraint, and $\beta^t\frac{\zeta_t}{p_{t-1}}$ to budget constraint, the Lagrangian looks like:
+%	\begin{align*}
+%		\E_0 \sum_{t=0}^\infty \beta^t \Bigg\{u(c_{1,t}, c_{2,t}, 1-h_t) + \frac{\phi_t}{p_t}(\tilde{m}_t - p_tc_{1,t}) + \frac{\zeta_t}{p_{t-1}} \Big(& R_{t-1}b_{t-1} + \tilde{m}_{t-1} + (1-\tau_{t-1})p_{t-1}w_{t-1}h_{t-1}\\
+%		&- p_{t-1} c_{1, t-1} - p_{t-1}c_{2, t-1} - \tilde{m}_t - b_t \Big) \Bigg\}
+%	\end{align*}
+%	First order conditions yield:
+%	\begin{align}
+%		u_1(t) &= \beta \E_t (\zeta_{t+1}) + \phi_t\\
+%		u_2(t) &= \beta \E_t (\zeta_{t+1})\\
+%		u_l(t) &=  \beta (1-\tau_t)w_t\E_t(\zeta_{t+1})\\
+%		\frac{\zeta_{t}}{p_{t-1}} &= \beta \frac{\E_t(\zeta_{t+1})}{p_t} + \frac{\phi_t}{p_t}\\
+%		\frac{\zeta_{t}}{p_{t-1}} &= \beta \frac{\E_t(\zeta_{t+1})}{p_t}R_t
+%	\end{align}
+%	alongside with 2 Transversality conditions:
+%	\begin{align*}
+%		\lim_{t\rightarrow \infty} \beta^t \frac{\zeta_t}{p_{t-1}} \tilde{m}_t &= 0\\
+%		\lim_{t\rightarrow \infty} \beta^t \frac{\zeta_t}{p_{t-1}} b_t &= 0
+%	\end{align*}
+%	Now, combining (6.4) and (6.5) we get the intratemporal Euler equation between credit goods and leisure:
+%	\begin{equation}
+%		\frac{u_l(t)}{u_2(t)} = (1-\tau_t)w_t
+%	\end{equation}
+%	Combining (6.3) and (6.6), we get:
+%	\begin{align}
+%		\nonumber \frac{\zeta_{t}}{p_{t-1}} &=  \frac{u_1(t)}{p_t}\\
+%		\zeta_t &= \frac{u_1(t)}{1 + \pi_t}
+%	\end{align}
+%	where
+%	\begin{equation*}
+%		1 + \pi_t := \frac{p_t}{p_{t-1}}
+%	\end{equation*}
+%	Then the multiplier for budget constraint becomes:
+%	\begin{equation*}
+%		\beta^t\frac{\zeta_t}{p_{t-1}} = \beta^t \frac{u_1(t)p_{t-1}}{p_t p_{t-1}} = \beta^t \frac{u_1(t)}{p_t}
+%	\end{equation*}
+%	Now, combining (6.9), (6.4) and (6.7), we get:
+%	\begin{align}
+%		\nonumber \frac{u_1(t)}{(1+\pi_t)p_{t-1}} &= \frac{u_2(t)}{p_t}R_t\\
+%		\nonumber \frac{u_1(t)}{p_{t}} &= \frac{u_2(t)}{p_t}R_t\\
+%		\frac{u_1(t)}{u_2(t)} &= R_t
+%	\end{align}
+%	Combining (6.7) with (6.9) we get an intertemporal condition
+%	\begin{align}
+%		\nonumber \frac{u_1(t)}{(1+\pi_t)p_{t-1}} &= \beta R_t \frac{\E_t(\frac{u_1(t+1)}{1+\pi_{t+1}})}{p_t}\\
+%		\nonumber \frac{u_1(t)}{p_t}p_t &= \beta R_t \E_t\Big(\frac{u_1(t+1)}{1+\pi_{t+1}}\Big)\\
+%		u_1(t) &= \beta R_t \E_t\Big(\frac{u_1(t+1)}{1+\pi_{t+1}}\Big)
+%	\end{align}
+%	
+%	\noindent
+%	For firm, given the CRS assumption and lack of capital and technology shocks, we have a linear production function and $w_t = 1$.\\
+%	
+%	\noindent
+%	The government's budget constraint is:
+%	\begin{equation*}
+%		M_t + B_t + p_{t-1}\tau_{t-1}h_{t-1} = M_{t-1} + R_{t-1}B_{t-1} + p_{t-1}g_{t-1}
+%	\end{equation*}
+%	where the LHS is the total revenue and the RHS is the total expenditure. Note that here $M_t$ denotes the money supply at the end of bond market of period $t$.\\
+%	
+%	\noindent
+%	For market clearing, we have:
+%	\begin{itemize}
+%		\item $M_t$ denotes the money supply at the end of the bond market of period $t$, and market clearing requires $\tilde{m}_t = M_t$
+%		\item tax is collected after production takes place (and hence after the bond market closes), and government consumption is done on credit
+%		\item resource constraint should be:
+%		\begin{equation}
+%			c_{1, t} + c_{2,t} + g_t = h_t
+%		\end{equation}
+%	\end{itemize}
+%	
+%	\subsection{Competitive Equilibrium}
+%	\begin{definition}
+%		A competitive equilibrium is a sequence $\{c_{1,t}, c_{2,t},h_t, M_t, B_t, p_t\}$ that given $\{p_t, \tau_t, R_t^b \}$, satisfies (6.1), (6.2), (6.8), (6.10), (6.11) and (6.12), and the Transversality conditions:
+%		\begin{align*}
+%			\lim_{t\rightarrow \infty} \beta^t \frac{\zeta_t}{p_{t-1}} \tilde{m}_t &= 0\\
+%			\lim_{t\rightarrow \infty} \beta^t \frac{\zeta_t}{p_{t-1}} b_t &= 0
+%		\end{align*}
+%	\end{definition}
+%	
+%	\noindent
+%	Now we re-list the characterizations:
+%	\begin{align*}
+%		p_t c_{1,t} &= M_t\\
+%		M_t + B_t &= R_{t-1}B_{t-1} + M_{t-1} \\
+%		&+ (1-\tau_{t-1})p_{t-1}w_{t-1}h_{t-1} - p_{t-1} c_{1, t-1} - p_{t-1}c_{2, t-1}\\
+%		\frac{u_l(t)}{u_2(t)} &= (1-\tau_t)w_t\\
+%		\frac{u_1(t)}{u_2(t)} &= R_t\\
+%		u_1(t) &= \beta R_t \E_t\Big(\frac{u_1(t+1)}{1+\pi_{t+1}}\Big)\\
+%		h_t &= c_{1, t} + c_{2,t} + g_t
+%	\end{align*}
+%	
+%	\noindent
+%	Note that if $R_t<1$, a competitive equilibrium is not well-defined as it would be optimal for the households to buy money and sell bonds (since the return on money is now better than that of bonds). Thus,
+%	\begin{equation}
+%		\frac{u_1(t)}{u_2(t)} \geq 1
+%	\end{equation}
+%	is also a constraint in the Ramsey problem.
+%	
+%	\subsection{Ramsey Problem}
+%	First, we derive the \textbf{Present Value Implementability Constraint (PVIC)}.\\
+%	We start from the consumer's budget constraint. We multiply each period's budget constraint with the Lagrangian multiplier earlier, and recall that $\frac{\zeta_t}{p_{t-1}} = \frac{u_i(t)}{p_t}$, and since CIA binds, we also have $c_{1, t-1}p_{t-1} = M_{t-1}$. Now by dropping all the expectations, we have:
+%	\begin{equation}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} R_{t-1}B_{t-1} + \sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} p_{t-1} (1-\tau_{t-1}^h)w_{t-1}h_{t-1} - \sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} B_t - \sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} M_t - \sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t}p_{t-1} c_{2, t-1} = 0
+%	\end{equation}
+%	First, notice that for the term
+%	\begin{equation*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} p_{t-1} (1-\tau_{t-1}^h)w_{t-1}h_{t-1}
+%	\end{equation*}
+%	we can apply
+%	\begin{align*}
+%		\frac{u_l(t)}{u_2(t)} &= (1-\tau_t)w_t \\
+%		\frac{u_1(t)}{u_2(t)} &= R_t\\
+%		u_1(t) &= \beta R_t \frac{u_1(t+1)}{1+\pi_{t+1}}\\
+%		1 + \pi_t &= \frac{p_t}{p_{t-1}}
+%	\end{align*}
+%	and get
+%	\begin{align*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} p_{t-1} \frac{u_l(t-1)}{u_2(t-1)}h_{t-1} &= \sum_{t=0}^\infty \beta^t \frac{u_1(t-1)(1+\pi_t)}{\beta R_{t-1}}\frac{p_{t-1}}{p_t} \frac{u_l(t-1)}{u_2(t-1)}h_{t-1}\\
+%		&= \sum_{t=0}^\infty \beta^{t-1}\frac{u_1(t-1)}{u_2(t-1)R_{t-1}}u_l(t-1)h_{t-1} \\
+%		&= \sum_{t=0}^\infty \beta^{t-1} u_l(t-1)h_{t-1}
+%	\end{align*}
+%	For the term
+%	\begin{equation*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} B_t
+%	\end{equation*}
+%	by applying
+%	\begin{align*}
+%		u_1(t) &= \beta R_t \frac{u_1(t+1)}{1+\pi_{t+1}}\\
+%		1 + \pi_t &= \frac{p_t}{p_{t-1}}
+%	\end{align*}
+%	we get
+%	\begin{align*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} B_t &= \sum_{t=0}^\infty \beta^t \frac{\beta R_t \frac{u_1(t+1)}{1+\pi_{t+1}}}{p_t}B_t\\
+%		&= \sum_{t=0}^\infty \beta^{t+1}  \frac{u_1(t+1)}{p_{t+1}}R_tB_t
+%	\end{align*}
+%	Notice that this can be cancelled out with the first term and get:
+%	\begin{equation*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} R_{t-1}B_{t-1} - \sum_{t=0}^\infty \beta^{t+1} \frac{u_1(t+1)}{p_{t+1}}R_tB_t = \frac{u_1(0)}{p_0}R_{-1}B_{-1}
+%	\end{equation*}
+%	So far our derivation leads us to
+%	\begin{equation*}
+%		\frac{u_1(0)}{p_0}R_{-1}B_{-1} + \sum_{t=0}^\infty \beta^{t-1} u_l(t-1)h_{t-1}  - \sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} M_t - \sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t}p_{t-1} c_{2, t-1} = 0
+%	\end{equation*}
+%	Now, focusing on the term
+%	\begin{equation*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} M_t
+%	\end{equation*}
+%	From (6.1) we substitute $M_t = p_t c_{1,t}$ and get
+%	\begin{equation*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} M_t = \sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t} p_t c_{1,t} = \sum_{t=0}^\infty \beta^t u_1(t)c_{1,t}
+%	\end{equation*}
+%	As for the last term
+%	\begin{equation*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t}p_{t-1} c_{2, t-1}
+%	\end{equation*}
+%	With (6.10), (6.11) and $1+\pi_t = \frac{p_t}{p_{t-1}}$
+%	\begin{align*}
+%		\frac{u_1(t)}{u_2(t)} &= R_t\\
+%		u_1(t) &= \beta R_t \frac{u_1(t+1)}{1+\pi_{t+1}}
+%	\end{align*}
+%	we get
+%	\begin{align*}
+%		\sum_{t=0}^\infty \beta^t \frac{u_1(t)}{p_t}p_{t-1} c_{2, t-1} &= \sum_{t=0}^\infty \beta^t \frac{u_1(t-1)(1+\pi_t)}{\beta R_{t-1}}\frac{p_{t-1}}{p_t}c_{2, t-1}\\
+%		&= \sum_{t=0}^\infty \beta^{t-1}\frac{u_1(t-1)}{R_{t-1}}c_{2, t-1}\\
+%		&= \sum_{t=0}^\infty \beta^{t-1}u_2(t-1)c_{2, t-1}
+%	\end{align*}
+%	Now, rearranging the PVIC and we get:
+%	\begin{align}
+%		\nonumber \sum_{t=0}^\infty \beta^t u_1(t)c_{1,t} + \sum_{t=0}^\infty \beta^{t-1}u_2(t-1)c_{2, t-1} - \sum_{t=0}^\infty \beta^{t-1} u_l(t-1)h_{t-1} &= \frac{u_1(0)}{p_0}R_{-1}B_{-1}\\
+%		\nonumber \sum_{t=0}^\infty \beta^t u_1(t)c_{1,t} + \sum_{t=0}^\infty \beta^{t}u_2(t)c_{2, t} - \sum_{t=0}^\infty \beta^{t} u_l(t)h_{t} &= \frac{u_1(0)}{p_0}R_{-1}B_{-1} - \beta^{-1}u_2(-1)c_{2, -1}+\beta^{-1}u_l(-1)h_{-1}\\
+%		\nonumber \sum_{t=0}^\infty \beta^t u_1(t)c_{1,t} + \sum_{t=0}^\infty \beta^{t}u_2(t)c_{2, t} - \sum_{t=0}^\infty \beta^{t} u_l(t)h_{t} &= \beta^{-1}\frac{u_1(-1)}{p_{-1}}B_{-1} - \beta^{-1}u_2(-1)c_{2, -1}+\beta^{-1}u_l(-1)h_{-1}\\
+%		\sum_{t=0}^\infty \beta^t u_1(t)c_{1,t} + \sum_{t=0}^\infty \beta^{t}u_2(t)c_{2, t} - \sum_{t=0}^\infty \beta^{t} u_l(t)h_{t} &= A_0
+%	\end{align}
+%	where $A_0 = \beta^{-1}\frac{u_1(-1)}{p_{-1}}B_{-1} - \beta^{-1}u_2(-1)c_{2, -1}+\beta^{-1}u_l(-1)h_{-1}$ is not affecting any first-order condition. For simplicity reasons, we treat $A_0$ as 0 in the Lagrangian for Ramsey problem.
+%	
+%	\begin{proposition}
+%		The consumption and labor allocations in a competitive equilibrium satisfy feasibility constraint (6.12) and the PVIC (6.15).
+%	\end{proposition}
+%	
+%	\noindent
+%	The Ramsey problem is as follows:
+%	\begin{equation*}
+%		\max_{c_{1,t}, c_{2,t}, h_t} \E_0 \sum_{t=0}^\infty \beta^t u(c_{1,t}, c_{2,t}, 1-h_t)
+%	\end{equation*}
+%	subject to (6.15), PVIC, and (6.12), resource/feasibility constraint
+%	\begin{align*}
+%		\sum_{t=0}^\infty \beta^t u_1(t)c_{1,t} + \sum_{t=0}^\infty \beta^{t}u_2(t)c_{2, t} - \sum_{t=0}^\infty \beta^{t} u_l(t)h_{t} &= A_0\\
+%		c_{1,t} + c_{2,t} + g_t &= h_t
+%	\end{align*}
+%	We assign $\lambda$ to PVIC as multiplier, and $\beta^t \gamma_t$ as the multiplier to the feasibility constraint in each period. Then, the Lagrangian turns out to be:
+%	\begin{equation*}
+%		\E_0 \sum_{t=0}^\infty \beta^t\Bigg\{ u(c_{1,t}, c_{2,t}, 1-h_t) + \lambda \Big(u_1(t)c_{1,t} + u_2(t)c_{2, t} - u_l(t)h_{t} \Big) + \gamma_t(h_t - c_{1,t} - c_{2,t} - g_t) \Bigg\}
+%	\end{equation*}
+%	FOC yields:
+%	\begin{align}
+%		u_1(t) + \lambda\big(u_{11}(t)c_{1,t} + u_1(t) + u_{21}(t)c_{2,t} - u_{l1}(t)h_t \big) &= \gamma_t\\
+%		u_2(t) + \lambda\big(u_{12}(t)c_{1,t}  + u_{22}(t)c_{2,t} + u_2(t) - u_{l2}(t)h_t \big) &= \gamma_t\\
+%		-u_l(t) + \lambda (-u_{1l}(t)c_{1,t} - u_{2l}(t)c_{2,t} + u_{ll}(t)h_t - u_{l}(t)) &= -\gamma_t
+%	\end{align}
+%	Hence, the Ramsey allocation and multiplier $\{c_{1,t}, c_{2,t}, h_t, \lambda, \gamma_t\}$ is characterized by PVIC (6.15), resource constraint (6.12), (6.16) - (6.18). Then, with the allocations pinned down, we can use (6.8) to pin down $\tau_t$ (remind ourselves that $w_t = 1$ by normalization), and $R_t$ by (6.10). Lastly, we can pin down $\frac{M_t}{P_t}$ by CIA constraint $\frac{M_t}{p_t} = c_{1,t}$.\\
+%	Lastly, we can pin down real bond stock $\frac{b_t}{p_t}$ by the government's budget constraint in real environment:
+%	\begin{equation*}
+%		\frac{M_t}{p_t} + \frac{b_t}{p_t} + \frac{\tau_{t-1}h_{t-1}}{1 + \pi_t} = \frac{1}{1+\pi_t}\frac{M_{t-1}}{p_{t-1}} + \frac{R_{t-1}}{1+\pi_t}\frac{b_{t-1}}{p_{t-1}} + \frac{g_{t-1}}{1 + \pi_t}
+%	\end{equation*}
+%	Note we are not going to explicitly show how we get $\pi_t$, but it is derivable from all the conditions we have.
+%	
+%	\subsection{Social Planner's Problem}
+%	It is worthy to remind ourselves that the social planner do not care about monetary stuff at all. Notice that monetary terms do not enter the feasibility constraint, so the social planner's problem in this model is very easy and straightforward:
+%	\begin{equation*}
+%		\max_{c_{1,t}, c_{2,t}, h_t} \sum_{t=0}^\infty \beta^t u(c_{1,t}, c_{2,t}, 1-h_t)
+%	\end{equation*}
+%	subject to
+%	\begin{equation*}
+%		c_{1,t} + c_{2,t} + g_t = h_t
+%	\end{equation*}
+%	The FOC will give us:
+%	\begin{align*}
+%		u_1(t) &= \mu_t\\
+%		u_2(t) &= \mu_t\\
+%		u_l(t) &= \mu_t
+%	\end{align*}
+%	It is clear that we have 3 markets, and 2 margins, both of which are intratemporal.
+%	
+%	\subsection{Completeness of Tax System}
+%	Following last part, we see the 2 margins being:
+%	\begin{align*}
+%		\frac{u_1(t)}{u_2(t)} &= 1\\
+%		\frac{u_l(t)}{u_2(t)} &= 1
+%	\end{align*}
+%	Note that from equilibrium condition (6.10)
+%	\begin{equation*}
+%		\frac{u_1(t)}{u_2(t)} = R_t
+%	\end{equation*}
+%	and equilibrium condition (6.8)
+%	\begin{equation*}
+%		\frac{u_l(t)}{u_2(t)} = 1 - \tau_t
+%	\end{equation*}
+%	we see that Ramsey planner is able to create wedges in all margins.
+%	
+%	\subsection{Optimal Interest Rate}
+%	Recall that
+%	\begin{equation*}
+%		\frac{u_1(t)}{u_2(t)} = R_t
+%	\end{equation*}
+%	From Ramsey's solution we have
+%	\begin{align*}
+%		u_1(t) + \lambda\big(u_{11}(t)c_{1,t} + u_1(t) + u_{21}(t)c_{2,t} - u_{l1}(t)h_t \big) &= \gamma_t\\
+%		u_2(t) + \lambda\big(u_{12}(t)c_{1,t}  + u_{22}(t)c_{2,t} + u_2(t) - u_{l2}(t)h_t \big) &= \gamma_t
+%	\end{align*}
+%	We divide $u_i(t)$ from both sides for both equations, and take the ratio, then we get:
+%	\begin{align*}
+%		1 + \frac{\lambda\big(u_{11}(t)c_{1,t} + u_1(t) + u_{21}(t)c_{2,t} - u_{l1}(t)h_t \big)}{u_1(t)} &= \frac{\gamma_t}{u_1(t)}\\
+%		1 + \frac{\lambda\big(u_{12}(t)c_{1,t}  + u_{22}(t)c_{2,t} + u_2(t) - u_{l2}(t)h_t \big)}{u_2(t)} &= \frac{\gamma_t}{u_2{t}}
+%	\end{align*}
+%	The optimal interest rate would be:
+%	\begin{equation}
+%		\frac{u_1(t)}{u_2(t)} = \frac{1 + \frac{\lambda\big(u_{12}(t)c_{1,t}  + u_{22}(t)c_{2,t} + u_2(t) - u_{l2}(t)h_t \big)}{u_2(t)}}{1 + \frac{\lambda\big(u_{11}(t)c_{1,t} + u_1(t) + u_{21}(t)c_{2,t} - u_{l1}(t)h_t \big)}{u_1(t)}}
+%	\end{equation}
+%	In principle, depending on the properties of the utility function, we can obtain $R_t$ from this equation.\\
+%	
+%	\noindent
+%	Now, suppose we put more structure on the problem: assuming that the utility function takes the form of
+%	\begin{equation*}
+%		u(c_1, c_2, 1-h) = V(w(c_1, c_2), 1-h)
+%	\end{equation*}
+%	where $w()$ is a homothetic function.
+%	Then we have the following different orders of derivatives:
+%	\begin{align*}
+%		u_1 &= V_1w_1\\
+%		u_2 &= V_1w_2\\
+%		u_l &= V_2\\
+%		u_{12} = u_{21} &= V_{11}w_1w_2 + V_1w_{12}\\
+%		u_{11} &= V_{11}w_1^2 + V_1w_{11}\\
+%		u_{22} &= V_{11}w_2^2 + V_1w_{22}\\
+%		u_{il} &= V_{12}w_i, \forall i = 1, 2
+%	\end{align*}
+%	Now, we substitute above back to (6.19). For simplicity reasons, I will do denominator and numerator separately. The point of this exercise is to see that if cash goods and credit goods enter the utility homothetically, the optimal interest rate is 0 (R = 1).\\
+%	For numerator:
+%	\begin{align*}
+%		& 1 + \frac{\lambda\big(u_{12}(t)c_{1,t}  + u_{22}(t)c_{2,t} + u_2(t) - u_{l2}(t)h_t \big)}{u_2(t)}\\
+%		=& (1 + \lambda) + \lambda \frac{V_{11} w_1 w_2 c_1 + V_1 w_{12} c_1 + V_{11}w_2^2 c_2 + V_1w_{22}c_2}{V_1 w_2} - \lambda\frac{V_{12} w_2h}{V_1 w_2}\\
+%		=& (1+\lambda) + \lambda \frac{V_{11}w_1w_2c_1 + V_{11}w_2^2 c_2}{V_1 w_2}  + \lambda\frac{V_1 w_{12}c_1 + V_1 w_{22}c_2}{V_1 w_2} - \lambda\frac{V_{12} w_2h}{V_1 w_2}\\
+%		=& (1+\lambda) + \lambda \frac{V_{11}w_1c_1 + V_{11}w_2c_2}{V_1} + \lambda \frac{w_{12}c_1 + w_{22}c_2}{w_2} - \lambda \frac{V_{12}h}{V_1}
+%	\end{align*}
+%	For denominator:
+%	\begin{align*}
+%		& 1 + \frac{\lambda\big(u_{11}(t)c_{1,t} + u_1(t) + u_{21}(t)c_{2,t} - u_{l1}(t)h_t \big)}{u_1(t)}\\
+%		=& (1 + \lambda) + \lambda \frac{V_{11}w_1^2c_1 + V_1w_{11}c_1 + V_{11}w_1w_2 c_2 + V_1w_{12}c_2}{V_1 w_1} - \lambda \frac{V_{12}w_1}{V_1 w_1}\\
+%		=& (1+\lambda) + \lambda \frac{V_{11}w_1^2c_1 + V_{11}w_1w_2 c_2}{V_1 w_1} + \lambda \frac{V_1w_{11}c_1 + V_1w_{12}c_2}{V_1 w_1}- \lambda \frac{V_{12}w_1}{V_1 w_1}\\
+%		=& (1 + \lambda) + \lambda \frac{V_{11}w_1c_1 + V_{11}w_2 c_2}{V_1} + \lambda \frac{w_{11}c_1 + w_{12}c_2}{w_1} - \lambda \frac{V_{12}h}{V_1}
+%	\end{align*}
+%	Then we get:
+%	\begin{equation*}
+%		\frac{(1+\lambda) + \lambda \frac{V_{11}w_1c_1 + V_{11}w_2c_2}{V_1} + \lambda \frac{w_{12}c_1 + w_{22}c_2}{w_2} - \lambda \frac{V_{12}h}{V_1}}{(1 + \lambda) + \lambda \frac{V_{11}w_1c_1 + V_{11}w_2 c_2}{V_1} + \lambda \frac{w_{11}c_1 + w_{12}c_2}{w_1} - \lambda \frac{V_{12}h}{V_1}} = 1
+%	\end{equation*}
+%	Note that this result is related to the uniform taxation result. It is possible to add a cash-good and credit-good consumption tax.
+%	
+%	\subsection{Optimal Long-Run Inflation}
+%	Consider an interest-rate feedback rule
+%	\begin{equation*}
+%		R_t = \max \Bigg\{1, \Big[(1+r)(1 + \pi_{*})\Big(\frac{1 + \pi_t}{1 + \pi_{*}}\Big)^{\psi_1}\Big(\frac{Y_t}{Y_t^{*}}\Big)^{\psi_2} \Big]^{1 - \rho R}R_{t-1}^{\rho R}e^{\sigma_R \epsilon_{R, t}} \Bigg\}
+%	\end{equation*}
+%	There are 3 channels through which $\pi_{*}$ can affect welfare:
+%	\begin{itemize}
+%		\item money demand
+%		\item "New-Keynesian" frictions
+%		\item zero lower bound
+%	\end{itemize}
+%	
+%	\subsubsection*{Money Demand}
+%	In the context of most flexible-price models we cover in the scope of this class, prices should fall at the rate of time preference.\\
+%	We have $R_t =1$ in those models and at the steady state we have:
+%	\begin{equation*}
+%		1 = \frac{\beta R}{1 + \pi}
+%	\end{equation*}
+%	This gives $\pi = \beta - 1$. This means, that, an inflation of -3\%  to -4\% for the US. This is not what we observe.\\
+%	This means 2 things:
+%	\begin{itemize}
+%		\item monetary policy in US is not optimal
+%		\item flexible-prices models we saw are not the right model
+%	\end{itemize}
+%	The truth is probably somewhere in between.
+%	
+%	\subsubsection*{New Keynesian Channel}
+%	Consider a model where prices are sticky, in the Calvo setup.\\
+%	\begin{itemize}
+%		\item Result 1: if $\zeta = \lambda = 0$, then we achieve the first best.
+%		\item Result 2: if $\zeta = 0$ and $\lambda \neq 0$, then
+%		\begin{equation*}
+%			\frac{u_c}{u_l} = 1 + \lambda \neq 1
+%		\end{equation*}
+%		\item Result 3: if $\pi = 0$ but $\zeta > 0$, then again,
+%		\begin{equation*}
+%			\frac{u_c}{u_l} = 1 + \lambda \neq 1
+%		\end{equation*}
+%		\item except for the distortion due to monopolist competition, the New Keynesian friction is minimized when $\pi = 0$
+%	\end{itemize}
+%	
+%	\subsubsection*{ZLB-Stabilization}
+%	Recall that the policy rule:
+%	\begin{equation*}
+%		R_t = \max \Bigg\{1, \Big[(1+r)(1 + \pi_{*})\Big(\frac{1 + \pi_t}{1 + \pi_{*}}\Big)^{\psi_1}\Big(\frac{Y_t}{Y_t^{*}}\Big)^{\psi_2} \Big]^{1 - \rho R}R_{t-1}^{\rho R}e^{\sigma_R \epsilon_{R, t}} \Bigg\}
+%	\end{equation*}
+%	the smaller inflation target, the less "room" there is below steady state for stabilization. This is bad for welfare, thus the proposal for 4\% inflation target.\\
+%	
+%	\noindent
+%	A natural question to ask is the credibility of such proposal. And we would wonder if ZLB really is a constraint.
+%	
+%	\subsubsection*{Other Possible Channels}
+%	\begin{itemize}
+%		\item Downward nominal wage rigidity: empirically not very large
+%		\item Heterogeneity (borrowers and lenders): poor households with nominal debt are hurt with negative inflation
+%		\item Foreigner: if a part of money stock is held by foreigners, then some inflation won't hurt
+%	\end{itemize}
+%	
+%	\subsection{Optimal Monetary Policy}
+%	\begin{itemize}
+%		\item Flexible Price + Money Demand
+%		\begin{itemize}
+%			\item Static(Long Run): $R=1$, $\pi = \beta - 1$
+%			\item Dynamic: $R_t =1$ $\forall t$
+%		\end{itemize}
+%		\item Flexible Price + Money Demand + Government Financing (distortionary tax)
+%		\begin{itemize}
+%			\item Static(Long Run): $R=1$
+%			\item Dynamic: $R_t =1$ $\forall t$, $\pi_t$ very volatile
+%		\end{itemize}
+%		\item Sticky Prices + government Financing (distortionary tax)
+%		\begin{itemize}
+%			\item Static(Long Run): $R>1$, $\pi \approx 0$
+%			\item Dynamic: $R_t >1$ $\forall t$, $\pi_t$ very stable
+%		\end{itemize}
+%	\end{itemize}
+	
+\end{document}

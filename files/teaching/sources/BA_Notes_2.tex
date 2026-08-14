@@ -1,0 +1,448 @@
+\documentclass[12pt]{article}
+
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\newcommand{\E}{\mathbb{E}}
+\title{ECON601 TA Notes: Canonical New-Keynesian Model}
+\author{Haoran Wang \thanks{This note is largely based upon Chapter 3 of Gali (2015).}}
+\date{November 4, 2024}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents
+
+This note introduces the canonical three-equation New Keynesian model. Essentially, the canonical NK model is an RBC model with staggered price setting. Like an RBC model, it is microfounded and built on the optimization problems of individual households and firms within a general-equilibrium framework. Unlike an RBC model, it adds frictions to firms' price-setting decisions, so sluggish price adjustment arises from firms' optimizing behavior in the presence of these frictions.
+
+\section{Setup}
+
+\subsection{Household} The household's problem is standard. A representative, infinitely lived household chooses $\{c_t, h_t, b_t\}$ to solve
+\begin{equation}
+	\max_{\{c_t, h_t, b_t\}} \E_0 \sum_{t=0}^\infty \beta^t Z_t \left(\frac{c_t^{1-\sigma}-1}{1-\sigma} - \frac{h_t^{1+\varphi}}{1+\varphi}\right) 
+\end{equation} 
+subject to a nominal budget constraint
+\begin{equation} \label{eq:HH_BC}
+	P_t c_t + b_t = R_{t-1} b_{t-1} + W_t h_t + D_t
+\end{equation}
+where $R_{t-1}$ is the gross return on a risk-free nominal bond and $Z_t$ is an exogenous shock to the discount factor $\beta$ in period $t$. 
+
+We focus on a sequential equilibrium in this note. The Lagrangian is
+\begin{align}
+	\mathcal{L} &= \E_0 \sum_{t=0}^\infty \beta^t Z_t \left(\frac{c_t^{1-\sigma}-1}{1-\sigma} - \frac{h_t^{1+\varphi}}{1+\varphi} - \lambda_t \left(P_t c_t + b_t - R_{t-1} b_{t-1} - W_t h_t - D_t\right)\right) 
+\end{align}
+and therefore the FOCs are
+\begin{eqnarray}
+	c_t^{-\sigma} &=& \lambda_t P_t \\
+	h_t^\phi &=& \lambda_t W_t \\
+	\beta^t Z_t \lambda_t &=& \beta^{t+1} \E_{t} \left[Z_{t+1}\lambda_{t+1}\right] R_t
+\end{eqnarray}
+along with the budget constraint. Combining the three FOCs above to eliminate $\lambda_t$, we obtain
+\begin{eqnarray}
+	\frac{h_t^\varphi}{c_t^{-\sigma}} &=& w_t \label{eq:HH_intra}\\
+	c_t^{-\sigma} &=& \beta R_t \E\left[\frac{Z_{t+1}}{Z_t} \frac{P_t}{P_{t+1}}c_{t+1}^{-\sigma}\right] \label{eq:HH_euler}
+\end{eqnarray}
+Together with the household's budget constraint, they jointly characterize the household's behavior.
+
+\paragraph{Log-linearization around the Steady State} Characterizing a global solution to a dynamic programming problem is generally computationally expensive because of the curse of dimensionality. One way to address this challenge is to focus on small perturbations around the steady state by linearizing or log-linearizing the system.
+
+For instance, in the household problem above, $\{c_t, h_t, b_t\}$ are characterized by the system of equations (\ref{eq:HH_intra}), (\ref{eq:HH_euler}), and (\ref{eq:HH_BC}). Denote the steady-state value of variable $x_t$ by $\bar{x}$ and the log deviation of $x_t$ from $\bar{x}$ by $\hat{x}_t$; that is,
+\[\hat{x}_t \equiv \log x_t - \log \bar{x}\]
+and hence
+\[x_t \equiv \bar{x} \exp(\hat{x}_t)\]
+
+We can log-linearize (\ref{eq:HH_intra}), (\ref{eq:HH_euler}) and (\ref{eq:HH_BC}) as follows. First, we know that at the steady state, these FOCs should also hold, and therefore we have
+\begin{eqnarray}
+	\frac{\bar{h}^{\varphi}}{\bar{c}^{-\sigma}} &=& \bar{w} \\
+	1 &=& \beta \bar{R} \\
+	\bar{P} \bar{c} + \bar{b} &=& \bar{R} \bar{b} + \bar{W} \bar{h} + \bar{D}
+\end{eqnarray}
+
+To log-linearize the system, replace each variable $x_t$ with $\bar{x} \exp(\hat{x}_t)$:
+\begin{eqnarray}
+\frac{\bar{h}^\varphi \exp(\varphi \hat{h}_t)}{\bar{c}^{-\sigma} \exp(-\sigma \hat{c}_t)} &=& \bar{w} \exp(\hat{w}_t) \\
+\bar{c}^{-\sigma} \exp(-\sigma \hat{c}_t) &=& \beta \bar{R} \exp(i_t) \E\left[\frac{\exp(z_{t+1})}{\exp(z_t)} \frac{1}{\exp(\pi_{t+1})}\bar{c}^{-\sigma} \exp(-\sigma \hat{c}_{t+1})\right] 
+\end{eqnarray} 
+where 
+\[i_t \equiv \log R_t - \log \bar{R} \text{ and } \pi_{t+1} \equiv \log P_{t+1} - \log P_t \]
+
+We can then use the steady-state relations to simplify these equations to
+\begin{eqnarray}
+	\exp(\varphi \hat{h}_t + \sigma \hat{c}_t) & = & \exp(\hat{w}_t) \\
+	\exp(-\sigma \hat{c}_t) &=& \exp(i_t + \E_t [z_{t+1}] - z_t - \E_t [\pi_{t+1}] - \sigma \E_t [\hat{c}_{t+1}])
+\end{eqnarray}
+Hence, we can drop the exponential on both sides and obtain
+\begin{eqnarray}
+	\varphi \hat{h}_t + \sigma \hat{c}_t & = & \hat{w}_t  \label{eq:HH_LL_intra}\\
+	-\sigma \hat{c}_t &=&  i_t + \E_t [z_{t+1}] - z_t - \E_t [\pi_{t+1}] - \sigma \E_t [\hat{c}_{t+1}] \label{eq:HH_LL_Euler}
+\end{eqnarray}
+Log-linearizing the budget constraint is a bit trickier, so I will return to it later. Thus far, we have obtained a log-linearized intratemporal margin between labor and consumption and a log-linearized intertemporal margin between current and future consumption. Assuming that the discount-factor shock $z_t$ follows an AR(1) process,
+\begin{equation}
+	z_t = \rho_z z_{t-1} + \varepsilon_t^z
+\end{equation}
+then (\ref{eq:HH_LL_Euler}) becomes
+\begin{equation}
+	\hat{c}_t = \E_t [\hat{c}_{t+1}] - \frac{1}{\sigma} (i_t - \E_t[\pi_{t+1}]) + \frac{1}{\sigma} (1-\rho_z) z_t
+\end{equation}
+
+\subsection{Firms}
+
+There are two types of firms in this economy: a final-good producer and a continuum $i \in [0,1]$ of intermediate-good producers. The final producer combines intermediate-good inputs to produce a final good. Each intermediate-good producer is a monopolist in its own good and therefore determines the price and quantity of intermediate good $i$ and the labor it hires to produce that good.
+
+\subsubsection{Final-good Producer's Problem}
+
+Suppose that the final-good producer's production technology is given by
+\begin{equation} \label{eq:ces}
+	Y_t = \left(\int_0^1 Y_t(i)^{\frac{\epsilon-1}{\epsilon}}\, di\right)^{\frac{\epsilon}{\epsilon-1}}
+\end{equation}
+where $Y_t(i)$ is the quantity of intermediate good $i$ that the final-good producer purchases from intermediate-good producer $i$. The parameter $\epsilon$ governs the elasticity of substitution among intermediate goods and is crucial in determining the intermediate-good producers' markups.
+
+The final-good producer's optimization problem is hence
+\begin{equation}
+	\max_{Y_t(i)} P_t  \left(\int_0^1 Y_t(i)^{\frac{\epsilon-1}{\epsilon}}\, di\right)^{\frac{\epsilon}{\epsilon-1}} - \int_0^1 P_{t}(i) Y_{t}(i) \, di
+\end{equation}
+The FOC for the final-good producer is therefore
+\begin{equation*}
+	P_t \frac{\epsilon}{\epsilon-1}  \left(\int_0^1 Y_t(i)^{\frac{\epsilon-1}{\epsilon}}\, di\right)^{\frac{1}{\epsilon-1}} \frac{\epsilon-1}{\epsilon} Y_t(i)^{-1/\epsilon} - P_t(i) = 0
+\end{equation*}
+and hence
+\begin{equation} \label{eq:demand}
+    P_t Y_t^{1/\epsilon} = P_t(i) Y_t(i)^{1/\epsilon}
+\end{equation}
+The final-good producer's choices $Y_t$ and $\{Y_t(i)\}$ are characterized by (\ref{eq:demand}) and the CES aggregator (\ref{eq:ces}). The log-linearized versions of these two equations are
+\begin{eqnarray}
+	\hat{y}_t &=& \int_0^1 \hat{y}_t(i) \, di \\
+	\hat{P}_t(i) - \hat{P}_t &=& -\frac{1}{\epsilon} \left(\hat{y}_t(i) - \hat{y}_t\right)
+\end{eqnarray}
+
+Equation (\ref{eq:demand}) defines the demand curve facing intermediate-good producer $i$, which is crucial to the producer's problem.
+
+We also need to characterize the final-good producer's maximum profit because it enters the household's budget constraint through dividend income $D_t$. Because the CES aggregator (\ref{eq:ces}) exhibits constant returns to scale, the final-good producer's maximum profit is zero (you may verify this after class). 
+
+Moreover, the CES structure gives us a price index that relates the aggregate price level $P_t$ to the price of each intermediate-good input $P_t(i)$. Using the result that maximum profit is zero,
+\begin{equation*}
+	P_t Y_t = \int_0^1 P_t(i) Y_t(i) \, di = \int_0^1 P_t(i) P_t^{\epsilon} P_t(i)^{-\epsilon} Y_t \, di = P_t^{\epsilon} Y_t \int_0^1 P_t(i)^{1-\epsilon} \, di
+\end{equation*}
+and hence
+\[P_t^{1-\epsilon} = \int_0^1 P_t(i)^{1-\epsilon} \, di\]
+or equivalently
+\[P_t = \left( \int_0^1 P_t(i)^{1-\epsilon} \, di\right)^{\frac{1}{1-\epsilon}}\]
+
+
+\subsubsection{Intermediate-good Producer's Problem under Flexible Price}
+
+I now provide the details of the intermediate-good producer's problem. Intermediate producer $i$ produces intermediate good $i$. It knows the demand curve (\ref{eq:demand}) it faces and chooses $P_t(i)$, $Y_t(i)$, and $H_t(i)$ to
+\begin{equation}
+	\max_{P_t(i), Y_t(i), H_t(i)} P_t(i) Y_t(i) - W_t H_t(i)
+\end{equation}
+subject to the demand function (\ref{eq:demand}) and the production function
+\begin{equation} \label{eq:prod}
+	Y_t(i) = A_t H_t(i)
+\end{equation}
+where $A_t$ is an exogenous TFP shock that follows
+\begin{equation}
+	a_t \equiv \log A_t = \rho_a a_{t-1} + \varepsilon_t^a
+\end{equation}
+
+To solve the intermediate-good producer's problem, we replace $H_t(i)$ by $Y_t(i)$ in the objective function using the production function, and then replace $Y_t(i)$ by $P_t(i)$ using the demand function (\ref{eq:demand}):
+\[ \max_{P_t(i)} P_t(i) \left[P_t^{\epsilon} Y_t P_t(i)^{-\epsilon}\right] - W_t \left(\frac{P_t^{\epsilon} Y_t P_t(i)^{-\epsilon}}{A_t}\right)\]
+
+The FOC with respect to $P_t(i)$ is
+\begin{equation}
+	P_t^\epsilon Y_t (1-\epsilon) P_t(i)^{-\epsilon} = W_t \left(\frac{P_t^\epsilon Y_t}{A_t}\right) (-\epsilon) P_t(i)^{-\epsilon-1}
+\end{equation}
+Hence
+\begin{equation} \label{eq:flex_price}
+	P_t(i) = \frac{\epsilon}{\epsilon - 1} \frac{W_t}{A_t}
+\end{equation}
+
+\underline{Notes:} Several takeaways from (\ref{eq:flex_price}):
+\begin{itemize}
+	\item This is the optimal monopolistic price charged by firm $i$ when there are no pricing frictions.
+	\item Marginal cost is defined as the derivative of the total cost of production (denoted by $\mathcal{C}$) with respect to output $Y$. Here, the cost function can be written as
+	\[\mathcal{C}_{it} = W_t H_t(i) = W_t \frac{Y_t(i)}{A_t}\]  
+	and therefore nominal marginal cost can be written as
+	\[\frac{\partial \mathcal{C}_{it}}{\partial Y_t(i)} = \frac{W_t}{A_t}\]
+	Hence, (\ref{eq:flex_price}) has a simple interpretation: the optimal price charged by monopolistically competitive firm $i$ equals nominal marginal cost times the markup $\frac{\epsilon }{\epsilon -1}$. 
+	\item In this model, the markup $\frac{\epsilon }{\epsilon -1}$ is constant and exogenous: it is fully determined by the elasticity-of-substitution parameter $\epsilon$. The larger $\epsilon$ is, the lower the markup. This is intuitive: if input $i$ is more substitutable (meaning that $\epsilon$ is high), demand for input $i$ will be more elastic and the market power of producer $i$ will be lower.
+	\item In this flexible-price setting, we can see from (\ref{eq:flex_price}) that there is no cross-sectional dispersion on prices [the right-hand side of equation (\ref{eq:flex_price}) does not depend on the firm index $i$]. This means that all intermediate good firms charge the same price. This is also easy to understand: in our model, the markup is fixed and the same across intermediate goods, and all the firms hire in the same labor market and are exposed to the same level of productivity $A_t$, which means that there is no cross-sectional dispersion in nominal marginal cost. 
+	\item An important implication of the previous bullet point is that $P_t(i) = P_t$. Dividing both sides of (\ref{eq:flex_price}) by $P_t$, we obtain
+	\[1 = \frac{P_t(i)}{P_t} = \frac{\epsilon}{\epsilon-1}\frac{w_t}{A_t}\]  
+	that is, under flexible prices, real marginal cost is the constant $\frac{\epsilon -1}{\epsilon}$. Log-linearizing this relation yields
+	\begin{equation} \label{eq:flex_price_wage}
+		\hat{w}_t - a_t = 0
+	\end{equation}
+that is, in log terms, the wage moves one-for-one with productivity.
+\end{itemize} 
+
+\paragraph{Potential Output and Natural Interest Rate \\ [6pt]}
+Equation (\ref{eq:flex_price_wage}) is important because it helps us express output $\hat{y}_t$ and labor $\hat{h}_t$ solely as functions of productivity $a_t$. The NK literature calls these equilibrium objects in the flexible-price monopolistic-competition model ``potential output" and ``potential employment." They are important benchmarks for the sticky-price model. The following derivation shows how we obtain potential output step by step. 
+
+First, the production function (\ref{eq:prod}) can be log-linearized as
+\[\hat{y}_t(i) = a_t + \hat{H}_t(i)\]
+and hence 
+\begin{equation} \label{eq:flex_price_y_minus_h}
+	\hat{y}_t = \int_0^1 \hat{y}_t(i) \, di = a_t + \int_0^1 \hat{H}_t(i)\, di = a_t + \hat{h}_t 
+\end{equation}
+where the last equality uses the labor market clearing condition.
+
+According to (\ref{eq:flex_price_wage}), we get
+\begin{equation*}
+	\hat{w}_t = a_t = \hat{y}_t - \hat{h}_t
+\end{equation*}
+Combining this result with the household's intratemporal margin (\ref{eq:HH_LL_intra}), we obtain
+\begin{equation} \label{eq:mrs=p}
+	\varphi \hat{h}_t + \sigma \hat{y}_t = \hat{w}_t = \hat{y}_t - \hat{h}_t 
+\end{equation} 
+This implies that 
+\[(1-\sigma) \hat{y}_t = (1 + \varphi) \hat{h}_t \implies \hat{h}_t = \frac{1-\sigma}{1+\varphi} \hat{y}_t\]
+Substituting this expression back into (\ref{eq:mrs=p}) allows us to express $\hat{y}_t$ as a function of $a_t$:
+\begin{equation} \label{eq:natural_output}
+	\hat{y}_t = \frac{\varphi + \sigma}{1+\varphi} a_t \equiv \hat{y}_t^n
+\end{equation}
+In other words, flexible-price equilibrium output can be expressed as a multiple of productivity. We define this quantity as ``potential output" or ``natural output" and denote it by $\hat{y}_t^n$ (the superscript $n$ stands for ``natural").
+
+Finally, substituting $\hat{y}_t^n$ into the log-linearized Euler equation (\ref{eq:HH_LL_Euler}) gives the equilibrium real interest rate $r_t^n$ under flexible prices:
+\begin{equation} \label{eq:natural_rate}
+	r_t^n \equiv -\sigma(\hat{y}_t^n - \E_t[\hat{y}_{t+1}^n]) + (1-\rho_z) z_t 
+\end{equation}
+In the NK literature, this quantity is called the ``natural interest rate."
+
+\section{Intermediate-good Producer's Problem under Calvo}
+
+We now depart from the flexible-price equilibrium and introduce pricing frictions on the firm side. There are several ways to model staggered price setting by intermediate-good firms. For instance, a large literature considers menu costs of price adjustment: when firms adjust prices, they must pay a fixed menu cost, and prices change if and only if the net gain from resetting them exceeds that cost. 
+
+Another parsimonious way to model staggered price setting is to follow Calvo's approach. Assume that in each period, only a fraction $1-\theta$ of intermediate-good producers have an opportunity to change their prices, while the remaining fraction $\theta$ do not.
+
+\subsection{Optimal Reset Price}
+For the firms that get a chance to reset their prices, the optimization problem is
+\begin{equation}
+	\max_{P_t^*(i)} \E_t \sum_{k=0}^\infty \left\{ \theta^k  M_{t, t+k} \frac{1}{P_{t+k}}\left[P_t^*(i) Y_{t+k|t}(i) - \frac{W_{t+k}}{A_{t+k}} Y_{t+k|t}(i)\right] \right\}
+\end{equation}
+where 
+\begin{itemize}
+		\item $\theta^k$ is the probability that the price reset in period $t$ remains unchanged through period $t+k$;
+	\item $M_{t, t+k} \equiv \beta^k \frac{Z_{t+k}}{Z_t} \frac{c_{t+k}^{-\sigma}}{c_t^{-\sigma}}$ is the stochastic discount factor;
+	\item $\frac{1}{P_{t+k}}$ translates nominal profits into real profits;
+	\item $Y_{t+k|t}$ is defined as 
+	\begin{equation}
+		Y_{t+k|t}(i) \equiv \frac{P_{t+k}^\epsilon Y_{t+k}}{(P_t^*(i))^{\epsilon}}
+	\end{equation}
+	that is, it gives the demand faced by firm $i$ in period $t+k$ if its price was last reset in period $t$ (and therefore the output produced by firm $i$ in period $t+k$).
+\end{itemize}
+
+Because the firm knows that the pricing friction takes the Calvo form, it recognizes that the price set in period $t$ may persist for some time. This makes its pricing behavior forward-looking.
+
+The FOC with respect to $P_t^*(i)$ is
+\begin{equation*}
+	\E_t \sum_{k=0}^\infty \theta^k M_{t, t+k} \frac{1}{P_{t+k}} \left[(1-\epsilon)P_t^*(i)^{-\epsilon} P_{t+k}^\epsilon Y_{t+k} - \frac{W_{t+k}}{A_{t+k}} P_{t+k}^\epsilon Y_{t+k} (-\epsilon) P_t^*(i)^{-\epsilon -1} \right] = 0
+\end{equation*}
+or equivalently,
+\begin{equation} \label{eq:FOC_calvo}
+	\E_t \sum_{k=0}^\infty \theta^k M_{t, t+k} P_{t+k}^{\epsilon -1} Y_{t+k} \left[P_{t}^*(i)- \frac{\epsilon}{\epsilon -1} \frac{P_{t+k}w_{t+k}}{A_{t+k}}\right] = 0
+\end{equation}
+
+
+\paragraph{Log-linearizing (\ref{eq:FOC_calvo}) \\ [6pt]}
+To clarify the implications of the equation above, we log-linearize it. First, replace each variable with an expression of the form $\bar{x} \cdot \exp(\hat{x}_t)$:
+\[\E_t \sum_{k=0}^\infty \theta^k \bar{M}_{k} \exp(\hat{M}_{t, t+k}) \bar{P}^{\epsilon -1} \exp((\epsilon -1)\hat{p}_{t+k}) \bar{Y}\exp(\hat{y}_{t+k}) \left[\bar{P} \exp(\hat{p}_t^*)- \frac{\epsilon}{\epsilon -1} \frac{\bar{w}\bar{P}\exp(p_{t+k}+w_{t+k})}{\bar{A}\exp(a_{t+k})}\right] = 0\]
+Note that at the steady state,
+\[\bar{M}_k  = \beta^k \frac{Z_{t+k}}{Z_t} \frac{c_{t+k}^{-\sigma}}{c_t^{-\sigma}}\bigg|_{SS} = \beta^k\]
+and
+\[\bar{P} = \frac{\epsilon}{\epsilon -1} \frac{\bar{w}\bar{P}}{\bar{A}}\]
+we can divide both sides by $\bar{Y} \bar{P}^\epsilon$ to obtain
+\[\E_t \sum_{k=0}^\infty \theta^k \beta^k \exp(\hat{M}_{t, t+k})  \exp((\epsilon -1)\hat{p}_{t+k}) \exp(\hat{y}_{t+k}) \left[ \exp(\hat{p}_t^*(i))-  \frac{\exp(w_{t+k}+p_{t+k})}{\exp(a_{t+k})}\right] = 0\]
+Hence
+\[\E_t \sum_{k=0}^\infty (\beta \theta)^k \exp(\hat{M}_{t, t+k} + (\epsilon-1) \hat{p}_{t+k} + \hat{y}_{t+k} + \hat{p}_t^*(i)) = \E_t \sum_{k=0}^\infty (\beta \theta)^k \exp(\hat{M}_{t, t+k} + \epsilon \hat{p}_{t+k} + \hat{y}_{t+k} + w_{t+k} - a_{t+k})\]
+Now, apply a first-order Taylor expansion to the exponential function ($\exp(x) \approx 1 + x$):
+\begin{align*}
+	& \E_t \sum_{k=0}^\infty (\beta\theta)^k \left[1+\hat{M}_{t, t+k} + (\epsilon-1) \hat{p}_{t+k} + \hat{y}_{t+k} + \hat{p}_t^*(i)\right] \\ & = \E_t \sum_{k=0}^\infty (\beta\theta)^k \left[1+\hat{M}_{t, t+k} + \epsilon \hat{p}_{t+k} + \hat{y}_{t+k} + w_{t+k} - a_{t+k}\right]
+\end{align*}
+Hence
+\[\sum_{k=0}^\infty (\beta \theta)^k \hat{p}_t^*(i) = \E_t \sum_{k=0}^\infty (\beta \theta)^k \left[\hat{p}_{t+k} + w_{t+k} - a_{t+k}\right]\]
+Using the formula for the sum of a geometric series, we obtain
+\[\frac{1}{1-\beta \theta} \hat{p}_t^*(i) = \sum_{k=0}^\infty (\beta \theta)^k \E_t \left[\hat{p}_{t+k} + w_{t+k} - a_{t+k}\right]\]
+and therefore
+\begin{equation} \label{eq:optimal_reset_p}
+	\hat{p}_t^*(i) = (1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \E_t \left[\hat{p}_{t+k} + w_{t+k} - a_{t+k}\right]
+\end{equation}
+
+\underline{Notes}:
+\begin{itemize}
+		\item Equation (\ref{eq:optimal_reset_p}) characterizes the optimal reset price. It is an infinite weighted sum of the firm's expected nominal marginal costs in all future periods. Specifically, the weight is $\frac{\beta^k \theta^k}{1-\beta \theta}$. Note that $\theta \in (0,1)$ measures nominal rigidity; the larger $\theta$ is, the lower the probability of resetting a price and the greater the rigidity. Thus, greater price rigidity leads the firm to place more weight on these expectation terms:
+	\[(\beta \theta)^k < \beta^k \text{ and } 1-\beta \theta > 1- \beta \implies \frac{\beta^k \theta^k}{1-\beta \theta} < \frac{\beta^k}{1-\beta}\]
+		that is, the more rigid the price, the more forward-looking the firm becomes. \\
+		(A research idea: if you have microdata that allow you to infer the degree of price rigidity $\theta$, along with survey or experimental data that allow you to measure how forward-looking firm managers are, you may be able to test this premise of the Calvo model.)
+		\item Looking at the right-hand side of equation (\ref{eq:optimal_reset_p}), we can again see that it is independent of the firm index $i$. Thus, all firms that have an opportunity to reset their prices in period $t$ choose the same optimal reset price. We can therefore drop the firm index $i$ on the left-hand side and denote the optimal reset price for ``cohort $t$" by $\hat{p}_t^*$.
+\end{itemize}
+
+\subsection{Aggregate Price Level, Inflation, Phillips Curve }
+With (\ref{eq:optimal_reset_p}), we have all the ingredients needed to characterize price dispersion, the aggregate price level, and inflation. 
+
+In period $t$, the distribution of prices is as follows:
+\begin{itemize}
+		\item A mass $1-\theta$ of firms reset their prices in period $t$;
+		\item A mass $\theta (1-\theta)$ of firms last reset their prices in period $t-1$;
+		\item A mass $\theta^2 (1-\theta)$ of firms last reset their prices in period $t-2$; 
+	\item $\cdots$
+\end{itemize}
+Moreover, from (\ref{eq:optimal_reset_p}), we know that there is no price dispersion within a price-resetting cohort (i.e., all firms that reset their prices in period $t$ choose the same $\hat{p}_t^*$).
+
+Hence, to get the aggregate price level $\hat{p}_t$, we simply aggregate with the above distribution:
+\begin{equation}
+	\hat{p}_t = (1-\theta) \sum_{k=0}^\infty \theta^k \hat{p}_{t-k}^*
+\end{equation}
+We can write it recursively as
+\begin{equation}
+	\hat{p}_t = (1-\theta) \hat{p}_t^* + \theta \hat{p}_{t-1}
+\end{equation}
+that is, today's aggregate price level is a weighted average of the optimal reset price and yesterday's aggregate price level.
+
+Inflation $\pi_t$ can be written as
+\begin{equation} \label{eq:pi_p_star_p_-1}
+	\pi_t \equiv \hat{p}_t - \hat{p}_{t-1} = (1-\theta) (\hat{p}_t^* - \hat{p}_{t-1})
+\end{equation}
+From (\ref{eq:optimal_reset_p}), it is straightforward to derive $\hat{p}_t^* - \hat{p}_{t-1}$:
+\begin{align} 
+	\hat{p}_t^*(i) - \hat{p}_{t-1} & = (1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \E_t \left[\hat{p}_{t+k} - \hat{p}_{t-1} + w_{t+k} - a_{t+k}\right] \nonumber \\
+	& = (1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \E_t \left[\sum_{s=0}^k \pi_{t+s} + w_{t+k} - a_{t+k}\right] \label{eq:p_star_minus_p_-1}
+\end{align}
+Note that
+\begin{align*}
+	(1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \sum_{s=0}^k\E_t \left[\pi_{t+s}\right] & = (1-\beta \theta) \sum_{k=0}^\infty \sum_{s=0}^k (\beta \theta)^k \E_t \left[\pi_{t+s}\right] \\
+	& = (1-\beta \theta) \sum_{s=0}^\infty \E_t[\pi_{t+s}] \sum_{k=s}^\infty (\beta \theta)^k \\
+	& = (1-\beta \theta) \sum_{s=0}^\infty \frac{(\beta \theta)^s}{1-\beta \theta} \E_t[\pi_{t+s}] = \sum_{s=0}^\infty (\beta \theta)^s \E_t[\pi_{t+s}]
+\end{align*}
+Plug it back into (\ref{eq:p_star_minus_p_-1}):
+\begin{align}
+	\hat{p}_t^*(i) - \hat{p}_{t-1} & = (1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \E_t \left[\sum_{s=0}^k \pi_{t+s} + w_{t+k} - a_{t+k}\right] \nonumber \\
+	& = \sum_{s=0}^\infty (\beta \theta)^s \E_t[\pi_{t+s}] + (1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \E_t\left[w_{t+k} - a_{t+k}\right] \nonumber
+\end{align}
+Hence (\ref{eq:pi_p_star_p_-1}) becomes
+\begin{align}
+	\pi_t &= (1-\theta) (\hat{p}_t^* - \hat{p}_{t-1}) \nonumber \\
+	& = (1-\theta)\sum_{s=0}^\infty (\beta \theta)^s \E_t[\pi_{t+s}] + (1-\theta) (1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \E_t\left[w_{t+k} - a_{t+k}\right] \label{eq:NKPC_infinite_regress}
+\end{align}
+
+\underline{Note:} 
+\begin{itemize}
+		\item Equation (\ref{eq:NKPC_infinite_regress}) is important for understanding the behavior of inflation $\pi_t$. It expresses current inflation as an infinite regress of (1) expected inflation in all future periods and (2) expected real marginal cost in all future periods. 
+		\item Expectations play a central role in inflation dynamics in NK models. If firms expect future inflation to be high, they recognize that the Calvo friction may prevent them from changing prices as desired in the future. They therefore choose a higher reset price today, increasing current inflation. Conversely, if firms expect future inflation to be low, those with an opportunity to reset their prices choose lower prices, reducing current inflation. \\
+		(This is a key transmission channel of monetary policy in the New Keynesian model. Because it relies on agents' expectations, the resulting policy implications can be misleading. For instance, an announcement of monetary tightening five years in the future may have a sizable effect on today's inflation; search for the ``forward guidance puzzle" on Google Scholar to learn more.)
+\end{itemize}
+
+We can write (\ref{eq:NKPC_infinite_regress}) recursively:
+\begin{align}
+\pi_t &= (1-\theta) \sum_{s=0}^\infty (\beta \theta)^s \E_t[\pi_{t+s}] + (1-\theta)(1-\beta \theta) \sum_{k=0}^\infty (\beta \theta)^k \E_t\left[w_{t+k} - a_{t+k}\right] \nonumber \\
+& = (1-\theta)\pi_t + (1-\theta)(1-\beta \theta)(w_t - a_t) + \underbrace{(1-\theta) \sum_{s=1}^\infty (\beta \theta)^s \E_t[\pi_{t+s}] + (1-\beta \theta) \sum_{k=1}^\infty (\beta \theta)^k \E_t\left[w_{t+k} - a_{t+k}\right]}_{\beta \theta \E_t[\pi_{t+1}]}  \nonumber
+\end{align}
+Hence, we obtain a recursive relationship between $\pi_t$ and $\E_t[\pi_{t+1}]$:
+\begin{equation} \label{eq:NKPC}
+	\pi_t = \frac{(1-\theta) (1-\beta \theta)}{\theta} (w_t - a_t) + \beta \E_t [\pi_{t+1}]
+\end{equation}
+This is called ``New-Keynesian Phillips curve" (NKPC):
+\begin{itemize}
+		\item The coefficient on real marginal cost $w_t - a_t$, namely,
+	\[\kappa \equiv \frac{(1-\theta) (1-\beta \theta)}{\theta}\]
+		is usually called the slope of the Phillips curve. It measures the sensitivity of inflation to real marginal cost. For example, an oil-price shock can be represented as a decrease in productivity $a_t$, while a labor-supply shock can shift the labor-supply curve inward and increase $w_t$. In either case, real marginal cost rises, and $\kappa > 0$ determines how much inflation increases in response.
+		\item The slope of the Phillips curve $\kappa$ decreases with $\theta$. This is intuitive: if nominal prices are more rigid (i.e., $\theta$ is larger), they should be less responsive to real shocks in the economy.
+	\item There is an enormous (micro and macro) literature on how to estimate the slope of Phillips curve from data. Check out the introduction and literature review of Gertler, Lenzu,...
+\end{itemize}
+
+
+\subsection{Summarize the Economy in Three Equations}
+
+The rest of the NK model is standard. We omit government expenditure and assume that the net supply of bonds is zero in every period:
+\begin{equation}
+	b_t = 0 \text{, }\forall t
+\end{equation}
+This can be regarded as a bond market clearing condition. Besides, we have a labor market clearing condition
+\begin{equation}
+	h_t = \int_0^1 H_t(i)\,di
+\end{equation}
+and a goods-market-clearing condition (which holds automatically if the labor and bond markets clear, by Walras's law). We also need a monetary policy rule that pins down the nominal price, which I specify below.
+
+Given $i_t$, we can summarize the economy with a system of two equations in $[\pi_t, \hat{y}_t]$. After specifying monetary policy, we obtain a three-equation system that summarizes the dynamics of this sticky-price economy.
+
+\paragraph{Aggregate Demand: Dynamic IS Curve \\ [6pt]}
+First, we plug the bonds market clearing condition $b_t = 0$ into the household budget constraint (\ref{eq:HH_BC}):
+\begin{equation} \label{eq:resource_constr}
+	c_t = w_t h_t + D_t = \int_0^1 w_t H_t(i) \, di + \int_0^1 \left[\frac{P_t(i)}{P_t} Y_t(i) - w_t H_t(i)\right] \, di = Y_t^{1/\epsilon} \underbrace{\int_0^1 Y_t(i)^{1-1/\epsilon} \, di}_{=Y_t^{1-1/\epsilon}} = Y_t
+\end{equation}
+where the second equality substitutes the profit earned by each intermediate firm $i$, and the penultimate equality follows from canceling the labor-cost terms and using the demand function (\ref{eq:demand}) to replace $P_t(i)$. Equation (\ref{eq:resource_constr}) can be viewed as either the resource constraint in a social planner's problem or the goods-market-clearing condition in a competitive equilibrium.
+
+Log-linearizing (\ref{eq:resource_constr}) in the vicinity of the steady state gives
+\begin{equation}
+	\hat{c}_t = \hat{y}_t
+\end{equation}
+and replacing $\hat{c}_t$ in the log-linearized Euler equation (\ref{eq:HH_LL_Euler}) with $\hat{y}_t$ gives us
+\begin{equation} \label{eq:dynamic_IS}
+	\hat{y}_t = \E_t [\hat{y}_{t+1}] - \frac{1}{\sigma} (i_t - \E_t[\pi_{t+1}]) + \frac{1}{\sigma} (1-\rho_z) z_t
+\end{equation}
+Equation (\ref{eq:dynamic_IS}) contains only $y_t$ and $\pi_t$. It is called the dynamic IS equation and summarizes the demand side of the economy (specifically, the demand for goods). 
+
+The NK literature typically takes one more step: replace the $z_t$ term using the definition of the natural interest rate $r_t^n$ in (\ref{eq:natural_rate}):
+\begin{equation*}
+	\hat{y}_t = \E_t [\hat{y}_{t+1}] - \frac{1}{\sigma} (i_t - \E_t[\pi_{t+1}]) + \frac{1}{\sigma} r_t^n + \hat{y}_t^n - \E_t [\hat{y}_{t+1}^n]
+\end{equation*}
+or equivalently,
+\begin{equation*}
+	\hat{y}_t - \hat{y}_t^n = \E_t [\hat{y}_{t+1} - \hat{y}_{t+1}^n] - \frac{1}{\sigma} (i_t - \E_t[\pi_{t+1}]-r_t^n)  
+\end{equation*}
+In the NK literature, the difference between sticky-price equilibrium output and flexible-price equilibrium output, $\hat{y}_t - \hat{y}_t^n$, is called the ``output gap." I denote it by $\tilde{y}_t$. Hence, the dynamic IS curve typically takes the following form:
+\begin{equation}
+	\tilde{y}_t = \E_t [\tilde{y}_{t+1}] - \frac{1}{\sigma} (i_t - \E_t[\pi_{t+1}]-r_t^n) 
+\end{equation} 
+where all quantities are expressed as deviations from their flexible-price equilibrium values.
+
+
+\paragraph{Aggregate Supply: NKPC \\ [6pt]}
+The production side is summarized by the NKPC (\ref{eq:NKPC}), but we can simplify the real marginal-cost term further because it can be expressed solely as a function of output $\hat{y}_t$ and the productivity shock $a_t$. First, use the household's intratemporal condition (\ref{eq:HH_LL_intra}) to substitute for $\hat{w}_t$:  
+\[\hat{w}_t = \varphi \hat{h}_t + \sigma \hat{y}_t \]
+Then use the labor-market-clearing condition
+\[\hat{h}_t = \int_0^1 \hat{H}_t(i) \,di = \int_0^1 \hat{y}_t(i) - a_t \, di = \hat{y}_t - a_t \] 
+Therefore,
+\begin{equation}
+	\hat{w}_t = \varphi (\hat{y}_t - a_t) + \sigma \hat{y}_t = (\varphi + \sigma) \hat{y}_t - \phi a_t
+\end{equation}
+The NKPC can therefore be rewritten as 
+\begin{equation}
+\pi_t = \kappa ((\varphi + \sigma) \hat{y}_t - (\phi+1) a_t) + \beta \E_t [\pi_{t+1}]
+\end{equation}
+Using the definition of natural output in (\ref{eq:natural_output}), we replace $a_t$ with $\hat{y}_t^n$ and obtain
+\begin{equation*}
+	\pi_t = \kappa (\varphi + \sigma) (\hat{y}_t - \hat{y}_t^n) + \beta \E_t [\pi_{t+1}]
+\end{equation*}
+or equivalently
+\begin{equation} \label{eq:NKPC_with_gaps}
+	\pi_t = \tilde{\kappa} \tilde{y}_t + \beta \E_t [\pi_{t+1}]
+\end{equation}
+where $\tilde{\kappa} \equiv \kappa (\sigma + \varphi)$. This is a version of the NKPC in terms of the output gap.
+
+\paragraph{Monetary Policy \\ [6pt]}
+To close the model, we must specify monetary policy. Suppose that U.S. monetary policy follows a Taylor rule:
+\begin{equation}
+	i_t = \phi_\pi \pi_t + \phi_y \tilde{y}_t + v_t
+\end{equation}
+where $\phi_\pi$ is the response of the nominal interest rate to inflation, $\phi_y$ is its response to the output gap, and $v_t$ is an exogenous shock orthogonal to $\pi_t$ and $\tilde{y}_t$. It is usually called a ``monetary policy shock."
+
+\paragraph{The Three-Equation NK Model} The equilibrium values of the sticky-price quantities $[i_t, \tilde{y}_t, \pi_t]$ are summarized by three equations:
+\begin{eqnarray}
+	\tilde{y}_t &=& \E_t [\tilde{y}_{t+1}] - \frac{1}{\sigma} (i_t - \E_t[\pi_{t+1}]-r_t^n) \\
+	\pi_t &=& \tilde{\kappa} \tilde{y}_t + \beta \E_t [\pi_{t+1}] \\
+	i_t &=& \phi_\pi \pi_t + \phi_y \tilde{y}_t + v_t
+\end{eqnarray}
+with an exogenously specified stochastic process for the monetary policy shock $v_t$ (for example, an AR(1) process).
+
+\paragraph{Thought Experiment: What Happens after a Monetary Tightening?} Suppose there is a positive monetary policy shock in period $t$; that is, $v_t > 0$:
+\begin{itemize}
+\item Taylor rule: $v_t \uparrow$ $\implies i_t \uparrow$;
+\item Dynamic IS: $i_t \uparrow \implies r_t \uparrow \implies \hat{y}_t \downarrow, \E_t[\hat{y}_{t+1}] \uparrow$;
+\item NKPC: $\hat{y}_t \downarrow \implies \pi_t \downarrow$.
+\end{itemize}
+
+
+\end{document}

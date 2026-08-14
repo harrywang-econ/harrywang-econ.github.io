@@ -1,0 +1,201 @@
+\documentclass[12pt]{article}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\newcommand{\E}{\mathbb{E}}
+\title{ECON601 TA Notes: Heterogeneous Firms}
+\author{Haoran Wang }
+\date{December 9, 2024}
+\onehalfspacing
+
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+
+This note summarizes the model presented in Hopenhayn and Rogerson (1993). 
+
+\section{Hopenhayn and Rogerson (1993) Setup}
+
+\subsection{Incumbent Firm's Problem}
+Each incumbent firm has a profit function 
+\begin{equation}
+	p_t f(n_t, s_t) - n_t - p_t c_f - g(n_t, n_{t-1})
+\end{equation}
+where
+\begin{itemize}
+		\item $p_t$ is the output price, which is common across firms. In this model, labor is the numeraire, so $p_t$ is the relative price of goods in terms of labor---the inverse of the real wage.
+		\item $s_t$ is the idiosyncratic productivity shock. Its evolution follows a Markov process $F(s'|s)$, and the shocks are i.i.d. across firms.
+	\item $n_t$ is the number of workers the firm hires. It is the only input for the firm.
+		\item Firms incur fixed costs \( p_t c_f \) to operate. Fixed costs are important in firm-dynamics models because they determine the extensive margin (i.e., whether the firm continues operating or exits the market).
+	\item $g(n_t, n_{t-1})$ is an adjustment cost of labor, taking the form
+	\begin{equation}
+		g(n_t, n_{t-1}) = \tau \cdot \max\{0, n_{t-1} - n_t\} 
+	\end{equation}
+		The adjustment cost is asymmetric: laying off workers is costly (when $n_{t-1} > n_t$), whereas increasing employment is costless.
+\end{itemize}
+
+\paragraph{Timing of Decisions}
+In each period, the firm makes two types of decisions:
+\begin{itemize}
+	\item whether to continue operating or exit, denoted by $X$, with
+\[X = \begin{cases}
+	1 & \text{ if the firm decides to exit} \\
+	0 & \text{ if the firm decides to stay}
+\end{cases}\]
+	\item how much labor to hire, denoted by $N$.
+\end{itemize}
+The timing of decisions is as follows:
+\begin{enumerate}
+		\item At the start of period $t$, each incumbent firm has state $(s_{t-1}, n_{t-1})$.
+	\item Firms decide whether to:
+	\begin{itemize}
+		\item Exit the market, or
+		\item Continue operating and incur the fixed cost \( p_t c_f \).
+	\end{itemize}
+		\item If the firm exits, it receives $-g(0, n_{t-1})$ in this period and zero in all future periods.
+		\item If the firm continues,
+	\begin{itemize}
+		\item the productivity $s_t$ is revealed;
+			\item the firm then makes the employment decision $n_t$;
+			\item it receives profit $p_t f(n_t, s_t) - n_t - p_t c_f - g(n_t, n_{t-1})$;
+			\item the process repeats in the next period.
+	\end{itemize}
+\end{enumerate}
+
+\paragraph{Value function of Incumbent Firm}
+When there are multiple stages within a period, as is common in firm-dynamics models, it is useful to write the value functions stage by stage: one can have a beginning-of-period value function and a within-period value function. 
+
+Let $V(s, n; p)$ denote the beginning-of-period value function (before the exit-or-stay decision) for a firm with productivity $s$, employment $n$, and price $p$. Let $V^{stay}$ denote the firm's value if it continues, $V^{exit}$ its value if it exits, and $W(s',n;p)$ the value of a continuing firm after today's productivity is realized as $s'$. 
+
+Within each period, we do backward induction. First, let's work out $W(s', n;p)$: 
+\begin{equation} \label{eq:W}
+	W(s', n; p) = \max_{n'} p f(n', s') - n' - pc_f - g(n', n) + \beta V(s', n'; p)
+\end{equation}
+which results in a policy function for labor $N(s',n;p)$. Then, we get the value of continuing:
+\begin{equation}
+	V^{stay}(s,n;p) = \mathbb{E}[W(s', n; p)|s] = \sum_{s'} F(s'|s) W(s', n; p)
+\end{equation}
+The value of exiting is
+\begin{equation}
+	V^{exit}(n) = -g(0, n)
+\end{equation}
+Hence, the beginning of the period value function $V(s,n;p)$ is given by
+\begin{align}
+	V(s,n;p) = \max\{V^{stay}(s,n,p), V^{exit}(n)\} & = \max_{x \in \{0,1\}} x V^{exit}(n) + (1-x) V^{stay}(s,n,p) \nonumber \\
+	& = \max_{x \in \{0,1\}} -x g(0,n) + (1-x) \sum_{s'} F(s'|s) W(s', n; p) \label{eq:V}
+\end{align}
+which results in a policy function $X(s,n;p)$.
+
+Hence, the incumbent firm's problem is summarized by a pair of value functions (\ref{eq:W}) and (\ref{eq:V}).
+
+
+\subsection{Entrant's Problem} 
+There is a continuum of ex ante identical potential entrants in each period. A firm must pay a fixed cost $p_t c_e$ to enter. The timing of the entrant's problem is as follows:
+\begin{itemize}
+\item Once this cost has been paid, the entrant is in the same position as an incumbent who decides to continue (in other words, the entrants cannot enter and exit in the same period).
+\item Each new entrant draws a value of productivity $s_t = s'$ from a distribution $\nu(\cdot)$, iid across firms.
+\item Then, each new entrant makes hiring decisions as incumbent firms do.
+\end{itemize}
+
+\paragraph{Value function for the entrant firm} We can easily write down the value for the entrant firm:
+\begin{equation}
+	V^e(p) = \sum_{s'} \nu(s') W(s',0;p) - p c_e 
+\end{equation}
+
+\paragraph{Free-entry condition} Entry occurs if and only if $V^e(p) > 0$. In equilibrium, $V^e(p) = 0$: if $V^e > 0$, more firms attempt to enter, increasing the mass of entrants. The entrant's problem therefore determines an endogenous mass of firms entering the economy, denoted by $M_t$.
+
+\subsection{Dynamics of Distribution}
+Let the distribution of state $(s,n)$ be $\mu$. We now characterize the law of motion for $\mu(s,n)$. To save some notation, I drop price $p$ as an argument in the policy function for now.
+
+First, we consider the probability of an incumbent firm with state $(s,n)$ transitioning to $(s',n')$:
+\begin{equation}
+	Pr(s',n'|s,n) = (1-x(s,n))  F(s'|s) \mathbf{1}\{n' = N(s',n)\}
+\end{equation}
+Apart from the incumbent firms, we also need to consider the contribution of new entrants to the distribution $\mu$. The mass of entrants with state $(s',n')$ is equal to
+\begin{equation}
+	M \nu(s') \mathbf{1}\{n' = N(s', 0)\}
+\end{equation}
+Therefore, we have the following law of motion for the distribution $\mu$:
+\begin{equation} \label{eq:distribution_transition}
+	\mu'(s',n') = \int (1-X(s,n))  F(s'|s) \mathbf{1}\{n' = N(s',n)\} \, d\mu(s,n) + M \nu(s') \mathbf{1}\{n' = N(s', 0)\} 
+\end{equation}
+Again, the right-hand side defines an operator on $\mu$, denoted by $\mu' = T\mu$. In equilibrium, we seek the invariant distribution, which is the fixed point of $T$.
+
+\subsection{Aggregate Variables from Firm's Problem}
+We can write down some aggregate variables that are essential to general equilibrium. First, let's look into aggregate labor demand. We know that 
+\begin{itemize}
+		\item Incumbent firms that remain in business ($X(s,n;p) = 0$) and draw idiosyncratic productivity $s'$ hire $N(s',n;p)$ workers.
+	\item If the incumbent decides to exit, it would choose to hire 0 workers. 
+	\item For entrant firms with productivity $s'$, the hiring is $N(s', 0; p)$.
+\end{itemize}
+Summing these components gives aggregate labor demand:
+\begin{equation}
+	L^d(\mu, M, p) = \int N(s',n;p) (1-X(s,n,p)) F(s'|s) \, ds' d \mu(s,n) + M \int \nu(s') N(s', 0; p) \, ds'
+\end{equation}
+Note the input of aggregate labor demand function: it is determined by price, distribution and mass of entrants, all of which will be pinned down in general equilibrium.
+
+Following a similar approach, we obtain aggregate output,
+\begin{equation}
+	Y^s(\mu, M, p) = \int f(N(s', n;p), s') F(s'|s) \, ds \, d\mu(s,n) + M \int f(N(s', 0;p), s')\, d\nu(s)
+\end{equation}
+aggregate non-labor cost $R$
+\begin{align}
+	R(\mu, M, p) & = \int \left(g(N(s', n;p), n) + p c_f\right) F(s'|s) (1-X(s,n;p)) \, ds' \, d\mu(s,n) \nonumber \\
+	& + \int g(0, n) X(s,n;p) \, d\mu(s,n) \nonumber \\
+	& + M \int pc_f + pc_e + g(N(s', 0; p), 0) \, d\nu(s') 
+\end{align}
+and aggregate profits $\Pi$:
+\begin{equation}
+	\Pi(\mu, M, p) = pY^s(\mu, M ,p) - R(\mu, M, p) - L^d(\mu, M, p)
+\end{equation}
+
+\section{Close the Model with a Representative Household}
+To close the model, the authors assume that there is a representative household solving the following static problem
+\begin{equation}
+	\max_{c,N} u(c) - a N  
+\end{equation}  
+subject to
+\begin{equation}
+	pc \leq N + \Pi + R
+\end{equation}
+where $\Pi$ is the profit of the firm and $R$ is the aggregate adjustment cost and operation costs paid by the firms. This is saying that the adjustment, operation and entry cost the firm pays is part of the compensation to the household. This results in a labor supply curve $L^s(p, \Pi + R)$.
+
+%With the firm's problem, it is easy to write down the expressions for $\Pi$ and $R$. For each incumbent firm which enters the period with state $(s,n)$ given price $p$, its max profit is given by
+%\begin{equation}
+%	\pi(s,n;p) = \sum_{s'} F(s'|s)\left[p(N(s',n;p), s') - N(s',n;p) - pc_f - g(N(s',n;p), n)\right]
+%\end{equation} 
+%For the firms that decide to exit, the profit is $-g(0,n)$. Hence the aggregate profit is given by
+%\begin{align}
+%	\Pi(p) & = - \int X(s,n;p) g(0, n)\, dn ds \nonumber \\ 
+%	& + \int (1-X(s,n;p)) \sum_{s'} F(s'|s)\left[p(N(s',n;p), s') - N(s',n;p) - pc_f - g(N(s',n;p), n)\right] \,ds dn
+%\end{align}
+
+
+\section{Definition of Equilibrium}
+A stationary equilibrium is value functions $V(s,n;p), V^e(p)$, policy functions $X(s,n;p)$ and $N(s',n;p)$, an equilibrium price $p^*$, an invariant distribution $\mu^*$ and a mass of entrants $M^*$ such that
+\begin{itemize}
+	\item Given price $p^*$, incumbent firm's value $V(s,n;p^*)$ and policy functions $X(s,n;p^*)$ and $N(s',n;p^*)$ are defined as in Section 1.1;
+	\item Given price $p^*$, entrant firm's value $V^e(p^*)$ are defined as in Section 1.2;
+	\item Labor market clears:
+	\begin{equation}
+		L^s(\mu^*, \Pi(\mu^*, M^*, p^*) + R(\mu^*, M^*, p^*)) = L^d(\mu^*, M^*, p^*)
+	\end{equation}
+\item Invariant distribution $\mu^*$ is the fixed point of (\ref{eq:distribution_transition}):
+\begin{equation}
+	\mu^* = T(M^*, p^*) \mu^*
+\end{equation}
+\item Free entry condition holds:
+\begin{equation}
+	V^e(p^*) \leq 0 \text{ with equality if $M^* > 0$}
+\end{equation}
+\end{itemize}
+
+Extra Practice: Midterm 2022.
+
+	
+\end{document}

@@ -1,0 +1,555 @@
+\documentclass[12pt]{article}
+
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\newcommand{\E}{\mathbb{E}}
+\title{ECON601 TA Notes: Heterogeneous Household}
+\author{Haoran Wang }
+\date{December 2, 2024}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents
+
+This note discusses a heterogeneous-household model without aggregate uncertainty. It is based on Aiyagari (1994) and Chapters 17 and 18 of Ljungqvist and Sargent. It also explains how to add aggregate uncertainty to the Aiyagari (1994) framework and derive the value function in Krusell and Smith (1998).
+
+\section{Complete Markets without Aggregate Uncertainty}
+
+When I first read the paper, I was puzzled by the lack of detail about its complete-market benchmark. On page 671, the author writes:
+\begin{quote}
+	``Now consider what the steady state of the economy would be if there were no uncertainty, or, equivalently, there were full insurance markets..."
+\end{quote}
+but the discussion that follows is verbal and informal. Before studying the incomplete-market or imperfect-insurance economy, we need to understand the complete-market economy. Here, I provide a formal analysis.
+
+Suppose that there is a continuum of households $i \in [0,1]$ in the economy. For now, I use slightly more cumbersome notation: let $s^t \equiv (s_0, s_1, \cdots, s_t)$ denote the history of aggregate state $s$, and let $c^i(s^t)$ and $y^i(s^t)$ denote the consumption and income of household $i$ in history $s^t$. At any given aggregate history $s^t$, the realization of $y^i(s^t)$ need not be the same across households. This captures the notion of ``idiosyncratic shocks" in heterogeneous-agent models.
+
+Following Prof. Shea's lecture and Chapter 8 of Ljungqvist and Sargent, under complete markets the household can trade a complete set of Arrow--Debreu securities at time 0\footnote{One can also formulate the complete-market problem using Arrow securities and a time-$t$ trading protocol, rather than Arrow--Debreu securities traded at time 0. The two formulations are largely equivalent.} (claims to consumption goods in history $s^t$) at price $q(s^t)$. Each agent $i$ chooses $\{c^i(s^t)\}$ to
+\begin{equation}
+	\max_{\{c^i(s^t)\}}\sum_{t=0}^\infty \sum_{s^t} \beta^t \mu(s^t) u(c^i(s^t))
+\end{equation}
+subject to
+\begin{equation} \label{eq:budget_arrow_debreu}
+	\sum_{t} \sum_{s^t} q(s^t) c^i(s^t) = \sum_t \sum_{s^t} q(s^t) y^i(s^t)
+\end{equation}
+The budget constraint (\ref{eq:budget_arrow_debreu}) says that the household can reallocate its resources across different histories or state realizations. 
+
+To solve household $i$'s problem, form the Lagrangian:
+\begin{equation}
+	\mathcal{L} = \sum_t \sum_{s^t} \beta^t \mu(s^t) u(c^i(s^t)) - \lambda^i \left[\sum_t \sum_{s^t} q(s^t) (c^i(s^t) - y^i(s^t))  \right]
+\end{equation}
+which yields the first-order condition
+\begin{equation} \label{eq:AD_foc}
+	\mu(s^t) \beta^t u'(c^i(s^t)) = \lambda^i q(s^t)
+\end{equation}
+Another household $j \neq i$ solves a similar problem with Lagrange multiplier $\lambda^j$. Its first-order condition is 
+\[\mu(s^t) \beta^t u'(c^j(s^t)) = \lambda^j q(s^t)\]
+Comparing household $i$ and $j$'s FOCs, we get
+\begin{equation}
+	\frac{u'(c^i(s^t))}{u'(c^j(s^t))} = \frac{\lambda^i}{\lambda^j}
+\end{equation}
+which gives us the relationship between household $i$ and household $j$'s consumption in history $s^t$:
+\begin{equation} \label{eq:c_i_c_j}
+	c^i(s^t) = (u')^{-1} \left(\frac{\lambda^i}{\lambda^j}u'(c^j(s^t))\right)
+\end{equation}
+
+In general equilibrium, for each history $s^t$, there is a market clearing condition for Arrow-Debreu security in that history: 
+\begin{equation} \label{eq:mc_AD}
+	\sum_i c^i(s^t) = \sum_i y^i(s^t)
+\end{equation}
+%and for the initial state $t = 0$,
+%\begin{equation}
+%	\sum_i c^i(s_0) = \sum_i y^i(s_0) + \sum_i a^i_0
+%\end{equation}
+We can use the FOCs (\ref{eq:AD_foc}), budget constraints (\ref{eq:budget_arrow_debreu}), and market-clearing conditions (\ref{eq:mc_AD}) to solve for the equilibrium allocation $\{c^i(s^t)\}$, Lagrange multipliers $\{\lambda^i\}$, and prices $\{q(s^t)\}$.
+
+\paragraph{Formal Definition of Aggregate Uncertainty}
+By ``no aggregate uncertainty", we mean that 
+\begin{equation}
+	\sum_i y^i(s^t) = \bar{y} \text{ for all $s^t$}
+\end{equation}
+That is, households' aggregate resources do not vary with history $s^t$.
+
+\subsection{Individual Consumption Dynamics}
+
+
+In a complete-market economy with no aggregate uncertainty, we can fully characterize each individual's consumption in every history. To do so, first substitute (\ref{eq:c_i_c_j}) into (\ref{eq:mc_AD}):
+\begin{equation} \label{eq:mc_st}
+ \underbrace{\sum_i (u')^{-1} \left(\frac{\lambda^i}{\lambda^j}u'(c^j(s^t))\right)}_{\equiv G^j(c^j(s^t))} = \sum_i y^i(s^t) = \bar{y}
+\end{equation}
+Observe that the left-hand side of (\ref{eq:mc_st}) is a monotonic function of $c^j(s^t)$ because both $(u')^{-1}$ and $u'$ are monotonic. There is also a market-clearing condition for $s^{t+1}$:
+\begin{equation}
+	\underbrace{\sum_i (u')^{-1} \left(\frac{\lambda^i}{\lambda^j}u'(c^j(s^{t+1}))\right)}_{\equiv G^j(c^j(s^{t+1}))} = \sum_i y^i(s^{t+1}) = \bar{y}
+\end{equation}
+Hence, we get
+\[G^j(c^j(s^t)) = \bar{y} = G^j(c^j(s^{t+1}))\]
+and by the monotonicity of $G$ we know that
+\begin{equation}
+	c^j(s^t) = c^j(s^{t+1})
+\end{equation}
+Applying the same argument to other histories $s^t$, we obtain 
+\begin{equation} \label{eq:full_insurance}
+	c^j(s^t) = \bar{c}^j \text{ for all $s^t$}
+\end{equation}
+Equation (\ref{eq:full_insurance}) is the main implication of complete-market models. It says that, in the absence of aggregate uncertainty, household $j$ chooses the same level of consumption in every history. In other words, each household can fully insure itself against idiosyncratic shocks and fully smooth consumption across different realizations of those shocks.
+
+\subsection{Equilibrium Price of Risk-free Asset}
+
+Besides consumption dynamics, we can also easily characterize the equilibrium prices for Arrow-Debreu security $q(s^t)$. Again, from FOC (\ref{eq:AD_foc}), we can write down the Euler equation
+\begin{equation}
+	\frac{\mu(s^t) u'(c^i(s^t))}{\beta \mu(s^{t+1}) u'(c^i(s^{t+1}))} = \frac{q(s^t)}{q(s^{t+1})}
+\end{equation}
+Since we've already established that $c^i(s^t) = c^i(s^{t+1})$, we get 
+\begin{equation} \label{eq:one_period_state_conting_bond}
+	\frac{q(s^{t+1})}{q(s^t)} = \beta \mu(s^{t+1}|s^t)
+\end{equation}
+To better understand (\ref{eq:one_period_state_conting_bond}), recall the definition of Arrow-Debreu security: to get an Arrow-Debreu security for history $s^t$, the household pays $q(s^t)$ in period 0 and receives 1 unit of consumption goods if history $s^t$ is realized. Then, what does the ratio $\frac{q(s^{t+1})}{q(s^t)}$ mean? Consider the following thought experiment: suppose I want to have one unit of consumption in state $s^{t+1}$. There are two ways of achieving it:
+\begin{enumerate}
+	\item Directly purchase an Arrow-Debreu security for $s^{t+1}$, which costs $q(s^{t+1})$ and gives the household a return of $1/q(s^{t+1})$ when state $s^{t+1}$ is realized;
+	\item Purchase an Arrow-Debreu security for state $s^t$ and then reinvest in state $s^t$ in a one-period state-contingent bond (or Arrow security) which costs $q(s^{t+1}|s^t)$ in state $s^t$ and receives 1 unit of consumption good in state $s^{t+1}$ if $s^{t+1}$ is realized. The return is $\frac{1}{q(s^{t+1}|s^t) q(s^t)}$.
+\end{enumerate} 
+In a frictionless financial market, the no-arbitrage condition must hold; that is, the two investments must yield the same return. Hence, we have
+\[\frac{1}{q(s^{t+1})} = \frac{1}{q(s^t) q(s^{t+1}|s^t)}\]
+and hence
+\begin{equation}
+	\frac{q(s^{t+1})}{q(s^t)} = q(s^{t+1}|s^t)
+\end{equation}
+Therefore, the left-hand side of (\ref{eq:one_period_state_conting_bond}) is the cost of a one-period state-contingent bond from $s^t$ to $s^{t+1}$. Equation (\ref{eq:one_period_state_conting_bond}) gives the equilibrium price of this bond, which equals the subjective discount factor times the probability of history $s^{t+1}$ conditional on $s^t$.
+
+We are particularly interested in the equilibrium price of a risk-free asset in this complete-market economy because it will be the only asset available in standard incomplete-market models. This allows us to compare the equilibrium prices of a risk-free bond in the two economies. By definition, a one-period risk-free bond gives the household one unit of the consumption good in every history $s^{t+1}$. We can therefore construct the risk-free bond by purchasing one unit of each one-period state-contingent bond and ``bundling" them into a new asset. The equilibrium price of this asset can also be derived from the no-arbitrage condition:
+\begin{equation}
+	\bar{q} = \sum_{s^{t+1}} 1 \times q(s^{t+1}|s^t) = \sum_{s^{t+1}} \beta \mu(s^{t+1}|s^t) = \beta
+\end{equation}
+In other words, the return on a one-period risk-free bond $r$ is given by
+\begin{equation}
+	1+r = \frac{1}{\bar{q}} = \frac{1}{\beta} \implies \beta (1+r) = 1 
+\end{equation}
+This is a very important result. It says that in equilibrium, the risk-free asset should have a return that satisfies $\beta (1+r) = 1$. Later, in the incomplete economy, we will see how the equilibrium risk-free return is different from this benchmark.
+
+\subsection{Aggregation and Equivalence to RBC without Uncertainty}
+To complete the discussion of the complete-market benchmark, we consider aggregation. Using (\ref{eq:one_period_state_conting_bond}), we can write the relationship between $q(s^{t})$ and $q(s_0)$ as
+\begin{equation}
+	\frac{q(s^t)}{q(s_0)} = \beta^t \mu(s^t|s_0)
+\end{equation} 
+Because $q(s_0)$ is normalized to 1 and $\mu(s_0) = 1$, we obtain 
+\begin{equation}
+	q(s^t) = \beta^t \mu(s^t)
+\end{equation}
+Substituting this expression into the household budget constraint (\ref{eq:budget_arrow_debreu}), we can solve analytically for each agent's consumption $\bar{c}^j$:
+\begin{equation}
+	\bar{c}^j = \frac{\sum_t \sum_{s^t} \beta^t \mu(s^t) y^j(s^t)}{\sum_{t} \sum_{s^t} \beta^t \mu(s^t)} = \sum_{t, s^t} \omega(s^t) y^j(s^t) 
+\end{equation}
+where 
+\[\omega(s^t) = \frac{\beta^t \mu(s^t)}{\sum_{t} \sum_{s^t} \beta^t \mu(s^t)} \text{ and } \sum_{t, s^t} \omega(s^t) = 1\]
+The weights $\omega(s^t)$ are the same across households. Hence, this complete-market economy with no aggregate uncertainty permits a representative-agent representation because everyone follows the same decision rule.
+
+Before I lay out the detail of the representative-agent representation, it is easy for us to verify that
+\begin{equation}
+	\sum_j \bar{c}^j = \sum_{t, s^t} \omega(s^t) \sum_j y^j(s^t) = \sum_{t, s^t} \omega(s^t) \bar{y} = \bar{y} 
+\end{equation}
+namely, aggregate consumption equals aggregate resources at each history, so that the market clearing condition is always respected. 
+
+\paragraph{Connection to Aiyagari (1994) setup} 
+
+In the Aiyagari model that I will show below, simply replace $y^i(s^t)$ in the above endowment economy by the idiosyncratic wage that the household receives from the firm $w^i(s^t)$, and in equilibrium, 
+\begin{equation}
+	\sum_i w^i(s^t) = \bar{w} = F(K, \bar{H}) - F_K(K, \bar{H}) K
+\end{equation}
+i.e. the aggregate income of households is equal to the aggregate compensation on labor. In Aiyagari, there is no aggregate uncertainty, and aggregate capital, labor and wage compensation $\bar{w}$ are at their steady states and same across all states $s^t$. All the implications discussed in previous sections hold, namely,
+\begin{itemize}
+	\item The implied equilibrium risk-free rate is $r = 1/\beta -1$;
+	\item Each individual chooses the same decision rule for consumption that smooth consumption perfectly across histories;
+	\item The economy collapses to a representative-agent economy, which is essentially a standard RBC model with no aggregate uncertainty (i.e. total factor productivity $z_t = \bar{z}$ fixed at its steady state, so are other variables).
+\end{itemize}
+The aggregate saving in this equivalent representative-agent economy is equal to the steady-state capital $K$ and the equilibrium interest rate is equal to $1/\beta -1$.
+
+\section{Aiyagari (1994)}
+\subsection{Partial Equilibrium: Household}
+There is a continuum of households $i \in [0,1]$. Each household $i$ solves
+\begin{equation}
+	\max_{c_{it}, a_{it}} \mathbb{E}_0 \sum_{t=0}^\infty \beta^t u(c_{it})
+\end{equation}
+subject to the budget constraint
+\begin{equation}
+	c_{it} + a_{it} = (1+r) a_{i,t-1} + ws_{it}
+\end{equation}
+and the borrowing constraint
+\begin{equation}
+	a_{it} \geq 0
+\end{equation}
+where $s_{it}$ is an idiosyncratic shock drawn from the invariant distribution $\Pi(\cdot)$ associated with a Markov chain $\pi(s'|s)$ with support $[\underline{s},\bar{s}]$. 
+\begin{itemize}
+	\item Important: because the law of large numbers holds, the Markov chain $\pi(s_{i,t+1} = s'|s_{it} = s)$ also gives the fraction of households in state $s$ today that transition to state $s'$ tomorrow, and $\Pi(s)$ gives the fraction of households in state $s$.
+	\item Important: instead of saving in a complete set of Arrow security/state-contingent bond, here the households can only access a risk-free bond $a_{it}$, so that the idiosyncratic risk cannot be fully insured.
+\end{itemize}
+The interpretation of $s_{it}$ is flexible:
+\begin{itemize}
+	\item In the lecture note, $s_{it} \in \{0,1\}$ stands for employment status of the household ($=0$ if unemployed, $=1$ if employed).
+	\item Or, $s_{it}$ could stand for a labor-augmenting technology. The distribution is continuous.
+\end{itemize}
+In this model, labor is supplied inelastically: the household always supplies one unit of labor, so there is no labor-supply decision. The model can readily be extended to include elastic labor supply; see the August 2022 comprehensive exam.
+
+Aggregate labor supply is given by
+\begin{equation}
+	H_t = \int_0^1 s_{it} \,di = \int s \Pi(s) \,ds
+\end{equation} 
+\begin{itemize}
+	\item If $s_{it}$ stands for employment status, then $H_t = 1-u_t$ where $u_t$ is the unemployment rate.
+\end{itemize}
+
+\subsubsection{Natural Borrowing Constraint}
+Thus far, I have imposed an ad hoc borrowing constraint $a_{it} \geq 0$. Even without this constraint, the household's problem implies a limit on borrowing such that the debt can be repaid with probability one in every possible history. This level of debt is called the ``natural borrowing limit," and the associated constraint is called the ``natural borrowing constraint."
+
+To find the natural borrowing constraint in the household problem above, note that in each period, $c_{it} \geq 0$ (the consumer can never have negative consumption), and, together with the budget constraint, we get the inequality 
+\begin{eqnarray*}
+	a_{it} \leq (1+r) a_{i,t-1} + w s_{it}
+\end{eqnarray*}
+for all $t$. In each period $t$, the household foresees that this inequality will hold for any given path of idiosyncratic shocks $\{s_{i,t+s}\}_{s=0}^\infty$, and hence
+\begin{eqnarray*}
+	\frac{a_{i,t+1}}{1+r} &\leq& a_{it} + \frac{ws_{i,t+1}}{1+r} \\
+	\frac{a_{i,t+2}}{(1+r)^2} &\leq& \frac{a_{i,t+1}}{1+r} + \frac{ws_{i,t+2}}{(1+r)^2} \\
+	& \cdots & \\
+	\frac{a_{i,t+T}}{(1+r)^T} &\leq& \frac{a_{i,t+T-1}}{(1+r)^{T-1}} + \frac{ws_{i,t+T}}{(1+r)^T}
+\end{eqnarray*}
+Summing these inequalities up, we get
+\begin{equation*}
+	\frac{a_{i,t+T}}{(1+r)^T} \leq a_{it} + \sum_{s=1}^T \frac{ws_{i,t+s}}{(1+r)^{s}}
+\end{equation*}
+and then take $T \to \infty$ on both sides:
+\begin{equation*}
+	\lim_{T \to \infty} \frac{a_{i,t+T}}{(1+r)^T} \leq a_{it} + \sum_{s=1}^\infty \frac{ws_{i,t+s}}{(1+r)^{s}}
+\end{equation*}
+If we impose a no-Ponzi-game condition
+\[\lim_{T \to \infty} \frac{a_{i,t+T}}{(1+r)^T} = 0\]
+ on the left-hand side, we get
+ \begin{equation} \label{eq:max_debt_given_path}
+ 	a_{it} \geq - \sum_{s=1}^\infty \frac{ws_{i,t+s}}{(1+r)^{s}}
+ \end{equation}
+(\ref{eq:max_debt_given_path}) gives us the maximum amount of borrowing in period $t$ for a household with a given future path of income $\{s_{i,t+s}\}_{s=1}^\infty$. 
+
+Natural borrowing limit requires that the household is able to repay the debt for any possible path of future income $\{s_{i,t+s}\}_{s=1}^\infty$. This means that $a_{it}$ has to be greater than or equal to the maximum of the right-hand side of (\ref{eq:max_debt_given_path}). And we know that
+\[\max  - \sum_{s=1}^\infty \frac{ws_{i,t+s}}{(1+r)^{s}} = - \min \sum_{s=1}^\infty \frac{ws_{i,t+s}}{(1+r)^{s}} = - \sum_{s=1}^\infty \frac{w \underline{s}}{(1+r)^s} = -\frac{1}{r}w \underline{s}\]
+where $\underline{s}$ is the lower bound of the support of the idiosyncratic shock $s$. The natural borrowing constraint is therefore
+\begin{equation}
+	a_{it} \geq -\frac{w\underline{s}}{r}
+\end{equation}
+Notes:
+\begin{itemize}
+	\item We can see that if $\underline{s} = 0$, it boils down to the ad hoc borrowing constraint I stated previously. 
+	\item By the definition of natural borrowing limit, the probability of the natural borrowing constraint being binding is zero: it binds only when the household's realized income keeps fixed at the lowest level for all future periods, which is a measure-zero event. Hence, if the only borrowing constraint in the problem is the natural borrowing constraint, it will not change the behavior of consumption and saving compared to the no-borrowing-constraint benchmark.
+	\item More generally, if we have an ad-hoc borrowing constraint 
+	\[a_{it} \geq - \phi\]
+	and if $\phi < \frac{w\bar{s}}{r}$, then the ad-hoc borrowing constraint will be binding with a positive probability, and the consumption-saving behavior of the household will be different from the no-borrowing-constraint benchmark.
+\end{itemize}
+
+
+\subsubsection{Solution to Household's Problem} 
+We use the recursive method to solve household's problem. The endogenous state variable is $a_{i,t-1}$, the exogenous state variable is $s_{it}, r, w$, and the control variables are $a_{it}$ and $c_{it}$.
+
+The Bellman equation is therefore
+\begin{equation}
+	V(a_{i,t-1}; s_{it}, r, w) = \max_{a_{it}} u\left((1+r)a_{i,t-1} + ws_{it} - a_{it}\right) + \mu_{it} a_{it} + \beta \mathbb{E}\left[V(a_{it}; s_{i,t+1}, r, w)|s_{it}\right]
+\end{equation}
+where $\mu_{it}$ is the Lagrange multiplier associated with the borrowing constraint. 
+
+We know that the agents who enter the period with the same bond holding $a_{i,t-1} = a$ and same idiosyncratic state $s_{it} = s$ face the same decision problem and end up with the same decision rules. Hence, I could ``index" each agent by $(a,s)$. Also, as a convention of the literature, let $a'$ and $s'$ denote tomorrow's states. The above Bellman equation can be written as
+\begin{equation} \label{eq:bellman}
+	V(a;s, r, w) = \max_{a'} u\left((1+r) a + ws - a'\right) + \mu a' + \beta \sum_{s'}V(a';s', r, w) \pi(s'|s)
+\end{equation}
+Take FOC and Envelope condition:
+\begin{eqnarray}
+	u'(c) &=& \mu + \beta \sum_{s'} \pi(s'|s) V_a(a';s') \\
+	V_a(a;s, r, w) &=& u'(c) (1+r) 
+\end{eqnarray}
+and hence we get an Euler equation
+\begin{equation}
+	u'(c) = \mu + \beta \sum_{s'} \pi(s'|s) (1+r) u'(c') = \mu + \beta (1+r) \sum_{s'} \pi(s'|s) u'(c')
+\end{equation}
+The slackness condition for $\mu$ is 
+\begin{equation}
+	\mu a' = 0 \text{ and } \mu \geq 0
+\end{equation}
+and therefore the Euler equation can be written as
+\begin{equation}
+	u'(c) \geq \beta(1+r) \mathbb{E}_t[u'(c')|s] \text{ with equality if $a' > 0$}
+\end{equation}
+Eventually we will find a value function $V(a;s, r, w)$ and a corresponding policy function $a'(a;s, r, w)$ for the households with state $(a;s, r, w)$.
+
+\subsubsection{Supermartingale Convergence Theorem and Individual Asset Supply}
+
+Thus far, the analysis is the same as the partial-equilibrium analysis in Prof. Shea's part of the course (see my second TA-session note), where the interest rate $r$ is treated as a parameter. Although $r$ is fixed in the partial-equilibrium analysis, keep in mind that it is endogenous in general equilibrium and is pinned down by the asset-market-clearing condition. The purpose of the partial-equilibrium analysis is to determine how changes in $r$ affect household consumption and saving.
+
+To do this, we need to focus on Euler equation
+\begin{equation}
+	u'(c_{it}) \geq \beta(1+r) \mathbb{E}_t[u'(c_{i,t+1})|s] \text{ with equality if $a_{it} > 0$}
+\end{equation}	
+Hence, $\{\beta^t (1+r)^t u'(c_{it})\}$ is a supermartingale. Furthermore, $u'(\cdot) \geq 0$, which implies that $\beta^t (1+r)^t u'(c_{it}) \geq 0$. By the Supermartingale Convergence Theorem (see Chapter 17, Appendix A, of Ljungqvist and Sargent, page 779), there exists a $\bar{M}\geq 0$ such that
+\begin{equation} \label{eq:supermtgl_covergence}
+	\beta^t (1+r)^t u'(c_{it}) \to \bar{M} \text{ a.s. as $t \to \infty$}
+\end{equation}  
+Equation (\ref{eq:supermtgl_covergence}) is a powerful tool for determining how the dynamics of $c_{it}$ and $a_{it}$ depend on $r$. Specifically, there are three scenarios:
+\begin{enumerate}
+\item If $\beta(1+r) > 1$, then in order for $\beta^t (1+r)^t u'(c_{it})$ to converge, we must have $u'(c_{it})$ converging to 0. However, since $u'(\cdot) > 0$ and $u''(\cdot) < 0$, this is only possible when $c_{it} \to \infty$ as $t \to \infty$, and hence $a_{it} \to \infty$ as well (from the budget constraint).
+\item If $\beta (1+r) = 1$, it turns out that $a_{it} \to \infty$. For technical details, see Chamberlain and Wilson (2000, RED), the footnote 21 of Aiyagri (1994) or my footnote below.\footnote{Here is a proof. Suppose that there exists $\bar{a}$ such that $\bar{a} = \sup_{t} \{a_{it}\}$, where the law of motion of $\{a_{it}\}$ follows from the policy function $a'(a,s)$. Consider a realization of states in period $t$ with $a_{i,t-1} = \bar{a}$ and $s_{it} = \bar{s}$ (the highest possible realization of $s_{it}$). By the definition of supremum, $a_{it} = a'(\bar{a}, \bar{s}) \leq \bar{a}$; but since $a'(\bar{a}, \bar{s})$ is the maximum saving possible for any given $a_{it}$, $a'(\bar{a}, \bar{s})$ is also an upper bound of $\{a_{it}\}$, and again by definition of supremum (the smallest upper bound), $a'(\bar{a}, \bar{s}) \geq \bar{a}$. Think about the Euler inequality in period $t$:
+\begin{align*}
+	u'(c_{it}) & = u'((1+r) \bar{a} + w \bar{s} - a'(\bar{a}, \bar{s}))\\
+	& \geq \mathbb{E}[u'((1+r) a'(\bar{a}, \bar{s}) + w s_{i,t+1} - a'(a'(\bar{a}, \bar{s}), \bar{s}))] \\
+	& = \mathbb{E}[u'((1+r) \bar{a} + w s_{i,t+1} - \bar{a})] \text{ [using the fact that $a'(\bar{a},\bar{s}) = \bar{a}$]} \\
+	& > u'((1+r) \bar{a} + w \bar{s} - \bar{a}) \text{ [using the fact that $u''(\cdot) < 0$ and $s_{i,t+1} \leq \bar{s}$]} \\
+	& = u'((1+r) \bar{a} + w \bar{s} - a'(\bar{a}, \bar{s})) = u'(c_{it})
+\end{align*}
+which is a contradiction.
+} Note that this is very different from the case of $\beta (1+r) = 1$ when there is no uncertainty (see my TA notes for Prof. Shea's part). Intuitively, since there is a non-trivial probability that the idiosyncratic state is low for a period of time and that the borrowing constraint is binding, the household needs to accumulate a large amount of asset to buffer this possibility. 
+\item If $\beta (1+r) < 1$, then as long as $u'(c_{it})$ is bounded above by $\beta^{-t} (1+r)^{-t}$, (\ref{eq:supermtgl_covergence}) holds. In this case, it is possible to have a path of $\{c_{it}, a_{it}\}$ such that $0 \leq a_{it} < \infty$ for all $t$. 
+\end{enumerate}
+
+
+\subsubsection{Aggregate Asset Supply Curve}
+Define aggregate household asset holdings $A_t$ as
+\begin{equation}
+A_t(r,w) = \int_0^1 a_{it} \,di = \int a'(a,s; r, w) \Lambda_t(a,s; r,w) \,da ds	
+\end{equation}
+where the distribution $\Lambda_t(a,s; r, w)$ gives us the fraction of households in period $t$ with state $(a,s)$ given prices $(r,w)$. I will discuss this object in detail later.
+
+From our discussion above, we know that 
+\begin{equation}
+	A_t(r,w)
+	\begin{cases}
+	 = \infty & \text{ if $r \geq 1/\beta -1$} \\
+	 < \infty & \text{ if $r < 1/\beta -1$}	
+	\end{cases}
+\end{equation}
+Figure 18.6.1 of Ljungqvist and Sargent and Figure II of Aiyagari (1994) illustrate a possible asset-supply curve: $A_t$ is increasing in $r$, continuous, and approaches infinity as $r \to 1/\beta -1$.
+
+\subsubsection{Evolution of Distribution $\Lambda_t$}
+The policy function $a'(a,s)$ implicitly defines a law of motion for the distribution of endogenous and exogenous states $\Lambda_t(a,s)$. It is the key to almost all heterogeneous agent macro models.
+
+First, consider the probability of transition from period-$t$ state $(a_{i,t-1}, s_{it}) = (a,s)$ to period-$(t+1)$ state $(a_{i,t}, s_{i,t+1}) = (a',s')$:
+\begin{equation}
+	Q(a',s'|a,s) \equiv P((a_{i,t}, s_{i,t+1}) = (a',s')|(a_{i,t-1}, s_{it}) = (a,s)) = \mathbf{1}\left\{a' = a'(a, s)\right\} \pi(s'|s)
+\end{equation}
+Hence
+\begin{equation} \label{eq:law_distribution}
+	\Lambda_{t+1}(a,s) = \int Q(a,s|\tilde{a}, \tilde{s}) \Lambda_t(\tilde{a}, \tilde{s}) \, d\tilde{a} d\tilde{s} = \int \mathbf{1}\left\{a = a'(\tilde{a}, \tilde{s})\right\} \pi(s|\tilde{s}) \Lambda_t(\tilde{a}, \tilde{s})\, d\tilde{a} d\tilde{s}
+\end{equation}
+Intuitively, in period $t+1$, the fraction of households with state $(a,s)$ is the sum of the fraction of the firms transitioning from state $(\tilde{a}, \tilde{s})$ in period $t$ to state $(a,s)$ in period $t+1$.
+
+(\ref{eq:law_distribution}) defines a law of motion for distribution $\Lambda_t$. The right-hand side can be regarded as an operator $T$ for $\Lambda_t$:
+\begin{equation} \label{eq:forward_operator}
+	\Lambda_{t+1} = T \Lambda_t
+\end{equation}
+Under appropriate conditions, there exists a unique invariant distribution $\bar{\Lambda}$ that is the fixed point of (\ref{eq:forward_operator}):
+\begin{equation}
+	\bar{\Lambda} = T \bar{\Lambda}
+\end{equation}  
+For technical details, see Chapter 12, Theorem 12.13 of Stokey and Lucas.
+
+Intuitively, the invariant distribution means that for any given $(a,s)$, the mass of agents transitioning from $(a,s)$ to other states $(a',s')$ is exactly the same as the mass of agents transitioning from $(\tilde{a}, \tilde{s})$ to $(a,s)$. In a recursive stationary competitive equilibrium, it is necessary that the distribution $\Lambda_t$ is at its invariant distribution.
+
+\subsection{Partial Equilibrium: Firms}
+The firm sector is standard. 
+\begin{equation}
+	\max_{K,H} F(K,H) - rK - wH
+\end{equation}
+and hence labor and capital demand are given by
+\begin{eqnarray}
+	r &=& F_K \label{eq:foc_k}\\
+	w &=& F_H \label{eq:foc_h}
+\end{eqnarray}
+
+\subsection{Recursive Stationary Competitive Equilibrium}
+A recursive competitive equilibrium is a value function $v(a,s,r,w)$, policy function $c(a,s,r,w)$, $a'(a,s,r,w)$, prices $(r,w)$ and distribution $\bar{\Lambda}$ such that
+\begin{itemize}
+	\item Given prices $(r,w)$, value function $v(a,s,r,w)$ and policy function $c(a,s,r,w)$, $a'(a,s,r,w)$ solves household Bellman equation (\ref{eq:bellman});
+	\item Given prices $(r,w)$, the firm maximizes profit and ends up capital demand $K(r,w)$ and labor demand $H(r,w)$, satisfying FOCs (\ref{eq:foc_k}) and (\ref{eq:foc_h});
+	\item Given prices $(r,w)$, $\bar{\Lambda}$ is the fixed point of law of motion
+	\begin{equation}
+		\Lambda_{t+1}(s,a;r,w) = \int \mathbf{1}\left\{a = a'(\tilde{a}, \tilde{s}; r,w)\right\} \pi(s|\tilde{s}) \Lambda_t(\tilde{a}, \tilde{s}; r,w)\, d\tilde{a} d\tilde{s}
+	\end{equation}
+	\item Market clears: $r, w$ are pinned down by labor and capital market clearing conditions
+	\begin{eqnarray}
+		H(r,w) &=& \int \Pi(s) s\,ds \\
+		K(r,w) &=& \int a'(a,s; r,w) \Lambda(a,s; r,w) \,da ds
+	\end{eqnarray}
+\end{itemize}
+Expect to see this type of question on the exam. The August 2022 comprehensive exam provides useful practice through an extension of the model above with endogenous labor supply.
+
+\section{Krusell and Smith (1998): A Brief Summary}
+
+The principal difference between Krusell and Smith (1998) and Aiyagari (1994) is that the former includes aggregate uncertainty. Consequently, the aggregate variables $r_t, w_t, K_t, H_t, C_t, Y_t$ fluctuate over time and cannot be treated as constants by households and firms. 
+
+Now, in household's problem, the Bellman equation (\ref{eq:bellman}) changes to
+\begin{equation}
+	V(a;s, r, w) = \max_{a'} u\left((1+r) a + ws - a'\right) + \mu a' + \beta \sum_{s', r', w'}V(a';s', r', w') P(s',r', w'|s,r,w)
+\end{equation}
+In other words, with aggregate uncertainty, the household will need to forecast the prices $r'$ and $w'$ in the future. However, the transition probability $P(s',r',w'|s,r,w)$ is not an easy object to characterize: it depends on the Markov transition probability of idiosyncratic state $\pi(s'|s)$ as well as the law of motion for prices $r'$ and $w'$, which is an endogenous object.
+
+If we focus on a rational-expectations equilibrium---that is, households know how prices are determined in each period and therefore hold model-consistent beliefs about $r'$ and $w'$---then each household recognizes that next period's prices are pinned down by the firm's FOCs:
+\begin{eqnarray}
+	r' &=& F_K(z', K', H')\\
+	w' &=& F_H(z', K', H')
+\end{eqnarray}
+Plug it into the value function $v(a,s;r,w)$ and redefine value function in terms of $(a,s,z,K,H)$:
+\begin{equation}
+	\tilde{V}(a,s,z, K,H) \equiv V(a,s, F_K(z,K,H), F_N(z,K,H))
+\end{equation}
+we get a modified Bellman equation
+\begin{align}
+	\tilde{V}(a,s,z,K,H) = \max_{a'} & u\left((1+F_K(z,K,H)) a + F_H(z,K,H)s - a'\right) + \mu a' \\ & + \beta \sum_{s',z', K', H'}\tilde{V}(a',s',z', K', H') P(s', z', K', H'|s,z, K,H)
+\end{align}
+in other words, the household needs to compute aggregate capital and labor today $K,H$ and forecast tomorrow's aggregate capital and labor $K'$ and $H'$. Again, by the definition of rational expectation, the household knows that the market clearing conditions for capital and labor is 
+\begin{eqnarray}
+	K &=& \int a'(a,s,z) \Lambda(a,s,z) \, dads \\
+	H &=& \int s \Lambda(a,s,z) \, dads 
+\end{eqnarray} 
+Hence, as long as the household knows the distribution $\lambda$, he could compute $K$ and $H$. Therefore, we could apply the ``change-of-variable" trick again and redefine value function as
+\begin{equation}
+	\bar{V}(a,s,z,\Lambda) \equiv \tilde{V}\left(a,s,z,\int a'(a,s,z) \Lambda(a,s,z) \, dads, \int s \Lambda(a,s,z) \, dads\right)
+\end{equation}
+and rewrite the value function as 
+\begin{equation}
+	\bar{V}(a,s,z,\Lambda) = \max_{c,a'} u(c) + \beta \sum_{z',s',\Lambda'} \bar{V}(a',s',z',\Lambda') P(z',s',\Lambda'|z,s,\Lambda)
+\end{equation}
+To characterize $P(z',s',\Lambda'|z,s,\Lambda)$, we need a law of motion for the distribution $\Lambda$:
+\begin{equation}
+	\Lambda'(a,s,z) = \int \mathbf{1}\{a'(a,s,z,\Lambda) = a\} \pi(s,z|\tilde{s}, \tilde{z}) \Lambda(\tilde{a},\tilde{s},\tilde{z}) \,d\tilde{a} d \tilde{s} d \tilde{z} 
+\end{equation}
+ This object is difficult to characterize, and Krusell and Smith (1998) proceed by using a temporary equilibrium---the optimal solution under a perceived law of motion for aggregate capital and labor---to approximate the rational-expectations equilibrium. However, because we do not know the exact rational-expectations equilibrium, it is difficult to evaluate the quality and extent of this approximation. Current research uses methods such as deep learning and reinforcement learning; see, for example, the work of Yucheng Yang at Zurich and Jes\'us Fern\'andez-Villaverde at Penn.
+
+
+%	\section{Questions}
+%	\begin{itemize}
+%		\item Goal: Build a class of models whose equilibria feature an endogenous distribution of income and wealth across households, and mobility across the distribution.
+%		\item Questions to analyze:
+%		\begin{enumerate}
+%			\item What is the fraction of $K$ due to precautionary motive?
+%			\item How can policy affect economic / intergenerational mobility?
+%			\item How much of the observed wealth inequality can one explain through uninsurable income variation across agents?
+%			\item What are the macro and redistributional implications of fiscal policies?
+%			\item How does market incompleteness and heterogeneity change the transmission of aggregate (productivity, monetary, etc.) shocks?
+%			\item Can we generate a reasonable equity premium?
+%			\item Are welfare costs of business cycles larger with incomplete markets?
+%		\end{enumerate}
+%	\end{itemize}
+%	
+%	\section{Building Blocks}
+%	\begin{itemize}
+%		\item Three building blocks:
+%		\begin{enumerate}
+%			\item The income-fluctuation problem.
+%			\item The aggregate neoclassical production function.
+%			\item The equilibrium of the asset market.
+%		\end{enumerate}
+%		\item Focus on the stationary equilibrium for now (an economy without aggregate shocks).
+%	\end{itemize}
+%	
+%	\section{Income Fluctuation Problem}
+%	\begin{itemize}
+%		\item Individuals are subject to exogenous income shocks, not fully insurable due to the lack of a complete set of Arrow-Debreu contingent claims.
+%		\item Only a risk-free asset (an asset with a non-state-contingent rate of return) in which the individual can save or borrow.
+%		\item Borrowing (liquidity) constraint: $a_{t+1} \geq -b$, where $b$ is exogenous.
+%		\item A continuum of such agents subject to different shocks will give rise to a wealth distribution. Integrating wealth holdings across all agents will give rise to an aggregate supply of capital.
+%	\end{itemize}
+%	
+%	\section{Aggregate Production Function}
+%	\begin{itemize}
+%		\item The representative firm produces with a constant returns to scale (CRS) production function:
+%		\[
+%		Y_t = F(K_t, H_t), \quad F_K > 0, F_H > 0, F_{KK} < 0, F_{HH} < 0
+%		\]
+%		\item Physical capital depreciates geometrically at rate $\delta \in (0, 1)$.
+%	\end{itemize}
+%	
+%	\section{Market Structure}
+%	\begin{itemize}
+%		\item The markets for final goods (consumption and investment goods), labor, and capital are all competitive.
+%		\item Aggregate resource constraint:
+%		\[
+%		F(K_t, H_t) = C_t + I_t = C_t + K_{t+1} - (1 - \delta) K_t
+%		\]
+%		\item The firm maximizes profits subject to these conditions.
+%	\end{itemize}
+%	
+%	\section{Stationary Equilibrium}
+%	\begin{itemize}
+%		\item Define the stationary equilibrium using the concept of Recursive Competitive Equilibrium (RCE).
+%		\item Requirements for the RCE:
+%		\begin{enumerate}
+%			\item Agents optimize.
+%			\item Markets clear.
+%			\item The distribution of agents across states must be invariant over time.
+%		\end{enumerate}
+%		\item The stationary probability measure reproduces itself permanently, but individuals move within the stationary distribution.
+%	\end{itemize}
+%	
+%	\section{Mathematical Preliminaries}
+%	\begin{itemize}
+%		\item Individual is characterized by the pair $(a, \epsilon)$, where $a$ is wealth and $\epsilon$ is the individual productivity shock.
+%		\item Let $\lambda$ be the probability distribution of agents over states. Let $A \equiv [-b, \bar{a}]$, where $\bar{a}$ is the upper bound of asset holdings, and $E$ is a countable set of shocks.
+%		\item The state space $S$ is the Cartesian product $A \times E$, with $\Sigma_s$ being the corresponding $\sigma$-algebra.
+%		\item Transition function $Q$: the probability that an individual transitions from $(a, \epsilon)$ to $A \times E$ next period:
+%		\[
+%		Q((a, \epsilon), A \times E) = I_{\{a'(a, \epsilon) \in A\}} \sum_{\epsilon' \in E} \pi(\epsilon', \epsilon)
+%		\]
+%		\item $T^*$ operator yields:
+%		\[
+%		\lambda_{n+1}(A \times E) = T^*(\lambda_n) = \int_{A \times E} Q((a, \epsilon), A \times E) d\lambda_n
+%		\]
+%	\end{itemize}
+%	
+%	\section{Stationary Recursive Competitive Equilibrium (RCE)}
+%	\begin{itemize}
+%		\item A value function $v: S \to \mathbb{R}$.
+%		\item Policy functions for the household: $a'(a, \epsilon)$ and $c(a, \epsilon)$.
+%		\item Firm choices $H$ and $K$.
+%		\item Prices $r$ and $w$.
+%		\item A stationary measure $\lambda^*$ such that:
+%		\begin{enumerate}
+%			\item Given prices, $a'(a, \epsilon)$ and $c(a, \epsilon)$ solve the household's problem and $v$ is the associated value function.
+%			\item The firm chooses $K$ and $H$ optimally.
+%			\item Labor market clears: $H = \int_{A \times E} \epsilon d\lambda^*$.
+%			\item Asset market clears: $K = \int_{A \times E} a'(a, \epsilon) d\lambda^*$.
+%			\item Goods market clears: $\int_{A \times E} c(a, \epsilon) d\lambda^* + \delta K = F(K, H)$.
+%			\item The invariant probability measure $\lambda^*$ satisfies:
+%			\[
+%			\lambda^*(A \times E) = \int_{A \times E} Q((a, \epsilon), A \times E) d\lambda^*
+%			\]
+%		\end{enumerate}
+%	\end{itemize}
+%	
+%	\section{Existence and Uniqueness}
+%	\begin{itemize}
+%		\item The equilibrium exists and is unique if the excess demand function in each market is continuous, strictly monotone, and intersects zero.
+%		\item For the labor market, equilibrium is straightforward: labor demand is decreasing in wages, and labor supply is exogenous.
+%		\item For the asset market, the supply of savings is larger under uninsurable risk due to precautionary savings, leading to $(1 + r) \beta < 1$.
+%		\item By Walras' law, if equilibrium in the asset market is shown to exist and be unique, then we have proven equilibrium for the entire economy.
+%	\end{itemize}
+%	
+%	% Continue with the remaining sections, following similar formatting
+%	\section{Algorithm to Compute Equilibrium}
+%	\begin{enumerate}
+%		\item Start with an initial guess for the interest rate $r_0 \in (-\delta, \frac{1}{\beta} - 1)$.
+%		\item Given $r_0$, obtain the wage rate $w(r_0)$ from the CRS property of the production function.
+%		\item Solve the dynamic programming problem for the agent to get $a'(a, \epsilon; r_0)$ and $c(a, \epsilon; r_0)$.
+%		\item Simulate a large number of households and compute a cross-sectional distribution until convergence.
+%		\item Compute the aggregate supply of assets $A(r_0)$.
+%		\item Compute the aggregate demand of capital $K(r_0)$.
+%		\item Compare $A(r_0)$ with $K(r_0)$. Adjust $r_0$ accordingly and iterate until convergence.
+%	\end{enumerate}
+%	
+%	\section{Calibration}
+%	\begin{itemize}
+%		\item \textbf{Technology}: With a Cobb-Douglas production function, set the capital share $\alpha = 0.4$ and depreciation rate $\delta = 6\%$.
+%		\item \textbf{Preferences}: Let $\gamma$ be the coefficient of relative risk aversion, typically between 1 and 5. Choose $\beta$ to match the wealth-income ratio of the U.S. economy (around 7).
+%		\item \textbf{Labor Income Process}: A good approximation to U.S. individual earnings dynamics is:
+%		\[
+%		\log y_t = \rho \log y_{t-1} + \epsilon_t, \quad \epsilon_t \sim N(0, \sigma_\epsilon)
+%		\]
+%		where $\rho = 0.95$ and $\sigma_\epsilon = 0.20$ at annual frequency.
+%	\end{itemize}
+	
+\end{document}

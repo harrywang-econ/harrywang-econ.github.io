@@ -1,0 +1,339 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON602 TA Notes: Wage Determination}
+\author{Haoran Wang}
+\date{March 10, 2025}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents 
+	
+		This note discusses non-allocative models of wage determination, in which the wage is not the competitive-equilibrium outcome at the intersection of labor-demand and labor-supply curves. The competitive, or ``allocative," view of wage determination is inconsistent with two important phenomena: unemployment and wage rigidity. Instead, wages in this note are determined by labor contracts between employers and employees. This contractual view of the labor market provides a framework for incorporating labor-market frictions into wage and employment determination and generating more realistic wage and unemployment dynamics. 
+	
+	\section{Rosen (1985)}
+	 
+		 Rosen's paper illustrates the implications of labor contracting between employers and employees using a standard principal--agent framework. It shows that labor contracts reflect the relative risk attitudes of the employer and employee.
+	 
+	 \subsection{Setup}
+	 
+	 \paragraph{Worker/Employee \\ [6pt]}
+		 The worker's preferences are given by
+	 \begin{equation}
+	 	u = U(C + mL)
+	 \end{equation}
+		 where $C$ is consumption and $L \in [0,1]$ is the fraction of time devoted to leisure.	 
+	 
+	 \underline{Notes}:
+	 \begin{itemize}
+	 	\item The utility function is assumed to be increasing and concave: $U'(\cdot) > 0$ and $U''(\cdot) < 0$. 
+		 	\item The concavity of $U$ captures the worker's risk aversion: by Jensen's inequality,
+	 	\[\mathbb{E}[U] \leq U(\mathbb{E})\] 
+	 	\item $C$ and $L$ are perfect substitutes. The marginal rate of substitution is 
+	 	\[\frac{U_L}{U_C} = \frac{U' \cdot m}{U'} = m\]
+		 	which is constant. Hence, in a competitive equilibrium, the labor-supply curve takes the form
+	 	\begin{equation}
+	 		N^s(w) = \begin{cases}
+	 			1 & \text{ if } w \geq m \\
+	 			0 & \text{ if } w < m
+	 		\end{cases} 
+	 	\end{equation}
+	 \end{itemize}
+ 
+ \paragraph{Firm/Employer \\ [6pt]}
+	Firm's production function is 
+	\begin{equation}
+		x = \theta f(N)
+	\end{equation}
+where 
+\begin{itemize}
+		\item the production function $f$ is increasing and concave in the total number of contract workers $N$;
+	\item The state variable $\theta$ is labor productivity, which is a random variable with known distribution $G(\theta)$ and density function $g(\theta)$, with mean $\mu$;
+		\item The realization of $\theta$ is known to both the firm and the worker; hence, the contract defined below can be fully contingent on $\theta$ (i.e., it is a complete contract).
+		\item Because a worker's optimal action is either 0 (employed) or 1 (unemployed), we can express the total number of hired workers as $N = \rho n$, where $n$ is a fixed number of workers under contract, $\rho$ is the worker-utilization rate (the proportion of contracted workers who work), and $1-\rho$ is the proportion who do not work (the layoff rate). 
+	\item $\rho$ is part of the contract and pinned down endogenously. 
+\end{itemize}
+
+The firm's utility function is given by $v(\pi)$, where $v$ is an increasing, weakly concave function and $\pi$ is the profit of the firm, which is equal to output $x$ minus the compensation to workers.
+\begin{itemize}
+	\item In other words, we are allowing the firm to be risk-averse as well.
+\end{itemize}
+
+\paragraph{Contract  \\ [6pt]}
+A state-contingent labor contract is defined by
+\begin{equation}
+	\{W_1(\theta), W_2(\theta), \rho(\theta)\}
+\end{equation}
+where
+\begin{itemize}
+		\item $W_1(\theta)$ is the compensation (in units of consumption goods) the worker receives from the firm when employed in state $\theta$;
+	\item $W_2(\theta)$ is the compensation (in units of consumption goods) the worker receives from the firm when the worker is laid off under state $\theta$;
+	\item $1 - \rho (\theta)$ is the layoff rate under state $\theta$. \\
+	(Have you seen a labor contract specifying this quantity? Do firms specify probability of layoff in the labor contract?)
+\end{itemize}
+
+\underline{Notes:}
+\begin{itemize}
+	\item The contract is a function of state $\theta$: this is only possible when both parties of the contract can observe the realization of $\theta$ ex post and commonly know the distribution $G(\theta)$ ex ante. 
+	\item We can write down the (expected) value of the contract for both the firm and workers: for the firm, the expected value $\mathbb{E}[v]$ is
+	\begin{equation}
+		\mathbb{E}[v] = \int v \left(\theta f(\rho(\theta) n) - \rho(\theta) n W_1(\theta) - (1-\rho(\theta)) n W_2(\theta) \right) \, d G(\theta)
+	\end{equation}
+and for each worker
+\begin{equation}
+\mathbb{E}[u] = \int \left\{U(W_1(\theta)) \rho (\theta) + (1-\rho(\theta)) U(W_2(\theta) + m) \right\} \, d G(\theta)
+\end{equation} 
+\end{itemize}
+
+\subsection{Optimal Contract}
+
+The optimal contract is derived from a principal agent problem. The second half of 604 will elaborate more on this topic.
+
+\paragraph{Principal-agent Problem: Overview \\ [6pt]}
+A principal--agent problem is a sequential game between a principal and an agent with the following timing:
+\begin{enumerate}
+		\item The principal offers a take-it-or-leave-it contract $\{W_1(\theta), W_2(\theta), \rho(\theta)\}$ to the agent (i.e., state $\theta$ has not yet been revealed).
+	\item The agent decides whether to take the contract or not:
+	\begin{itemize}
+			\item If the agent accepts: state $\theta$ is revealed, and the principal and agent receive their ex post payoffs according to the contract;
+			\item if the agent rejects: the agent gets a reservation utility $\bar{u}$ and the principal gets a reservation utility $\bar{v}$. 
+	\end{itemize}
+\end{enumerate}
+For simplicity, I set the principal's reservation utility $\bar{v}$ to $-\infty$, i.e. the principal is always better off as long as he reaches a contract with the agent. 
+
+The optimal contract is the one which gives the principal the maximum expected payoff subject to the constraint that the agent takes the contract. It is the SPNE of this sequential game.
+
+In the paper, principal = worker, and agent = firm. In most other papers, principal = firm and agent = worker. Implications are more or less the same.
+
+\paragraph{Participation Constraint \\ [6pt]}
+Let the reservation utility of the worker be $\bar{u}$. The worker will take contract $\{W_1(\theta), W_2(\theta), \rho(\theta)\}$ if and only if
+\begin{equation}
+	\mathbb{E}[u] \geq \bar{u}
+\end{equation}
+where $\bar{u}$ is the reservation utility or outside option of the worker. This constraint is called ``individual rationality constraint" (IR constraint) or ``participation constraint". 
+
+When the principal offers a contract, the participation constraint must be taken into account. Because reaching an agreement is in the principal's interest, the contract must give the agent sufficient incentive to accept.
+
+\paragraph{Firm's Problem that Solves the Optimal Contract \\ [6pt]}
+
+The firm chooses contract $\{W_1(\theta), W_2(\theta), \rho(\theta)\}$ to 
+\begin{equation}
+	\max \mathbb{E}[v] \text{ s.t. } 	\mathbb{E}[u] \geq \bar{u} \text{ and } \rho(\theta) \in [0,1]
+\end{equation}
+Lagrangian:
+\begin{align*}
+	\mathcal{L} & = \int v \left(\theta f(\rho(\theta) n) - \rho(\theta) n W_1(\theta) - (1-\rho(\theta)) n W_2(\theta) \right) \, d G(\theta) \\
+	& + \lambda\left(\int \left\{U(W_1(\theta)) \rho (\theta) + (1-\rho(\theta)) U(W_2(\theta) + m) \right\} \, d G(\theta) - \bar{u}\right) \\
+	& + \int \mu(\theta) \rho(\theta) \, d G(\theta) - \int \gamma(\theta) (\rho(\theta) - 1) \, dG(\theta)
+\end{align*}
+FOCs:
+\begin{eqnarray*}
+	v'(\pi (\theta)) \cdot (-\rho(\theta)) n + \lambda U'(W_1(\theta)) \rho(\theta) &=& 0 \\
+	- v'(\pi (\theta)) \cdot (1 -\rho(\theta)) n + \lambda U'(W_2(\theta)+ m) (1-\rho(\theta)) &=& 0 \\
+	v'(\pi) (\theta f'(\rho(\theta) n) n - n W_1(\theta) + n W_2(\theta)) + \lambda (U(W_1(\theta)) - U(W_2(\theta) + m)) + \mu(\theta) - \gamma(\theta) &=& 0 
+\end{eqnarray*}
+together with the slackness conditions
+\[\lambda \geq 0, \mu(\theta) \geq 0, \gamma(\theta) \geq 0\]
+
+\paragraph{Analysis}
+
+First, combining two FOCs, we get:
+\begin{equation} \label{eq:risk_sharing}
+	\frac{U'(W_1(\theta))}{U'(W_2(\theta) + m)} = 1
+\end{equation}
+which implies that
+\begin{equation}
+	W_1(\theta) = W_2(\theta) + m
+\end{equation}
+and hence the third FOC can be simplified as 
+\begin{equation} \label{eq:foc_rho}
+	v'(\pi) \left[\theta f'(\rho(\theta) n) n - n \cdot m\right] + \mu (\theta) - \gamma(\theta) = 0
+\end{equation}
+
+\paragraph{Implications for Unemployment \\ [6pt]}
+We analyze the slackness conditions for Lagrange multipliers associated with the boundary conditions for $\rho$:
+\begin{itemize}
+	\item Suppose $0 < \rho(\theta) < 1$, then the slackness conditions imply that $\mu(\theta) = 0$ and $\gamma(\theta) = 0$, and therefore (\ref{eq:foc_rho}) degenerates to
+	\begin{equation}
+		v'(\pi) n \left[\theta f'(\rho(\theta) n) - m\right] = 0
+	\end{equation}
+which solves $\rho(\theta)$:
+\begin{equation}
+	\rho(\theta) = \frac{1}{n}(f')^{-1}\left(\frac{m}{\theta}\right)
+\end{equation}
+\item Suppose $\mu(\theta) > 0$, so that $\rho(\theta) = 0$ and $\gamma(\theta) = 0$. Equation (\ref{eq:foc_rho}) degenerates to
+\begin{equation}
+	\theta f'(0) - m < 0
+\end{equation}
+In this case, the firm will not hire any workers. We end up with full unemployment.
+\item Suppose $\gamma(\theta)> 0$, so that $\rho(\theta) = 1$ and $\mu(\theta) = 0$. Equation (\ref{eq:foc_rho}) degenerates to 
+\begin{equation}
+	\theta f'(n) - m > 0
+\end{equation}
+In this case, the firm will fully utilize its quotas to hire workers. We end up with full employment.
+\end{itemize}
+
+Define $\theta^* \equiv \frac{m}{f'(0)}$ and $\theta^{**} = \frac{m}{f'(n)}$. From above, we conclude that
+\begin{itemize}
+	\item When $\theta < \theta^*$, the firm will not hire any worker;
+	\item When $\theta > \theta^{**}$, the firm will hire as much as it can, so that there will be no unemployment;
+	\item When $\theta \in [\theta^*, \theta^{**}]$, the labor utilization is between 0 and 1, and the layoff rate $1-\rho(\theta)$ decreases with $\theta$.
+\end{itemize}
+In other words, we get countercyclical unemployment.
+
+\paragraph{Implications for Wage \\ [6pt]}
+
+The optimal contract requires the wage offer to satisfy (\ref{eq:risk_sharing}). In other words, the marginal rate of substitution between employment and unemployment is constant and does not vary with state $\theta$. In each state, the optimal wage contract sets the gap between employment and layoff compensation equal to the constant $m$.
+
+We are interested in the case where $v'(\pi) = 1$, i.e. the firm is risk-neutral. Then the first two FOCs degenerate to
+\begin{equation} \label{eq:wage_rigidity}
+	\lambda U'(W_1(\theta)) = n \text{ and } \lambda U'(W_2(\theta) + m) = n
+\end{equation}
+We can see that in this case, $W_1(\theta)$ and $W_2(\theta)$ will be independent of state $\theta$ and hence marginal product of labor. 
+
+This is an important result and can be interpreted as a micro-foundation for wage rigidity. The fact that wage does not fluctuate with state in (\ref{eq:wage_rigidity}) reflects \textbf{optimal risk sharing} between the firm and the worker. The risk-neutral firm can tolerate more risk, and therefore in the contract, it absorbs all the risks from the variations in state $\theta$. The workers are risk-averse, and in the optimal contract, the firm offers full insurance to their wage income, so that they do not bear any risk from the fluctuations in state $\theta$. 
+
+\section{Shapiro and Stiglitz (1984): Efficiency Wage}
+
+Another early theory of labor contracts is the efficiency-wage theory of Shapiro and Stiglitz (1984). In this paper, worker effort is unobservable to the firm and therefore not contractible. The firm can implement a powerful monitoring technology to detect shirking, or it can pay a wage above the market-clearing wage or marginal product of labor to induce workers to exert effort. This is a standard hidden-action, or ``moral hazard," problem that is well studied in information economics.
+
+\subsection{Setup}
+
+The model is highly stylized. 
+
+\paragraph{Worker \\ [6pt]}
+Worker's utility function is given by 
+\begin{equation}
+	U(w, e) = w - e
+\end{equation} 
+where $w$ is the compensation the worker receives from the firm and $e$ is the effort exerted by the worker.
+
+For simplicity, effort $e$ can take only two values: $e = \bar{e}$ (work) or $e = 0$ (shirk). If the worker is unemployed, the worker receives an unemployment benefit $\bar{w}$ from the firm.
+
+\paragraph{Firm \\ [6pt]}
+
+The firm has a production function
+\begin{equation}
+	Q = f(L)
+\end{equation}
+where $L$ is effective labor. A worker who exerts effort contributes one unit of effective labor; hence, $L$ is the fraction or total number of non-shirking workers in the economy.
+ 
+The firm is endowed with a monitoring technology that enables it to discover a shirking worker with probability $q$. The firm offers a wage package $(w, \bar{w})$ to the worker it hires, where $w$ is the employment wage level and $\bar{w}$ is the unemployment benefit.
+
+\paragraph{Further Simplification from the Paper \\ [6pt]}
+The worker's decision in the paper is a dynamic planning problem in continuous time. Here, for illustrative purpose, I drop the dynamic elements in the paper and focus on a static version of the model. Hence, the value of not shirking is 
+\begin{equation}
+	u(e = 1) = w - \bar{e}
+\end{equation}
+and the (expected) value of shirking is
+\begin{equation}
+	\mathbb{E}[u(e = 0)] = q \bar{w} + (1-q) w
+\end{equation}
+	 that is, if the worker is detected shirking (which occurs with probability $q$), the firm fires the worker, who then receives unemployment benefits $\bar{w}$. Otherwise, the worker is treated as non-shirking and receives compensation $w$.  
+
+Also, for simplicity, assume that there is a single firm in the economy and a continuum $[0,1]$ of workers whom the firm can hire. This is equivalent to setting $\rho = L$ and $n = 1$ in the Rosen model discussed above.
+
+With this simplification, under monitoring technology $q$, the firm's contract is specified by the effective labor demand $L$, wage compensation if shirking is not detected $w$, and unemployment benefit if shirking is detected $\bar{w}$. The value of contract $(L, w, \bar{w})$ given $q$ is the expected profit of the firm:
+\begin{equation} \label{eq:pi}
+	\mathbb{E}[\pi] = f(L) - w L - \left(w (1-q) (1-L) + \bar{w} q (1-L)\right)
+\end{equation}
+
+\subsection{Optimal Contract}
+
+The timing of the contracting game is as follows: the principal (the firm) makes a take-it-or-leave-it offer to the agents (the workers); the agents decide whether to accept it and, after accepting, whether to shirk or exert effort. 
+
+The most important difference between Shapiro and Stiglitz (1984) and Rosen (1985) is that the actions of agents (workers) in the efficiency wage model cannot be perfectly verified by the principal. In other words, the worker's effort $e$ cannot be contracted. The firm takes the hidden action into account and what it can do is to design an incentive structure such that the agents spontaneously choose not to shirk and conform to the principal's interests. 
+
+To formalize this idea, work backward from the worker's behavior. Given a wage offer $(w, \bar{w})$, the worker exerts effort if and only if doing so yields a higher payoff than shirking:
+\begin{equation} \label{eq:IC}
+	w - \bar{e} \geq q \bar{w} + (1-q) w \implies w \geq \bar{w} + \frac{\bar{e}}{q} 
+\end{equation}
+\underline{Notes}:
+\begin{itemize}
+	\item Inequality (\ref{eq:IC}) is called ``No-Shirking Condition" (NSC) in the paper, and more frequently referred to as an ``incentive compatibility constraint" in the information economics literature. It will be a constraint for the firm's optimal contracting problem later.
+		\item Equation (\ref{eq:IC}) characterizes the worker's optimal action under each contract $(w, \bar{w})$. The worker exerts effort if and only if the premium for working rather than shirking, $w - \bar{w}$, is sufficiently large.
+	\item The ``minimal" premium is $1/q$, and we can see that it decreases with $q$. In other words, as the monitoring technology gets poorer ($q \to 0$), the firm needs to create more incentive for the workers to prevent them from shirking. 
+\end{itemize}
+	 Another constraint that the firm considers when designing the contract is the participation constraint:
+  \begin{equation} \label{eq:IR}
+  	w - \bar{e} \geq \bar{u} \text{ where } \bar{u} \text{ is the reservation utility of the worker}
+  \end{equation}
+i.e. the maximum payoff of the worker needs to be higher than his reservation utility so that he participates. Again, for simplicity, assume $\bar{u} = 0$.
+
+Lastly, suppose that the government prohibits negative wages in any circumstances, so that the unemployment benefit $\bar{w}$ cannot be negative. This introduces another constraint for the firm, which is referred to as a ``limited liability constraint":
+\begin{equation} \label{eq:limited_liability}
+	\bar{w} \geq 0
+\end{equation}
+
+ The optimal contract is the contract that maximizes the principal's payoff (\ref{eq:pi}) subject to the participation constraint (\ref{eq:IR}), the incentive compatibility constraint (\ref{eq:IC}) and the limited liability constraint (\ref{eq:limited_liability}).
+ 
+ Lagrangian:
+ \begin{align*}
+ 	\mathcal{L} & = f(L) - w L - \left(w (1-q) (1-L) + \bar{w} q (1-L)\right) \\ & + \lambda \left(w - \bar{w} - \frac{\bar{e}}{q} \right) + \mu (w - \bar{e} - \bar{u}) + \gamma \bar{w}
+ \end{align*}
+
+FOCs:
+\begin{eqnarray}
+	f'(L) - w + (w (1-q) + \bar{w} q) &=& 0 \\
+	-L - (1-q)(1-L) + \lambda + \mu &=& 0 \\
+	- q(1-L) - \lambda+ \gamma &=& 0
+\end{eqnarray}
+together with three slackness conditions
+\[\lambda \geq 0 \text{, } \mu \geq 0 \text{ and } \gamma \geq 0\]
+
+\paragraph{Analysis \\ [6pt]}
+Here are several observations:
+\begin{itemize}
+	\item The first observation is that the limited liability constraint is always binding, i.e. $\bar{w} = 0$. From the third FOC, suppose $\bar{w} > 0$, and hence by slackness condition $\gamma = 0$. We end up having $\lambda = q(1-L) < 0$, which contradicts with the slackness condition for $\lambda$. There is no incentive for the firm to set a higher unemployment benefit than required.
+	\item Plug $\bar{w} = 0$ into the first two FOCs, we get
+	\[f'(L) = wq\]
+	\[\lambda + \mu  = qL + 1-q \]
+	and IC and IR becomes
+	\[w \geq \frac{\bar{e}}{q} \text{ and } w \geq \bar{e} \]
+	It is obvious that at optimum we will have a binding IC constraint and a slack IR constraint. Hence, the optimal contract is given by
+	\begin{equation} \label{eq:optimal_contract_ew}
+		L = (f')^{-1}(wq), w = \frac{\bar{e}}{q} \text{ and } \bar{w} = 0
+	\end{equation}
+	\item The fact that the IC constraint binds while the IR constraint is slack again illustrates the effect of hidden action. To induce workers to exert effort, the firm must set a higher wage. As shown above, this necessarily leaves the participation constraint slack, so the worker receives utility above the reservation value or outside option.\footnote{In information economics, the gap between an agent's utility and reservation value is called ``economic rent." Here, the principal (the firm) gives workers economic rents to prevent shirking.} 
+\item The equilibrium wage $w$ in this model is higher than its marginal product of labor: from (\ref{eq:optimal_contract_ew}), 
+\[f'(L) = w q = \bar{e} < w\]
+This shows that efficiency wage generates \textit{involuntary unemployment}: workers would be willing to accept a contract at a wage lower than $w = \frac{\bar{e}}{q}$ and above $\bar{e}$. However, they are not able to make a credible and verifiable commitment not to shirk while working, and this leads the firm to hire at a higher wage level than a frictionless labor market would predict.
+\item The model also predicts sticky wages: even after changing the production function to 
+\[Q = \theta f(L)\]
+where $\theta$ is labor productivity, the wage $w$ in the optimal contract is independent of $\theta$ and depends only on the cost of effort $\bar{e}$ and monitoring technology $q$. In other words, $w$ does not fluctuate with $\theta$ or with the marginal product of labor $\theta f'(L)$.
+\end{itemize}
+
+
+%The value of shirking for the worker is
+%\begin{equation}
+%	V^S_E =  w + \frac{1}{1+r} \left[(q + b) V_u + (1-q-b) \max\{V_E^S, V_E^N\}\right] 
+%\end{equation}
+%The value of non-shirking for the worker is
+%\begin{equation}
+%	V^S_N =  w - 1 + \frac{1}{1+r} \left[b V_u + (1-b) \max\{V_E^S, V_E^N\}\right] 
+%\end{equation}
+%If $V_E^S > V_E^N$, then $\max\{V_E^S, V_E^N\} = V_E^S$, so that 
+%\[V^S_E =  w + \frac{1}{1+r} \left[(q + b) V_u + (1-q-b) V_E^S\right] \]
+%so that
+%\[V_E^S = \frac{(q+b) V_u + (1+r) w}{r + q + b}\]
+%
+%If $V_E^S < V_E^N$, then $\max\{V_E^S, V_E^N\} = V_E^N$, so that 
+%\[V^S_N =  w - 1 + \frac{1}{1+r} \left[b V_u + (1-b) V_E^N\right] \]
+%so that
+%\[V_E^N = \frac{b V_u + (1+r) (w-1)}{r + b}\]
+%
+%\[q \bar{w} + (1-q)w \leq w - 1\]
+%\[w \geq \frac{q \bar{w} + 1}{q}= \bar{w} + \frac{1}{q}\]
+%
+%
+%\[f(\rho) - w \rho - \bar{w} (1-\rho) + \lambda\left(w - \bar{w} - \frac{1}{q}\right)\]
+%\[f'(\rho) = w - \bar{w}\]
+%\[\]
+
+\end{document}

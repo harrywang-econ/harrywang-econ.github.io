@@ -1,0 +1,488 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON602 TA Notes: Search and Matching in Macro Labor}
+\author{Haoran Wang}
+\date{March 3, 2025}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents 
+	
+		This note presents the details of Mortensen and Pissarides (1994, ReStud), the workhorse model of search-and-matching frictions in the macro-labor literature. 
+%	Motivated by the fact that large job creation and job destruction flows co-exist at all phases of the business cycle, the paper proposes a model that features endogenous job creation and job destruction 
+%	
+%	\noindent They show that an aggregate shock induces negative correlation between job creation and job destruction, whereas a dispersion shock induces positive correlation. The job destruction process is shown to have more volatile dynamics (higher variance) than the job creation process.\\
+%	
+%	\noindent \textbf{This is the workhorse search model}. This is a model of endogenous job creation and destruction which incorporates the matching approach to equilibrium unemployment and wage determination. There are frictions involving searching and matching, which generates the dynamics of work flows. This frictions can be seen from a labor market perspective (there are search costs for the worker and vacancy creation costs for the firm) or an IO perspective (there are entry and exit costs). Establishments in this model have diverse experiences because of persistent idiosyncratic shocks.\\
+	
+\section{Model Setup}
+	
+%	\noindent The economy has a continuum of jobs that differ with respect to values of labor product. Each job is designed to produce a single unit of a variation on a common product. Each variation is unique to the job and commands a relative price that is subject to idiosyncratic risk, due to either taste or productivity shocks.\\
+%	
+%	\noindent A key assumption is that investment is irreversible, so an existing job cannot switch the variation of its product once the job has been created. Before creation, technology is fully flexible and the firm can choose the variation of its product.\\
+%	
+%	\noindent The idiosyncratic risk for existing jobs is modelled as a jump process characterized by a Poisson arrival frequency and a drawing from a common distribution of relative prices. Large negative shocks induce job destruction, but the choice of when to destroy the job is the firm's.\\
+%	
+%	\noindent Job creation depends on information available to potential employers. They assume \textbf{newly-created jobs are the most profitable in the market.}\\
+%	
+%	\noindent They model the matching process as taking place between individual job vacancies and unemployed workers. This is a model in which firms only create one vacancy. There is a zero-profit condition (CRS in the matching technology) for a new job vacancy that can produce the most highly valued product in the market.\\
+%	
+%	\noindent Wages are the outcome of a bilateral bargain that takes place when unmatched jobs and workers meet and is revised continuously in the face of productivity shocks.\\
+%	
+%	\noindent \textbf{Model in full}
+
+\begin{itemize}
+	\item There is a continuum $i \in [0,1]$ of firms in the economy.
+		\item Each firm has one job that can be in one of two states: filled and producing, or vacant and searching. Jobs that are neither producing nor associated with an active search are destroyed.
+	\item Productivity of each job $a_{it}$ is idiosyncratic, with a structure
+	\begin{equation}
+		a_{it} = p_t + \sigma \epsilon_{it}
+	\end{equation}
+where $p_t$ is the aggregate productivity that is common to all jobs, and $\epsilon_{it}$ is the job-specific component of productivity. The dispersion parameter $\sigma$ is common to all jobs as well. 
+	\item A Poisson process governs variation in $\epsilon_{it}$. From time $t$ to the next instant $t + \Delta t$ (the model is written in continuous time), $epsilon$ remains unchanged with probability $1-\lambda$, while a new value is drawn from a fixed distribution $F(\cdot)$ with probability $\lambda$. The distribution has support $(-\infty, \epsilon_u]$, mean zero, and unit variance.  
+\item Assume that the newly created job has productivity $p + \sigma \epsilon_u$, i.e. the newly created jobs are the most productive ones in the economy (justification?). 
+\item (Search/matching Friction) There is a fixed cost of posting and maintaining vacancy for each job, denoted as $c$, common to all firms/jobs. 
+\begin{itemize}
+	\item Hence, firms are not willing to separate when a negative $\epsilon$ shock hits the firm because posting a new vacancy is costly.
+	\item However, if the negative $\epsilon$ shock is large enough, so that $\epsilon$ is below some threshold $\epsilon_d$, the job is destroyed. The threshold $\epsilon_d$ will be pinned down endogenously in the model.
+	\item Hence, the job destruction rate is equal to $\lambda F(\epsilon_d)$.
+	\item In this model, there is no on-the-job search or job-to-job flows, and therefore job destruction = layoff = separation (with job-to-job flows, separation = layoff + job-to-job flow). 
+\end{itemize}
+	\item (Matching Technology) Let $u$ denote unemployment and $v$ denote vacancies. The constant-returns-to-scale matching function $m(v,u)$ gives the rate at which vacant jobs and unemployed workers meet, fill jobs, and begin production. 
+\begin{itemize}
+		\item In other words, $m(v,u)$ is the job-creation rate in the model. It gives the total number of matches. 
+		\item The job-finding rate is the probability that an unemployed worker finds a job. In this model, all new hires come from unemployment (there are no job-to-job flows), so the job-finding rate is $m(v,u)/u$.
+		\item Similarly, the job-filling rate is the probability that a vacancy is filled. In the model, it is $m(v,u)/v$. The paper denotes it by $q$, a function of $u/v$:
+	\[q(v/u) \equiv m(v,u)/v = m(1, u/v)\]
+	with $q$ being a decreasing function.
+	\item The vacancy-to-unemployment ratio $v/u$ is referred to as ``tightness". If the labor market is tight, $v/u$ is large (i.e. there are more jobs than workers, or, a shortage of labor supply in the market), so that the probability of a job being filled $q$ is smaller, and the job finding rate $m(v,u)/u = m(v/u,1)$ becomes larger.  
+\end{itemize}
+	\item The goal is to solve for equilibrium vacancies $v$, unemployment $u$, and the job-destruction rate $\lambda F(\epsilon_d)$. 
+\end{itemize}
+	
+%	\noindent Each firm \textbf{Job creation:} When a firm with a vacant job and a worker meet and start producing; opening a new job vacancy is NOT job creation. \textbf{Jos destruction:} when a filled job separates and leaves the market.\\
+%	
+%	\noindent Workers can be either unemployed and searching OR employed and producing. Wages are chosen so as to share at all times the surplus from a job match in fixed proportions (worker's share is $\beta$). New jobs offer the highest wage (since job vacancies have the best technology).\\
+%	
+%	\noindent Each job is characterized by a fixed irreversible technology and produces a unit of a differentiated product whose price is $$p + \sigma \varepsilon$$ where $p,\sigma$ are common to all jobs; whereas $\varepsilon$ is job specific. $p$ is an aggregate component of productivity that does not affect the dispersion of prices. $\sigma$ represents dispersion, an increase means an increase in price variance. The process that changes the idiosyncratic component $\varepsilon$ is Poisson with arrival rate $\lambda$: when there is a change, the new value of $\varepsilon$ is a drawing from the fixed distribution $F(x)$ which has finite upper support $\varepsilon_{u}$. They model it Poisson because it implies \textbf{persistence} in job-specific shocks.\\
+%	
+%	\noindent Exogenous events that affect the persistence or distribution of idiosyncratic shocks (micro shocks), shift $\lambda$ and $\sigma$ respectively. Events that affect productivity of all jobs by the same amount and in the same direction (macro shocks) are reflected in changes in $p$.\\
+%	
+%	\noindent Firms create jobs that have value of product equal to the upper support of the price distribution $$p + \sigma \varepsilon_{u}$$ Once a job is created, the firm has no choice over its productivity. Thus, job productivity is a stochastic process with initial condition $\varepsilon_{u}$ and terminal state: reservation productivity that leads to job destruction.\\
+%	
+%	\noindent Filled jobs do not always exit when they are hit by shocks, because there is a cost of recruiting, modelled as a per-unit cost of maintaining a vacancy, $c$.\\
+%	
+%	\noindent Existing filled jobs are destroyed only if the idiosyncratic component of their productivity falls below some critical number $$\varepsilon_{d} < \varepsilon_{u}$$ Therefore, the rate at which existing jobs are destroyed is $\lambda F(\varepsilon_{d})$. Note that if there were no frictions (vacancy cost $c$), an adverse productivity shock that pushed productivity below $\varepsilon_{u}$ would cause the firms to exit immediately.\\
+%	
+%	\noindent The rate at which vacant jobs and unemployed workers meet is determined by the h.o.d. 1 \textbf{matching function} $m(v,u)$, where $v$ is number of vacancies and $u$ is number of unemployed workers, both normalized by fixed labor force size. Since vacancies offer the highest wage, no job seeker turns down a vacancy, so the transition rate (probability that a vacancy is filled) is $$q = \dfrac{m(v,u)}{v} = m \left( 1, \dfrac{u}{v} \right)$$ with $q'(v/u) <0$ and elasticity between $-1$ and $0$. The rate at which seekers meet vacancies is $$\dfrac{vq}{u} = m \left( \dfrac{v}{u},1 \right)$$ Job creation is defined by the number of matches $$m(v,u) = vq \left(\dfrac{v}{u} \right)$$ The unknowns of the model are the number of job vacancies $v$ and unemployment $u$, which determine, through the matching technology, job creation, and the critical value for the idiosyncratic component of productivity $\varepsilon_{d}$ that induces job destruction.\\
+
+\section{Bellman Equations in the Steady State}
+
+We first look into the case where there is no aggregate uncertainty, i.e. $p$ does not change over time. 
+
+In the paper, the model is written in continuous time. I will explain the intuitions in discrete time and transform it into continuous time. For a full discussion of the continuous time methods, see my note for Pablo's part on ELMS.
+
+\subsection{Value of Vacancy}
+
+Let $V$ denote the value to the firm of posting a vacancy, and let $J(\epsilon)$ denote the value of an existing job with idiosyncratic productivity $\epsilon$. In the next period,
+\begin{itemize}
+\item With probability $q$ (job filling rate), the vacancy will be filled, and, with our assumption that the newly created job has productivity $\epsilon_u$, the value of this newly filled job is $J(\epsilon_u)$. 
+\item With probability $1-q$, the vacancy remains unfilled. Also, posting and maintaining a vacancy costs $c$ units of output for the firms. 
+\end{itemize}
+As a result, in discrete time, the value of a vacancy is 
+\begin{equation}
+	V_t = - c + \frac{1}{1+r} \left[q J(\epsilon_u) + (1-q) V_{t+1} \right]
+\end{equation}  
+
+\paragraph{From Discrete-time to Continuous-time \\ [6pt]}
+
+To move from the discrete-time Bellman equation to continuous time, first change the period length from 1 to $\Delta t$:
+\[	V_t = - c \Delta t + \frac{1}{1+r\Delta t} \left[q \Delta t J(\epsilon_u) + (1-q \Delta t) V_{t+\Delta t} \right]\]
+Rearrange terms:
+\[V_t - \frac{1-q\Delta t}{1+r\Delta t} V_{t+ \Delta t} = - c\Delta t + \frac{1}{1+r\Delta t} q\Delta t J(\epsilon_u)\]
+Divide both sides by $\Delta t$:
+\[\frac{V_t - \frac{(1-q\Delta t) V_{t+ \Delta t}}{1 + r \Delta t}}{\Delta t} = - c + \frac{1}{1+r\Delta t} q J(\epsilon_u)\]
+Take the limit $\Delta t \to 0$: the left-hand side becomes
+\begin{align}
+	\frac{V_t - \frac{(1-q\Delta t) V_{t+ \Delta t}}{1 + r \Delta t}}{\Delta t} & = \frac{V_t - V_{t+ \Delta t}}{\Delta t} + \frac{V_{t + \Delta t} - \frac{1-q\Delta t}{1+r\Delta t} V_{t+\Delta t}}{\Delta t} \nonumber \\
+	& = \frac{V_t - V_{t+ \Delta t}}{\Delta t} + \frac{(r+q)\Delta t}{1+r \Delta t}\frac{1}{\Delta t} V_{t+ \Delta t} \nonumber \\
+	& \to -\dot{V}_t + (r+q)V_t
+\end{align}
+where $\dot{V}_t \equiv \frac{d V_t}{dt}$. If we mute the aggregate uncertainty as in the paper (so that $p$ does not change over time), $V_t = V_{t+\Delta t} = V$, and hence $\dot{V}_t \equiv \frac{d V_t}{dt} = 0$.
+ 
+The limit of the right-hand side is $- c + q J(\epsilon_u)$. Putting everything together:
+\begin{equation} \label{eq:bellman_vacancy}
+	r V = - c + q (J(\epsilon_u) - V)
+\end{equation} 
+which is exactly equation (1) in the paper. 
+
+\paragraph{``Free entry" Condition \\ [6pt]}
+In the steady state, the equilibrium value of the vacancy should be 0:
+\begin{equation} \label{eq:free_entry}
+	rV = 0
+\end{equation}
+If this is not the case, then there are incentives for the firms to enter and create more jobs, driving up the job creation rate. This is akin to the free entry condition that we discussed in Hopenhayn (1992) last semester.
+
+\subsection{Wage Determination}
+Let $W(\epsilon)$ denote the value to a worker of a job with productivity $\epsilon$. Let $U$ denote the worker's reservation value from unemployment (e.g., the value of government unemployment benefits). 
+
+Assume that the firm and worker determine a wage contract through cooperative Nash bargaining, so the resulting contract assigns a fixed proportion of total surplus,
+\[S(\epsilon) \equiv J(\epsilon) + W(\epsilon) - U\]
+to the worker:
+\begin{equation}
+	\begin{cases}
+		W(\epsilon) - U & = \beta S(\epsilon) \\
+		J(\epsilon) & = (1-\beta) S(\epsilon)
+	\end{cases}
+\end{equation} 
+Let $w(\epsilon)$ be the wage that the firm pays the worker to implement this allocation result.
+
+
+\subsection{Value of Existing Jobs}
+
+We now write down the Bellman equation for $J(\epsilon)$ and $W(\epsilon)$, the value of job for firms and workers. Again, I explain the intuition in discrete time and transform it into continuous time. 
+\begin{itemize}
+	\item First, notice that the concurrent payoff of the firm is equal to
+	\[p + \sigma \epsilon - w(\epsilon)\]
+	\item In the next period, with probability $\lambda$, a new $\epsilon = \epsilon'$ is drawn, so that the continuation value in this case is equal to $J(\epsilon')$ if the job survives in the next period. However, if the newly drawn $\epsilon'$ is too low, the value of the job may be below 0, so that the job will be destroyed. Hence, the continuation value when there is a new draw in the next period is $\max\{J(\epsilon'), 0\}$.  
+	\item With  probability $1- \lambda$, the productivity $\epsilon$ does not change. 
+\end{itemize}
+Putting everything together, the Bellman equation in discrete time is
+\[J(\epsilon) = p + \sigma \epsilon - w(\epsilon) + \frac{1}{1+r} \int_{-\infty}^{\epsilon_u} \left[\lambda \max\{J(\epsilon'), 0\} + (1-\lambda) J(\epsilon) \right]\, dF(\epsilon')\]
+Apply the same steps in Section 2.1 to rewrite the above Bellman equation in time interval $\Delta t$, rearrange terms and take limit, we get the continuous-time Bellman equation
+\begin{equation}
+	r J(\epsilon) = p + \sigma \epsilon - w(\epsilon) + \lambda  \int_{-\infty}^{\epsilon_u} \left[\max\{J(\epsilon') , 0\}- J(\epsilon) \right]\, dF(\epsilon')
+\end{equation}
+Replacing the $J$'s on the right-hand side using the fact $J(\epsilon) = (1-\beta) S(\epsilon)$, we get equation (5) in the paper:
+\begin{equation} \label{eq:J}
+	r J(\epsilon) = p + \sigma \epsilon - w(\epsilon) + \lambda (1-\beta) \int_{-\infty}^{\epsilon_u} \left[\max\{S(\epsilon') , 0\}- S(\epsilon) \right]\, dF(\epsilon')
+\end{equation}
+
+Similarly, for the worker, the value of job $W(\epsilon)$ can be written in discrete time as
+\[W(\epsilon) = w(\epsilon) + \frac{1}{1+r} \int_{-\infty}^{\epsilon_u}\left[\lambda \max\{W(\epsilon'), U\} + (1-\lambda) W(\epsilon)\right]\, dF(\epsilon') \] 
+the first term in the integrand on the right-hand side says that if the new draw $\epsilon'$ makes the value of job lower than the worker's reservation utility, then the worker would quit the job and become unemployed.
+
+Again, use the procedures in section 2.1 and use the fact that $W(\epsilon) - U = \beta S(\epsilon)$, we get the Bellman equation in continuous time
+\begin{equation} \label{eq:W}
+	r W(\epsilon) = w(\epsilon) + \lambda  \int_{-\infty}^{\epsilon_u}[\max\{W(\epsilon'), U\} - W(\epsilon)] \, dF(\epsilon')
+\end{equation}
+
+\subsection{Value of Unemployment}
+
+Lastly we define the value of unemployment. In the next period, the probability of an employed worker getting a job is equal to the job finding rate $m(v,u)/u = q v/u$. Recall that all new hires are with the highest productivity $p + \sigma \epsilon_u$. Hence, the Bellman equation for unemployment is
+\[U = b + \frac{1}{1+r} \left[\frac{qv}{u} W(\epsilon_u) + \left(1-\frac{qv}{u}\right) U\right]\]
+which, in continuous time, becomes
+\begin{equation} \label{eq:U}
+	r U = b + \frac{qv}{u} (W(\epsilon_u) - U) = b + \frac{qv}{u} \beta S(\epsilon_u)
+\end{equation}
+where $b$ is the exogenous unemployment benefit that the worker gets from the government.
+
+\subsection{Equilibrium Tightness $v/u$ and Destruction Threshold $\epsilon_d$}
+(\ref{eq:J}) + (\ref{eq:W}) - (\ref{eq:U}):
+\begin{equation} \label{eq:sum}
+	(r+\lambda) S(\epsilon) = p + \sigma \epsilon - b + \lambda \int_{-\infty}^{\epsilon_u} \max\{S(\epsilon'), 0\} \, dF(\epsilon') - \beta \frac{vq}{u} S(\epsilon_u)
+\end{equation}
+The threshold $\epsilon_d$ is defined by the point at which the firm is indifferent between shutting down the job and continuing to operate it:
+\begin{equation}
+	J(\epsilon_d) = 0 
+\end{equation}
+which is equivalent to $(1-\beta) S(\epsilon_d) = 0$ and hence $S(\epsilon_d) = 0$. Use this fact to simplify the integral on the right-hand side of (\ref{eq:sum}): 
+\begin{align}
+	\int_{-\infty}^{\epsilon_u} \max\{S(\epsilon'), 0\} \, dF(\epsilon') & = \int_{\epsilon_d}^{\epsilon_u} S(\epsilon') \, dF(\epsilon') \nonumber \\
+	& = \left[S(\epsilon')F(\epsilon')\right]_{\epsilon_d}^{\epsilon_u} -  \int_{\epsilon_d}^{\epsilon_u} F(\epsilon') S'(\epsilon') \, d\epsilon' \nonumber \\
+	& = S(\epsilon_u) - 0 -\int_{\epsilon_d}^{\epsilon_u} F(\epsilon') S'(\epsilon') \, d\epsilon' \nonumber \\
+	& = S(\epsilon_u) - S(\epsilon_d) - \int_{\epsilon_d}^{\epsilon_u} F(\epsilon') S'(\epsilon') \, d\epsilon' \nonumber \\
+	& = \int_{\epsilon_d}^{\epsilon_u} S'(\epsilon')\,d\epsilon' - \int_{\epsilon_d}^{\epsilon_u} F(\epsilon') S'(\epsilon') \, d\epsilon' \nonumber\\
+	& = \int_{\epsilon_d}^{\epsilon_u} (1- F(\epsilon')) S'(\epsilon') \, d\epsilon' \nonumber \\
+	& = \frac{\sigma}{r+\lambda} \int_{\epsilon_d}^{\epsilon_u} [1- F(\epsilon')] \, d\epsilon' \label{eq:integration}
+\end{align}
+where
+\begin{itemize}
+	\item the second equality follows from integration by parts;
+	\item the third equality follows from
+	\[S(\epsilon_u) F(\epsilon_u) - S(\epsilon_d) F(\epsilon_d) = S(\epsilon) \cdot 1 - 0 \cdot F(\epsilon_d) = S(\epsilon_u) - 0\]
+	\item the fourth equality replaces the $0$ by $S(\epsilon_d)$;
+	\item the last equality follows from the envelope condition of $S(\epsilon)$ in (\ref{eq:sum}):
+	\[(r+\lambda) S'(\epsilon) = \sigma \implies S'(\epsilon) = \frac{\sigma}{r+\lambda}\]
+\end{itemize}
+
+Substitute (\ref{eq:integration}) back into (\ref{eq:sum}):
+\begin{equation} \label{eq:Bellman_S}
+	(r+\lambda) S(\epsilon) = p + \sigma \epsilon - b + \frac{\sigma \lambda}{r + \lambda} \int_{\epsilon_d}^{\epsilon_u} [1- F(\epsilon')] \, d\epsilon' - \beta \frac{vq}{u} S(\epsilon_u) 
+\end{equation}
+This can be further simplified since we know what $S(\epsilon_u)$ is, from the Bellman equation for $V$ (\ref{eq:bellman_vacancy}) and the ``free-entry" condition (\ref{eq:free_entry}):
+\[J(\epsilon_u) = \frac{c}{q} \implies S(\epsilon_u) = \frac{1}{1-\beta} J(\epsilon_u) = \frac{1}{1-\beta} \frac{c}{q}\]
+Substituting this expression into (\ref{eq:Bellman_S}) gives
+\begin{equation} \label{eq:Bellman_S_final}
+	(r+\lambda) S(\epsilon) = p + \sigma \epsilon - b + \frac{\sigma \lambda}{r + \lambda} \int_{\epsilon_d}^{\epsilon_u} [1- F(\epsilon')] \, d\epsilon' - \frac{\beta c}{1-\beta} \frac{v}{u}
+\end{equation}
+
+This equation (\ref{eq:Bellman_S_final}) is the key equation for analysis.
+
+\paragraph{Job Destruction Curve: Given $v/u$, what is $\epsilon_d$? \\ [6pt]}
+
+The first equation that pins down the equilibrium is the job-destruction curve. For a given tightness $v/u$, it determines the exit threshold $\epsilon_d$. This result follows from (\ref{eq:Bellman_S_final}) by substituting $\epsilon = \epsilon_d$ on the left-hand side and using the fact that $S(\epsilon_d) = 0$:
+\begin{equation} \label{eq:JD_curve}
+	p + \sigma \epsilon_d = b + \frac{\beta c}{1-\beta} \frac{v}{u} -  \frac{\sigma \lambda}{r + \lambda} \int_{\epsilon_d}^{\epsilon_u} [1- F(\epsilon')] \, d\epsilon'
+\end{equation}
+Note that the right-hand side is also a function of $\epsilon_d$. Hence, the threshold $\epsilon$ is the solution to equation (\ref{eq:JD_curve}). 
+
+\underline{Note}:
+\begin{itemize}
+	\item The sum of first two terms on the right-hand side of (\ref{eq:JD_curve}) is the opportunity cost of employment, or equivalently, the value of unemployment (it is essentially the right-hand side of the value function for unemployment (\ref{eq:U})). 
+	\item The third term is an ``option value" for the firm. From our derivation, it is essentially the term $\frac{1-\beta}{1+r} \lambda \int \max\{S(\epsilon'), 0\} \, dF(\epsilon')$ in the discrete-time version, which is the expected continuation value of a new productivity draw for the current match.
+\end{itemize}
+
+
+\paragraph{The Shape of JD curve \\ [6pt]}
+We are interested in the shape of the job destruction curve. By implicit function theorem and fundamental theorem of calculus, (\ref{eq:JD_curve}) implies that
+\[\sigma \frac{\partial \epsilon_d}{\partial (v/u)} = \frac{\beta c}{1-\beta} + \frac{\sigma \lambda}{r + \lambda} (1-F(\epsilon_d)) \frac{\partial \epsilon_d}{\partial (v/u)} \]
+so that
+\[\sigma \left[1 -  \frac{ \lambda}{r + \lambda} (1-F(\epsilon_d))\right]\frac{\partial \epsilon_d}{\partial (v/u)} = \frac{\beta c}{1 - \beta} \implies \frac{\partial \epsilon_d}{\partial (v/u)} > 0 \]
+Hence, it is upward sloping. 
+
+We are also interested in some comparative statics of parameters, holding $v/u$ constant. For instance, we can investigate how $\epsilon_d$ varies with $p-b$:
+\[1 + \sigma \frac{\partial \epsilon_d}{\partial (p-b)} = \frac{\sigma \lambda}{r + \lambda} (1-F(\epsilon_d))\frac{\partial \epsilon_d}{\partial (p-b)} \implies \frac{\partial \epsilon_d}{\partial (p-b)} < 0\]
+In the problem set, you will work on more questions of this type. I will not go further here.
+
+\paragraph{Job Creation Curve: given $\epsilon_d$, what is $v/u$? \\ [6pt]}
+
+Again, by equation (\ref{eq:Bellman_S_final}),
+\[(r+\lambda) S(\epsilon_u) = p + \sigma \epsilon_u - b + \frac{\sigma \lambda}{r + \lambda} \int_{\epsilon_d}^{\epsilon_u} [1- F(\epsilon')] \, d\epsilon' - \frac{\beta c}{1-\beta} \frac{v}{u}\]
+\[(r+\lambda) S(\epsilon_d) = p + \sigma \epsilon_d - b + \frac{\sigma \lambda}{r + \lambda} \int_{\epsilon_d}^{\epsilon_u} [1- F(\epsilon')] \, d\epsilon' - \frac{\beta c}{1-\beta} \frac{v}{u}\]
+Taking the difference gives
+\begin{equation}
+	(r+\lambda) (S(\epsilon_u) - S(\epsilon_d)) = \sigma (\epsilon_u - \epsilon_d)
+\end{equation}
+Using $S(\epsilon_u) = \frac{c}{q(1-\beta)}$ and $S(\epsilon_d) = 0$, we obtain
+\begin{equation} \label{eq:JC_curve}
+	q\left(\frac{v}{u}\right) = \frac{c(r+\lambda)}{(1-\beta) \sigma (\epsilon_u - \epsilon_d)}
+\end{equation} 
+Equation (\ref{eq:JC_curve}) is the job creation curve.
+
+It is easy to see that $v/u$ is a decreasing function of $\epsilon_d$. The intersection of the JD curve (\ref{eq:JD_curve}) and the JC curve (\ref{eq:JC_curve}) pins down the equilibrium tightness $(v/u)^*$ and threshold $\epsilon_d^*$.
+
+\subsection{Equilibrium Unemployment and Beveridge Curve}
+
+Finally, we determine equilibrium unemployment $u$. We are effectively working with a heterogeneous-worker model with two types of workers: employed and unemployed. The steady state requires the distribution across these types to remain invariant over time. 
+
+We know that the mass of employed and unemployed workers is $1-u$ and $u$, respectively. At the steady state, the outflow and inflow into the unemployment should be exactly the same, so that there is zero net entrance/exit into the unemployment. The mass of inflow into unemployment comes from the separation of the existing job match, which is equal to the mass of employment $1-u$ times the job destruction rate $\lambda F(\epsilon_d^*)$:
+\[(1-u) \lambda F(\epsilon_d^*)\]
+and the mass of outflow of unemployment comes from the job finding of the currently unemployed population, which is equal to the mass of unemployment $u$ times the job finding rate $m(v,u)/u = m(v/u, 1)$:
+\[u \cdot m((v/u)^*, 1)\]
+In a stationary equilibrium, the inflow should coincide with outflow:
+\begin{equation} \label{eq:beveridge}
+	(1-u) \lambda F(\epsilon_d^*) = u \cdot m((v/u)^*, 1) \implies u^* = \frac{\lambda F(\epsilon_d^*)}{\lambda F(\epsilon_d^*) + m ((v/u)^*,1)}
+\end{equation}
+Equation (\ref{eq:beveridge}) gives us the equilibrium relationship between vacancy $v$ and unemployment $u$. It is referred to as the Beveridge Curve in the literature.
+
+\subsection{Exercise: A Positive MIT Shock to $p$}
+Consider how the Mortensen--Pissarides economy responds to a one-time unanticipated increase in aggregate productivity $p$. 
+
+We first think about the job creation and job destruction curve. From (\ref{eq:JC_curve}) we can see that $p$ does not directly shift the job creation curve. For the job destruction curve, since we have already established earlier that for each fixed tightness $v/u$, an increase in $p$ will lead to a decrease in $\epsilon_d$. Hence, the JD curve would shift inwards in Figure 1 of the paper, resulting in a higher equilibrium tightness $(v/u)^*$ and a lower job destruction threshold $\epsilon_d^*$.
+
+We then use the Beveridge curve (\ref{eq:beveridge}) to pin down the response of unemployment and vacancy. Since $\epsilon_d^*$ becomes smaller, the Beveridge curve as in Figure 2 of the paper would shift inwards. Since the equilibrium tightness $v^*/u^*$ gets higher, the JC line in Figure 2 shifts upwards. Hence, we can see that the equilibrium unemployment goes down unambiguously while the direction of equilibrium vacancy is inconclusive. 
+
+In sum, as $p$ goes up,
+\begin{itemize}
+	\item Job creation rate = Layoff rate = Separation Rate = $\lambda F(\epsilon_d)$ goes down;
+	\item Tightness $v/u$ goes up;
+	\item Unemployment $u$ goes down (countercyclical!);
+	\item Vacancy $v$ is ambiguous.
+\end{itemize}   
+These objects can be directly computed and mapped to the data counterparts, if one has high-quality employer-employee matched dataset (e.g. LEHD in Census).
+
+\section{Anticipated Cyclical Shock in $p$}
+
+What if the firms are able to anticipate the cyclical shock in $p$?
+
+Suppose there are in total two possible aggregate states: $p$ or $p^*$, where $p < p^*$. The Poisson probability of transitioning to the other state is equal to $\mu$. 
+
+The paper does not provide the details of deriving equations (16)--(18), so I present the derivations here.
+
+\subsection{Value function when current state is low}
+
+The equations in the anticipated shock case are largely the same as the steady state equations. Let $J(\epsilon)$ and $J^*(\epsilon)$ denote the value of job to firms when the current aggregate productivity is $p$ and $p^*$ respectively. In discrete time, the firm's value function in the low state is
+\begin{align}
+	J(\epsilon) & = p + \sigma \epsilon - w(\epsilon) + \frac{1}{1+r} \Bigg[(1-\mu) \int_{-\infty}^{\epsilon_u} [\lambda \max\{J(\epsilon'), 0\} + (1-\lambda) J(\epsilon)] \, dF(\epsilon') \nonumber \\ & + \mu \int_{-\infty}^{\epsilon_u} [\lambda \max\{J^*(\epsilon'), 0\} + (1-\lambda) J^*(\epsilon)] \, dF(\epsilon')\Bigg]
+\end{align}
+As before, we transform this equation into the version with time interval being $\Delta t$:
+\begin{align}
+	J(\epsilon) & = (p + \sigma \epsilon - w(\epsilon))\Delta t + \frac{1}{1+r \Delta t} \Bigg[(1-\mu \Delta t) \int_{-\infty}^{\epsilon_u} [\lambda \Delta t \max\{J(\epsilon'), 0\} + (1-\lambda \Delta t) J(\epsilon)] \, dF(\epsilon') \nonumber \\ & + \mu \Delta t \int_{-\infty}^{\epsilon_u} [\lambda \Delta t \max\{J^*(\epsilon'), 0\} + (1-\lambda \Delta t) J^*(\epsilon)] \, dF(\epsilon')\Bigg]
+\end{align}
+Again, move the $J(\epsilon)$ term to the left, and divide both sides by $\Delta t$: 
+\begin{align}
+	& \frac{1}{\Delta t}\left(J(\epsilon) - \frac{(1 - \lambda \Delta t)(1 - \mu \Delta t)}{1 + r \Delta t} J(\epsilon) \right) \nonumber \\ 
+	& =p + \sigma \epsilon - w(\epsilon) + \frac{1}{1+r \Delta t} \Bigg[(1-\mu \Delta t) \int_{-\infty}^{\epsilon_u} \lambda  \max\{J(\epsilon'), 0\} \, dF(\epsilon') \nonumber \\
+	&  + \mu  \int_{-\infty}^{\epsilon_u} [\lambda \Delta t \max\{J^*(\epsilon'), 0\}+ (1-\lambda \Delta t) J^*(\epsilon) ] \, dF(\epsilon')\Bigg] \nonumber
+\end{align}
+We take the limit $\Delta t \to 0$ on both sides. The left-hand side becomes
+\[\text{LHS} = \frac{1}{\Delta t} \frac{r\Delta t + \mu \Delta t + \lambda \Delta t + \lambda \mu (\Delta t)^2}{1 + r \Delta t} J(\epsilon) \to \frac{r + \lambda + \mu + 2 \lambda \mu \Delta t}{1 + 2 r \Delta t} J(\epsilon) \to (r + \lambda + \mu ) J (\epsilon)\]
+and the right-hand side becomes
+\[\text{RHS} \to p + \sigma \epsilon - w(\epsilon) + \int_{-\infty}^{\epsilon_u} \lambda  \max\{J(\epsilon'), 0\} \, dF(\epsilon') + \mu  J^*(\epsilon)   \]
+where the penultimate step follows from L'H\^opital's rule. Hence, we obtain the continuous-time version of the value function $J$:
+\begin{equation} \label{eq:J_cyclical}
+	(r + \lambda + \mu) J(\epsilon) = p + \sigma \epsilon - w(\epsilon) + \lambda \int_{-\infty}^{\epsilon_u} \max\{J(\epsilon'), 0\} \, dF(\epsilon') + \mu   J^*(\epsilon)  
+\end{equation}
+Similarly, we can write down the worker's value function
+\begin{equation} \label{eq:W_cyclical}
+	(r + \lambda + \mu) W(\epsilon) =  w(\epsilon) + \lambda \int_{-\infty}^{\epsilon_u} \max\{W(\epsilon'), U\} \, dF(\epsilon') + \mu  W^*(\epsilon) 
+\end{equation}
+You may derive equation (\ref{eq:W_cyclical}) yourself as an exercise.
+
+The value of unemployment in discrete time is
+\begin{equation}
+	U = b + \frac{1}{1+r} \left[\frac{qv}{u}[(1-\mu) W(\epsilon_u) + \mu W^*(\epsilon_u)] + \left(1 - \frac{qv}{u}\right) [(1-\mu) U + \mu U^*]\right]
+\end{equation}
+and change the length of period to $\Delta t$:
+\[U = b \Delta t + \frac{1}{1+r \Delta t} \left[\frac{qv}{u} \Delta t[(1-\mu \Delta t) W(\epsilon_u) + \mu \Delta t W^*(\epsilon_u)] + \left(1 - \frac{qv}{u} \Delta t\right) [(1-\mu \Delta t) U + \mu \Delta t U^*]\right]\]
+and hence we get the continuous time Bellman equation
+\begin{align} \label{eq:U_cyclical}
+	r U  = b + \frac{q v}{u} (W(\epsilon_u)- U) + \mu (U^*-U) 
+\end{align}
+
+
+Combine (\ref{eq:J_cyclical}), (\ref{eq:W_cyclical}) and (\ref{eq:U_cyclical}), and use the fact that 
+\[W(\epsilon_u) - U = \beta S(\epsilon_u) \text{ and } W^*(\epsilon_u) - U = \beta S^*(\epsilon_u)\]
+we can get a continuous-time Bellman equation for the joint surplus $S(\epsilon) = J(\epsilon) + W(\epsilon) - U$:
+\begin{align*}
+	r (J(\epsilon) + W(\epsilon) - U) &= p + \sigma \epsilon - b  \\
+	& + \lambda \int_{\epsilon_d}^{\epsilon_u} J(\epsilon') + \max\{W(\epsilon'), U\} \, d F(\epsilon') - \lambda U + \lambda U - \lambda J(\epsilon) - \lambda W(\epsilon)\\
+	& + \mu (J^*(\epsilon) + W^*(\epsilon) - U^*) + \mu U  -  \frac{q v}{u} (W(\epsilon_u)- U)\\
+	& - \mu J(\epsilon) - \mu W(\epsilon)
+\end{align*}
+Hence
+\[r S(\epsilon) = p + \sigma \epsilon - b + \lambda \int_{\epsilon_d}^{\epsilon_u} S(\epsilon') \, d F(\epsilon') - (\lambda + \mu) S(\epsilon) + \mu S^*(\epsilon) - \beta\frac{vq}{u} S(\epsilon_u)\]
+and therefore 
+\begin{equation} \label{eq:eqs_16}
+	(r + \lambda + \mu) S(\epsilon) = p + \sigma \epsilon - b  +  \lambda \int_{\epsilon_d}^{\epsilon_u} S(\epsilon') \, d F(\epsilon')- \beta\frac{vq}{u} S(\epsilon_u)+ \mu S^*(\epsilon)
+\end{equation}
+Equation (\ref{eq:eqs_16}) here is Equation (16) in the paper. 
+
+\subsection{Value functions when current state is high}
+
+When the current state is $p^*$, the value functions can be a bit tricky. 
+
+Again, we think about the value of the job for the firm $J^*(\epsilon)$. The firm's profit in the current period remains $p^* + \sigma \epsilon - w^*(\epsilon)$. In the next period, with probability $1-\mu$ the aggregate state remains $p^*$, and hence with probability $\lambda(1-\mu)$ the firm would draw a new idiosyncratic shock $\epsilon'$ under $p^*$ from distribution $F$, and with $(1-\mu) (1-\lambda)$ probability the idiosyncratic state remains the same under $p^*$. These parts are identical to the previous analysis.
+
+What really makes things tricky is the contingencies where the aggregate productivity transitions into the low state $p$ in the next period: since we know from the MIT shock exercise that we should expect the separation threshold to be greater in the low state, i.e. $\epsilon_d > \epsilon_d^*$. This means that if $\epsilon \in [\epsilon_d^*, \epsilon_d]$, the job would disappear in the next period, which gives the firm value 0. Hence, if $\epsilon \in [\epsilon_d^*, \epsilon_d]$, we have    
+\begin{align}
+	J^*(\epsilon) & = p^* + \sigma \epsilon - w^*(\epsilon) + \frac{1}{1+r} \Bigg\{(1-\mu) \int_{-\infty}^{\epsilon_u} [\lambda \max\{J^*(\epsilon'), 0\} + (1-\lambda) J^*(\epsilon)] \, dF(\epsilon') \nonumber \\
+	&  + \mu \left[ (1-\lambda) \cdot 0 + \lambda \int_{-\infty}^{\epsilon_u} \max\{J(\epsilon'), 0\} \, dF(\epsilon') \right] \Bigg\}
+\end{align}
+which results in the continuous-time value function
+\begin{equation}
+	(r+\lambda + \mu) J^*(\epsilon) = p^* + \sigma \epsilon - w^*(\epsilon) + \lambda \int_{\epsilon_d^*}^{\epsilon_u} \underbrace{J^*(\epsilon')}_{= (1-\beta) S^*(\epsilon')}\,d F(\epsilon')
+\end{equation}
+Similarly, when $\epsilon \in [\epsilon_d^*, \epsilon_d]$, value of job for the worker is equal to
+\begin{equation}
+	W^*(\epsilon) = w^*(\epsilon) + \frac{1}{1+r} \left[(1-\mu) \int_{-\infty}^{\epsilon_u} \lambda [\max\{W^*(\epsilon'), U^*\} + (1-\lambda) W^*(\epsilon)] \, dF(\epsilon') + \mu U \right]
+\end{equation}
+which gives us
+\begin{equation}
+	(r + \lambda + \mu) W^*(\epsilon) = w^*(\epsilon) + \lambda \int_{-\infty}^{\epsilon_u} \max \{W^*(\epsilon'), U^*\} \, dF(\epsilon') + \mu U = w^*(\epsilon) + \lambda \int_{\epsilon_d^*}^{\epsilon_u} \beta S^*(\epsilon') \, dF(\epsilon') + \lambda U^*  + \mu U
+\end{equation}
+The value of employment in the high state, $U^*$, is similar to (\ref{eq:U_cyclical}), except for replacing the variables with superscript $*$:
+\begin{equation}
+		r U^*  = b + \frac{q^* v^*}{u^*} (W^*(\epsilon_u)- U^*) + \mu (U-U^*) 
+\end{equation}
+Hence
+\begin{align}
+	r S^*(\epsilon) & = r (J^*(\epsilon) + W^*(\epsilon) - U^*) \nonumber \\
+	& = p^* + \sigma \epsilon - b + \lambda \int_{\epsilon_d^*}^{\epsilon_u} S^*(\epsilon')\,d F(\epsilon') - (\lambda + \mu) J^*(\epsilon)  - (\lambda + \mu) W^*(\epsilon) + \lambda U^*+ \mu U  \nonumber \\
+	&  - \beta \frac{q^*v^*}{u^*} S^*(\epsilon_u) - \mu U + \mu U^* \nonumber \\
+	& =  p^* + \sigma \epsilon - b + \lambda \int_{\epsilon_d^*}^{\epsilon_u} S^*(\epsilon')\,d F(\epsilon') - (\lambda + \mu) S^*(\epsilon) - \beta \frac{q^* v^*}{u^*} S^*(\epsilon_u)
+\end{align}
+This is equation (18) in the paper. 
+
+When $\epsilon > \epsilon_d$, then the firm will keep the job as the aggregate state decreases from $p^*$ to $p$. I write down the discrete-time Bellman equation: firm's value
+\begin{align}
+	J^*(\epsilon) & = p^* + \sigma \epsilon - w^*(\epsilon) + \frac{1}{1+r} \Bigg[(1-\mu) \int_{-\infty}^{\epsilon_u} [\lambda \max\{J^*(\epsilon'), 0\} + (1-\lambda) J^*(\epsilon)] \, dF(\epsilon')  \nonumber \\
+	& + \mu \int_{-\infty}^{\epsilon_u} [\lambda \max\{J(\epsilon'), 0\} + (1-\lambda) J(\epsilon)] \, dF(\epsilon') \Bigg]
+\end{align}
+worker's value
+\begin{align}
+	W^*(\epsilon) & = w^*(\epsilon) + \frac{1}{1+r} \Bigg[(1-\mu) \int_{-\infty}^{\epsilon_u} [\lambda \max\{W^*(\epsilon'), U^*\} + (1-\lambda) W^*(\epsilon)] \, dF(\epsilon')  \nonumber \\
+	& + \mu \int_{-\infty}^{\epsilon_u} [\lambda \max\{W(\epsilon'), U\} + (1-\lambda) W(\epsilon)] \, dF(\epsilon') \Bigg]
+\end{align}
+and unemployment value same as above. We end up with a continuous time Bellman equation for $S^*$:
+\begin{equation}
+	(r + \lambda + \mu) S^*(\epsilon) = p^* + \sigma \epsilon - b + \lambda \int_{\epsilon_d}^{\epsilon_u} S^*(\epsilon')\, d F(\epsilon') - \beta \frac{v^*q^*}{u^*} S^*(\epsilon_u) + \mu S(\epsilon)
+\end{equation}
+which is equation (17) of the paper. 
+
+\subsection{Implication: Asymmetry in Booms and Busts}
+
+The cool part of this exercise is that we get asymmetry for boom and recessions:
+\begin{itemize}
+	\item In recessions, there is a ``cleansing effect" for the jobs with productivity between $[\epsilon_d^*, \epsilon_d]$: these jobs with an ``intermediate" level of idiosyncratic productivity exist when the aggregate state is high but will be destroyed immediately when the aggregate state is low. In the model, this is the source of massive, abrupt layoffs in recessions (although the importance of the cleansing effect is questionable empirically since J2J flows seem to be important, according to JH's work). 
+	\item In booms, however, these jobs $[\epsilon_d^*, \epsilon_d]$ are not created immediately, because of the search and matching friction (captured by the cost of posting vacancy $c$). Hence, the model has the potential to capture slow recovery of employment in the recovery period.
+	\item Very beautiful work, consistent with the empirics in many aspects.   
+\end{itemize}
+ 
+
+%\newpage
+%
+%
+%	\noindent The value of posting a vacancy to a firm is $$rV = -c + q \left( \dfrac{v}{u} \right)(J(\varepsilon_{u})-V)$$ So the value equals some initial cost of posting $c$, plus the probability of filling the vacancy $q \left( \dfrac{v}{u} \right)$, times the excess value of a filled job. Free entry condition implies $$rV = 0$$ Surplus of a filled job is $$S(\varepsilon) = J(\varepsilon) + W(\varepsilon) - U$$ So the surplus equals the value to the firm of the filled job $J(\varepsilon)$, plus the value to the worker of being in that filled job $W(\varepsilon)$ minus his unemployment value.\\
+%	
+%	\noindent As mentioned before, this surplus will be split via some bargaining mechanism between the worker $\beta$ and the firm $1-\beta$. $$\beta S(\varepsilon) = W(\varepsilon)-U$$ $$(1-\beta)S(\varepsilon) = J(\varepsilon)$$ Since firms have the option of closing jobs at no cost, a filled job continues in operation for as long as its value is above zero. Hence, filled jobs are destroyed when a productivity shock $x$ arrives that makes $J(x) = (1-\beta)S(x)$ negative. For any realization $\varepsilon$, $J(\varepsilon)$ solves $$rJ(\varepsilon) = p + \sigma \varepsilon - w(\varepsilon) + \lambda(1-\beta) \int_{\varepsilon_{d}}^{\varepsilon_{u}} \lbrace max[S(x),0] - S(\varepsilon)  \rbrace dF(x)	$$ The first two terms are the productivity terms, $w(\varepsilon)$ is the wage, and the integral is the option value of getting hit by a shock weighted by the probability of a shock $\lambda$, and the proportion of the surplus that goes to the firm, $1-\beta$.\\
+%	
+%	\noindent Similarly, the value of a filled job to a worker $$rW(\varepsilon) = w(\varepsilon) + \lambda \beta \int_{\varepsilon_{d}}^{\varepsilon_{u}} (S(x)-S(\varepsilon))dF(x)$$ And the value of unemployment to the worker is $$rU = b + \dfrac{Vq}{u} (W(\varepsilon)-U)$$ Where $b$ represents unemployment benefits and leisure, and $Vq/u = m/u$ is the probability of finding a new job.\\
+%	
+%	\noindent Adding up the three value equations and using $W(\varepsilon)-U = \beta S(\varepsilon)$, we get $$(r+\lambda)S(\varepsilon) = p + \sigma \varepsilon - b + \lambda \int_{\varepsilon_{d}}^{\varepsilon_{u}} max[S(x),0]dF(x)-\beta \left( \dfrac{vq}{u} \right)S(\varepsilon_{u})$$ Since $S(\varepsilon)$ is monotonically increasing in $\varepsilon$, job destruction satisfies the reservation property (total surplus increases with $\varepsilon$). Thus, there is a unique reservation productivity $\varepsilon_{d}$ that solves $J(\varepsilon_{d}) = (1-\beta)S(\varepsilon_{d}) =0$; such that jobs that get a shock $\varepsilon < \varepsilon_{d}$ are destroyed.\\
+%	
+%	\noindent Some more work here shows one key condition. Note $S'(\varepsilon) = \dfrac{\sigma}{r+\lambda}$ and solve $\int S(x)dF(x)$ by parts. Also use the free entry condition $J(\varepsilon_{u}) = \dfrac{c}{q(v/u)}$ and evaluate the total expression on $\varepsilon_{d}$, noting $S(\varepsilon_{d}) =0$.  We finally get \textbf{the job destruction equation (JD)} $$p + \sigma \varepsilon_{d} = b + \dfrac{\beta c}{1-\beta}\dfrac{v}{u}- \dfrac{\sigma \lambda}{r+\lambda} \int_{\varepsilon_{d}}^{\varepsilon_{u}}[1-F(x)]dx$$ It gives the reservation productivity in terms of the ratio of vacancies to unemployment and the parameters of the model, so with knowledge of $v/u$ is can be used to derive the job destruction rate $\lambda F(\varepsilon_{d})$. The LHS is the lowest price acceptable to firms with a filled job (which is the productivity at $\varepsilon_{d}$), which is less than the opportunity cost of employment because of the existence of a hiring cost. The opportunity cost of employment to the worker is the value of leisure $b$ plus the expected gain from search (the second term in RHS, the possibility that workers can get another job). The third term reflects the chance that the firm is hit with a positive shock and things improve (which decreases $\varepsilon_{d}$).\\
+%	
+%	\noindent Because the decrease in $\varepsilon_{d}$ increases the option value (the integral term), the increase in $p$ reduces the reservation price $p + \sigma \varepsilon_{d}$ : the range of prices observed at higher common price expands.\\
+%	
+%	\noindent A higher expected return from search (the second term in RHS), increases the opportunity cost of employment and so leads to higher $\varepsilon_{d}$ and to more job destruction.\\
+%	
+%	\noindent An increase in $\lambda$ increases the option value of a job because job-specific product values are now less persistent. Therefore, at higher $\lambda$, a job experiencing a bad shock is less likely to be destroyed. In contrast, a higher discount rate $r$, reduces future profitability at all prices, so reduces the option value of waiting for an improvement, so $\varepsilon_{d}$ goes up.\\
+%	
+%	\noindent Higher $\sigma$ implies that the more profitable jobs become even more profitable but less profitable jobs suffer a price reduction.\\
+%	
+%	\noindent To derive the\textbf{ job creation condition}, we first write the last step before defining the JD curve: $$(r+\lambda)S(\varepsilon) = p + \sigma\varepsilon - b - \dfrac{\beta c}{1-\beta} \dfrac{v}{u} - \dfrac{\sigma \lambda}{r+\lambda} \int_{\varepsilon_{d}}^{\varepsilon_{u}}[1-F(x)]dx$$ Solve for $S(\varepsilon)$, then also solve for $S(\varepsilon_{d})$, calculate $S(\varepsilon)-S(\varepsilon_{d})$ and note that $S(\varepsilon_{d}) = 0$. Finally, use $J(\varepsilon_{u}) = \dfrac{c}{q(v/u)}$ and $W(\varepsilon)-U = \beta S(\varepsilon)$. We finally get the \textbf{job creation equation (JC)}: $$q = \dfrac{c}{1-\beta}\dfrac{r+\lambda}{\sigma(\varepsilon_{u}-\varepsilon_{d})}$$ This along with the job destruction condition uniquely determine $v/u$ and $\varepsilon_{d}$ as seen in \textbf{Figure 24}. JD slopes up because at higher $v/u$ the opportunity cost of employment is higher, so there is more job destruction. JC slopes down because at higher $\varepsilon_{d}$ job destruction is more likely, so there is less creation.\\
+%	
+%	\noindent For given $v/u$, an increase in common price $p$ or a decrease in the exogenous cost of employment $b$ shifts JD to the left, so the equilibrium $v/u$ increases and the equilibrium $\varepsilon_{d}$ decreases. An increase in $\lambda$ shifts JD to the left and JC down, so it decreases $\varepsilon_{d}$ (it can be seen that the negative effect through JC dominates). By contrast, an increase in $r$ shifts JD to the right and JC down, so it decreases $v/u$, with ambiguous effects on $\varepsilon_{d}$. The effect of dispersion $\sigma$, is to increase $v/u$ at given $\varepsilon_{d}$ and so shift JC up. It also increases $\varepsilon_{d}$ at given $v/u$, so it shifts JD to the right. The overall effect is an increase in $\varepsilon_{d}$. \\
+%	
+%	% Figure here
+%	%\begin{figure}[h]
+%	%	\centering
+%	%		\includegraphics[width=\linewidth]{MP_1.png}
+%	%		{\large \caption{Joint determination of $v/u$ and $\varepsilon_{d}$.}}
+%	%\end{figure}
+%	
+%	\noindent \textbf{General intuition:} The JD curve has to do with worker and firm gains of having a working relationship, while the JC has to do only with the gains of the firm of creating a vacancy that is going to be filled.\\
+%	
+%	\noindent The final equation of the model is the steady-state condition for unemployment, or \textbf{Beveridge curve} $$u = \dfrac{\lambda F(\varepsilon_{d})}{\lambda F(\varepsilon_{d}) + m(v/u,1)}$$ The flow out of unemployment equals the flow into unemployment at points on the curve. The endogenous job separation rate is $\lambda F(\varepsilon_{d})$ and the job matching rate per unemployed worker is $m(v/u,1)$ (probability of finding a job, which is different from $q$, the probability of filling a vacancy).\\
+%	
+%	% Figure here
+%	%\begin{figure}[h]
+%	%	\centering
+%	%		\includegraphics[width=\linewidth]{MP_2.png}
+%	%		{\large \caption{Equilibrium vacancies and unemployment.}}
+%	%\end{figure}
+%	
+%	\noindent Higher vacancies imply more job matching, higher vacancies also imply more job destruction., through the effects of $v/u$ on $\varepsilon_{d}$, so unemployment needs to be higher to maintain stationary job destruction rate. Whether the curve slopes down or not depends on the relative strength of each effect.\\
+%	
+%	\noindent A positive net aggregate productivity shock, represented by either an increase in $p$ or a fall in $b$, increases $v/u$ and decreases $\varepsilon_{d}$, so it shifts up and the Beveridge curve to the left. In other words, job creation increases and job destruction decreases in response to a positive macro shock (makes sense, employment increases). Eventually, unemployment falls but the effect on vacancies is ambiguous. On the other hand, a negative aggregate shock means that $\varepsilon_{d}$ goes up, and all the jobs between this $\varepsilon_{d}'$ and old $\varepsilon_{d}$ get immediately destroyed, so we get spikes of lay-offs in recession and a slower recovery in an expansion.\\
+%	
+%	\noindent An increase in the variance of the idiosyncratic shock ($\sigma$?) increases both job creation and job destruction. Its effects in vacancy-unemployment space are to shift the Beveridge curve to the right and JC up. Equilibrium vacancies increase but the effect on unemployment is ambiguous.\\
+%	
+%	\noindent A reduction in persistence, shown by an increase in $\lambda$, moves JC down and Beveridge curve to the right, given the reservation productivity.\\
+%	
+%	\pagebreak
+%	
+%	\noindent \textbf{Conclusions:} The model is characterized by potentially large amounts of job creation and job destruction, due to idiosyncratic shocks that take place independently of the processes that change aggregate conditions. s. Changes in aggregate conditions, however, do affect the cutoffs that induce firms to open new jobs or close existing ones ($\varepsilon_{d}$).\\
+%	
+%	\noindent They have showed that at higher common components of labor productivity (aggregate shocks), the probability that an unemployed worker finds a job is higher and the job destruction probability is lower.\\
+	
+\end{document}

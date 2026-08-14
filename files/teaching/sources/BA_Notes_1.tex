@@ -1,0 +1,657 @@
+\documentclass[12pt]{article}
+
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON601 TA Notes: RBC, Reduced-form Money Models}
+\author{Haoran Wang \thanks{A substantial part of this note is based on the first-year notes by Lixi Wang and the handwritten TA notes in the past four years by Kanat Isakov. I am grateful to their great help and contributions. All errors are mine.}}
+\date{November 3, 2025}
+\onehalfspacing
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents
+	
+	\section{Workhorse: Real Business Cycle Model}
+	The Real Business Cycle (RBC) model, sometimes called the neoclassical stochastic growth model, is one of the major breakthroughs in modern macroeconomics. The introduction of the RBC model in the early 1980s marked a clear paradigm shift. Specifically, it was one of the first macroeconomic models built on \textbf{microfoundations} (namely, individual-level optimization in partial equilibrium plus market clearing in general equilibrium), and it offers a set of new tools and insights for analyzing business-cycle fluctuations and evaluating macroeconomic policies. 
+	
+	\subsection{Setup}
+	\begin{itemize}
+		\item There are two representative agents in the economy: a household and a firm. 
+		\item There are three markets in the economy: consumption goods, labor, and capital.
+		\item The household's income comes from three sources: 
+		\begin{itemize}
+			\item First, the consumer owns capital. She rents her capital to the firm and earns rental income in each period. 
+			\item Second, she supplies her labor to the firm for production and earns a labor income from the firm.
+			\item Lastly, she is the firm's shareholder and receives all of its profits in each period.
+		\end{itemize}
+	   She can spend her income in two ways: she can purchase consumption goods from the firm or invest by increasing her capital stock.
+	  \item The firm rents capital and buys labor services from the household, combining these inputs into the consumption good using a production technology. It sells its output to the household and distributes its profits to the shareholder (the household) as dividends.
+	\end{itemize}
+	
+	\subsection{Partial Equilibrium: Individual Optimizations}
+	\subsubsection{Household's Problem} 
+	Again, the first step is always to identify the states and controls for the household. Let me make a convention about timing for this part of the course: we use $k_t$ to denote the capital stock at the end of period $t$ for the household, so that $k_{t-1}$ is an endogenous state variable and $k_t$ is a control variable. 
+	
+	Note that the household takes the nominal wage $W_t$, the price of the consumption good $P_t$, and the rental price of capital $R_t$ as given (since they are equilibrium objects outside her control). Therefore, $\{W_t, R_t, P_t\}$ are ``exogenous'' state variables for the consumer; from the perspective of the economy as a whole, however, they are endogenous variables. 
+	
+	Hence, the control and state variables are
+	\begin{itemize}
+		\item Control variable: consumption $c_t$, end-of-period capital stock $k_t$, labor supply $h_t$;
+		\item Endogenous state variable: yesterday's capital stock $k_{t-1}$;
+		\item State variables exogenous to the household: nominal wage $W_t$, price of consumption good $P_t$, rental price of capital $R_t$ and dividend $\Pi_t$.
+	\end{itemize}
+	
+	The consumer's problem is 
+	\begin{equation}
+		\max_{\{c_t, h_t, k_t\}_{t=0}^\infty} \mathbb{E}_0\sum_{t=0}^\infty \beta^t u(c_t, 1-h_t)
+	\end{equation}
+	subject to
+	\begin{align}
+		P_t c_t + P_t (k_t - (1-\delta)k_{t-1}) & \leq W_th_t + R_t k_{t-1} + \Pi_t \label{eq:budget}\\
+		c_t & \geq 0 \label{eq:non_neg_c}\\
+		k_t & \geq 0 \label{eq:non_neg_k}\\
+		k_{-1} &\text{ given}
+	\end{align}
+	\underline{Note:} 
+	\begin{itemize}
+		\item The budget constraint (\ref{eq:budget}) is written in nominal terms. If we divide on both sides by $P_t$, we get a budget constraint in real terms:
+		\begin{equation}
+			c_t + k_t - (1-\delta)k_{t-1} = w_t h_t + r_t k_{t-1} + \pi_t
+		\end{equation}
+	where $w_t \equiv \frac{W_t}{P_t}, r_t \equiv \frac{R_t}{P_t}$ and $\pi_t \equiv \frac{\Pi_t}{P_t}$ are real wages, real rental rate and real profit respectively. You can work with either one in the optimization problem: eventually, it is the \textbf{real prices} that \textit{determine} the behaviors of the household in partial equilibrium, not the nominal prices; and, it is the \textbf{real prices} that \textit{are determined} by the market clearing conditions in general equilibrium.
+		\item Constraints (\ref{eq:non_neg_c}) and (\ref{eq:non_neg_k}) should look familiar to us: (\ref{eq:non_neg_c}) looks like a non-negativity constraint for consumption and (\ref{eq:non_neg_k}) looks like a borrowing constraint. 
+		\item As I mentioned in the first TA session in Prof. Shea's part, (\ref{eq:non_neg_c}) can be ignored if we impose an Inada condition on the utility function, so that it is never optimal for the consumer to choose non-positive consumption.
+		\item (\ref{eq:non_neg_k}) requires more discussion. In practice, when we solve this representative-agent RBC model, we usually drop this constraint as well. We can do so because the representative household has rational expectations and knows that, in equilibrium, capital will never be zero because choosing zero capital is never optimal for the firm (I will lay out the firm's problem in detail later). However, this point no longer holds in a heterogeneous-household model: although a household may correctly believe that aggregate capital should be positive in each period, the idiosyncratic shock it faces may still cause its borrowing constraint to bind. In that case, we should take (\ref{eq:non_neg_k}) into account. We will return to this topic in a few weeks.
+	\end{itemize}
+
+\paragraph{Solving Household's Problem} There are multiple ways of solving the household's problem. I illustrate (1) using Lagrange multiplier method and (2) using recursive Bellman method below.
+
+\paragraph{Method 1: Sequential Formulation Using Lagrangian \\ [6pt]} We ignore the non-negativity constraints and write down the Lagrangian:
+\begin{equation}
+	\mathcal{L} = \mathbb{E}_0\sum_{t=0}^\infty \beta^t\Bigg(u\big(c_t, 1-h_t\big) + \lambda_t\Big(w_th_t + r_t k_{t-1} + (1-\delta) k_{t-1} + \pi_t - k_t - c_t \Big) \Bigg)
+\end{equation}
+As I discussed in the second TA session note for Prof. Shea's part, the first-order conditions are 
+\begin{align}
+	u_c(t) &= \lambda_t\\
+	u_l(t) &= \lambda w_t\\
+	\lambda_t &= \beta \mathbb{E}_t \left[\lambda_{t+1}(r_{t+1} + 1 - \delta)\right]
+\end{align}
+plus a transversality condition
+\[\lim_{t\rightarrow \infty} \beta^t \lambda_t k_t = 0\]
+By doing some algebra, we get the solution to the household problem is a set of sequences $\{c_t, h_t, k_t\}_{t=0}^\infty$ such that, for given $\{P_t, W_t, R_t, \Pi_t\}_{t=0}^\infty$ and $k_{-1}$,
+\begin{align}
+	u_c(c_t, 1-h_t)w_t &= u_l(c_t, 1-h_t)  \label{eq:HH_start} \\
+	u_c(c_t, 1-h_t) &= \beta \mathbb{E}_t\left[u_c(c_{t+1}, 1-h_{t+1})(r_{t+1} + 1 - \delta)\right]\\
+	c_t + k_t &= w_th_t + r_t k_{t-1} + (1-\delta) k_{t-1} + \pi_t \label{eq:HH_end}
+\end{align}
+plus the transversality condition.
+
+\underline{Note:} To save some notation, from now on I will use $u_c(t) \equiv u_c(c_t, 1-h_t)$ and $u_l(t) \equiv  u_l(c_t, 1-h_t)$ to denote the marginal utility terms.
+
+\paragraph{Method 2: Recursive Formulation Using Bellman Equation \\ [6pt]} We can also solve the household's optimization problem using a recursive Bellman equation. In each period $t$, the household's control variables are $c_t, k_t$, and $h_t$; its endogenous state variable is $k_{t-1}$; and its exogenous state variables are the prices $P_t, W_t, R_t, \Pi_t$ (or, equivalently, $w_t, r_t, \pi_t$). The household seeks a value function $V(k_{t-1}; w_t, r_t, \pi_t)$ and policy functions $c(k_{t-1}; w_t, r_t, \pi_t), h(k_{t-1}; w_t, r_t, \pi_t), k(k_{t-1}; w_t, r_t, \pi_t)$ such that the value and policy functions jointly solve the Bellman equation
+\begin{align}\label{eq:bellman}
+	V(k_{t-1}; w_t, r_t, \pi_t) & = \max_{c_t, k_t, h_t} u(c_t, 1-h_t) + \beta \mathbb{E}_t \left[V(k_{t}; w_{t+1}, r_{t+1}, \pi_{t+1})\right] \nonumber \\
+	& \text{s.t. } c_t + k_t - (1-\delta)k_{t-1} = w_t h_t + r_t k_{t-1} + \pi_t
+\end{align}	
+Again, we can derive the FOCs (first, replace $k_t$ on the right-hand side of the Bellman equation and drop $k_t$ as a control):
+\begin{eqnarray}
+	u_c(t) &=& \beta \mathbb{E}_t\left[V_k(k_{t}; w_{t+1}, r_{t+1}, \pi_{t+1})\right] \\
+	u_l(t) &=& \beta \mathbb{E}_t\left[V_k(k_{t}; w_{t+1}, r_{t+1}, \pi_{t+1})\right] w_t 
+\end{eqnarray}
+which implies
+\[\frac{u_l(t)}{u_c(t)} = w_t\]
+We also have the envelope condition
+\begin{equation}
+	V_k(k_{t-1}; w_t, r_t, \pi_t) = \beta \mathbb{E}_t\left[V_k(k_{t}; w_{t+1}, r_{t+1}, \pi_{t+1})\right] (1-\delta + r_t)
+\end{equation}
+so that
+\[V_k(k_{t-1}; w_t, r_t, \pi_t) =  u_c(t) (1-\delta + r_t)\]
+and 
+\[V_k(k_{t}; w_{t+1}, r_{t+1}, \pi_{t+1}) =  u_c(t+1) (1-\delta + r_{t+1})\]
+Plug it back into the FOC on $c_t$:
+\begin{equation}
+	u_c(t) = \beta \mathbb{E}_t \left[u_c(t+1) (1-\delta + r_{t+1})\right]
+\end{equation}
+We end up with the same condition as in the Lagrangian setup.
+
+\subsubsection{Firm's Problem} The representative firm uses capital and labor to produce output with a production function $F(K,H)$. We usually assume that $F(K,H)$ is increasing and concave. 
+
+Given prices $\{w_t, r_t\}$, the firm chooses $\{K_t, H_t\}_{t=0}^\infty$ to 
+\begin{equation}
+	\max_{\{K_t, H_t\}_{t=0}^\infty} \mathbb{E}_0 \sum_{t=0}^\infty \left\{M_{0,t} (A_t F(K_t, H_t) - r_t K_t - w_t H_t) \right\}
+\end{equation}
+where $M_{0,t}$ is the stochastic discount factor of the firm. In most cases, $M_{0,t}$ is the marginal rate of intertemporal substitution of the household:
+\[M_{t,t+1} = \beta \frac{u_c(t+1)}{u_c(t)} \text{ and } M_{t,t+1} = \beta^t \frac{u_c(t)}{u_c(0)}\]
+and $A_t$ is the total-factor productivity (TFP), which is stochastic. For simplicity, we assume that $A_t$ is the only source of uncertainty in our model. 
+
+The firm's optimization problem is essentially static. Capital demand $K_t$ and labor demand $H_t$ satisfy FOCs:
+\begin{eqnarray}
+	F_k(t) &=& r_t \label{eq:firm_r}\\ 
+	F_h(t) &=& w_t \label{eq:firm_w}
+\end{eqnarray}
+and the maximum real profit $\pi_t$ is implied by
+\begin{equation}
+	\pi_t = A_t F(K_t, H_t) - r_t K_t - w_t H_t = A_t F(K_t, H_t) - F_k(t) K_t - F_h(t) H_t \label{eq:firm_pi}
+\end{equation}
+
+\underline{Note:} From the micro class, we know that if the production function $F()$ is constant return-to-scale (CRTS), then $\pi_t = 0$.
+
+\subsection{General Equilibrium} 
+Now we can impose the market clearing conditions and define general equilibrium. 
+
+\subsubsection{Market Clearing Conditions and Walras's Law} 
+
+There are in total 3 markets to be cleared: goods market, capital market and labor market, with three nominal prices $\{P_t, R_t, W_t\}$.
+
+In the first half of next semester's micro class, you will learn from Prof. Ozbay about \textbf{Walras's Law}, which implies that, although we have in total three markets to clear, we need only market clearing conditions for 2 out of the 3 markets. More generally, suppose we have $N$ markets, and the Walras's law stipulates that under some conditions, $N-1$ market clears + consumer \& firm optimizing implies that the $N$-th market also clears. Additionally, instead of pinning down the nominal prices $\{P_t, R_t, W_t\}$, the market clearing condition can only pin down the real prices $\{r_t, w_t\}$. 
+
+If you don't believe in it, you can easily prove the following argument by maths: if capital and labor market clears and the first-order conditions in consumer's and firm's problems are satisfied, then the goods market clears, i.e.
+\[c_t + k_t - (1-\delta) k_{t-1} = F(k_{t-1}, h_t)\]
+
+\begin{proof}
+After imposing capital and labor market clearing condition
+\begin{eqnarray}
+	k_{t-1} &=& K_t \label{eq:capital_clearing} \\
+	h_t &=& H_t \label{eq:labor_clearing}
+\end{eqnarray}
+Hence, the implied equilibrium profit according to (\ref{eq:firm_pi}) becomes
+\[\pi_t = F(k_{t-1},n_{t-1}) - r_t k_{t-1} - w_t h_t \]
+Substituting $\pi_t + r_t k_{t-1} + w_t h_t$ into the right-hand side of the household's budget constraint (\ref{eq:HH_end}) yields
+\begin{equation*}
+	c_t + \underbrace{k_t - (1-\delta) k_{t-1}}_{\equiv i_t} = F(k_{t-1}, h_t) 
+\end{equation*}
+which is exactly the goods market clearing condition.
+
+\end{proof}
+
+\subsubsection{Defining Competitive Equilibrium: Sequential and Recursive}
+
+Depending on how we formulated the partial equilibrium, we can define competitive equilibrium in two ways: sequential competitive equilibrium or recursive competitive equilibrium.
+
+\paragraph{Sequential CE \\ [6pt]}
+	A sequential competitive equilibrium (CE) is a sequence of allocations $$\{c_t, h_t, k_t, K_t, H_t\}_{t=0}^\infty$$ and a sequence of prices
+	\[\{\pi_t, r_t, w_t\}_{t=0}^\infty\]
+	such that for given $k_{-1}$ and stochastic process for exogenous shock $\{A_t\}$:
+	\begin{itemize}
+		\item Given $\{w_t, r_t, \pi_t\}_{t=0}^\infty$ and $k_{-1}$, the sequence $\{c_t, h_t, k_t\}_{t=0}^\infty$ solves the household's problem by satisfying (\ref{eq:HH_start}) - (\ref{eq:HH_end}), together with the transversality condition;
+		\item Given $\{w_t, r_t\}_{t=0}^\infty$, the sequence $\{K_t, H_t, \pi_t\}_{t=0}^\infty$ solves the firm's problem and satisfies (\ref{eq:firm_r}), (\ref{eq:firm_w}) and (\ref{eq:firm_pi});
+		\item Capital and Labor market clears, satisfying (\ref{eq:capital_clearing}) and (\ref{eq:labor_clearing}).
+	\end{itemize}
+
+\underline{Note:} A straightforward way of checking whether you've written down the sequential competitive equilibrium correctly is to count the number of equations and endogenous real variables. For instance, in the definition above, we have in total 8 endogenous real variables to pin down:
+\[(c_t, h_t, k_t, K_t, H_t, \pi_t, r_t, w_t)\]
+and we have in total eight equations (3 FOCs for Household, 3 FOCs for firms, 2 market clearing conditions). In other words, the number of equations and the number of unknowns should match exactly. If we are working with nominal variables 
+\[(c_t, h_t, k_t, K_t, H_t, \Pi_t, R_t, W_t, P_t)\]
+then there will be 9 variables and 8 equations, and we should have exactly one degree of freedom, according to the Walras's law. In order to pin down the price level, there are often two ways to go:
+\begin{itemize}
+	\item We could introduce another numeraire good whose supply is determined by the fiscal or monetary authority, e.g. money, and ``make up" some reasons for the private sector agents to have demand for that numeraire good (will see some of the reasons shortly), and define price level as the relative price between consumption good and the new numeraire good.
+	\item The fiscal or monetary authority could come up with a policy rule that anchors price to other endogenous variables, e.g. the US monetary policy is given by Taylor rule
+	\[i_t = \phi_\pi \pi_t + \phi_y y_t\]
+	which says that the Fed achieves a ``target" interest rate that is determined by inflation and output.
+\end{itemize}
+Either way, all I want to say is that this degree of freedom by Walras's law gives the government some space of maneuvering the economy (in the above two example, it is the monetary policy that ``close the economy" --- pin down the equilibrium price level).
+
+\paragraph{Recursive CE \\ [6pt]}
+
+A recursive competitive equilibrium is given by policy functions
+\[c(k; r, w, \pi), k'(k; r,w,\pi), h(k; r, w, \pi), K(r,w,A), H(r,w, A), \pi(r,w, A), \]
+household's value function $V(k; r, w, \pi)$ and price $\{w(A), r(A)\}$ such that:
+\begin{itemize}
+	\item Given $w(A), r(A), \pi(r,w, A)$, policy functions $c(k; r, w, \pi), k'(k; r,w,\pi), h(k; r, w, \pi)$ and the value function $V(k; r, w, \pi)$ solve household's recursive optimization problem, defined by Bellman equation (\ref{eq:bellman});
+	\item Given $w(A), r(A)$, policy functions $H(r,w, A), K(r, w, A)$ solve firm's profit max problem, with price and implies a maximum profit profit $\pi(r,w, A)$ according to (\ref{eq:firm_pi});\footnote{In fact, we can also define a firm's problem recursively, with a firm's value function $\tilde{V}(A)$ defined by \[\tilde{V}(r,w, A) = \max_{K,H} F(K,H) - wH - rK + \mathbb{E} \left[M' \tilde{V}(A')\big|A\right]\] with associated policy function $K(r,w,A)$ and $H(r,w,A)$ and implied profit $\pi(r,w, A) \equiv \max_{K,H} F(K,H) - wH - rK$.}
+	\item Market clears: $w(A)$ and $r(A)$ solves
+	\begin{eqnarray}
+		K(r,w,A) &=& k \\
+		H(r,w,A) &=& h(k; r, w, A)
+	\end{eqnarray}
+\end{itemize}
+
+\subsection{Sidenotes}
+
+\paragraph{Stationary SCE and RCE} In macroeconomic papers/textbooks you always see ``stationary" or ``steady state". It refers to the case where all the exogenous shocks/uncertainty in the economy is shut off and all real endogenous variables are constant over time. In order to get the steady state, we could simply drop the expectations in the equations that define a sequential CE above and set $A_t = \bar{A}$ (hence we end up with a Stationary Sequential Competitive Equilibrium), or equivalently, drop all the expectations in the Bellman equations for household and firms in the recursive CE above and set $A_t = \bar{A}$ (so that we end up with a Stationary Recursive Competitive Equilibrium).
+
+%\paragraph{Incorporating Trends}
+%Sometimes, when you apply this framework to match some aggregate data, you may want to incorporate a trend to some of the endogenous variables (e.g. you may want the annual GDP growth in your model to match the average annual GDP growth of the US in the data).
+
+\paragraph{Computation} Wait one more month for the computational lecture.
+
+\paragraph{Implications of RBC} There is too much material on this topic to discuss in class. For a succinct treatment, I refer you to Mark Gertler's (NYU) webpage:
+\begin{center}
+	\url{https://wp.nyu.edu/markgertler/macro-theory-2-slides/}
+\end{center}
+
+\section{Reduced-form Money Models}
+
+A drawback of the RBC model is that the nominal price level $P_t$ plays no role in equilibrium: none of the real variables depend on $P_t$, and none of the equations helps pin down $P_t$. Similarly, inflation $\pi_{t} \equiv \frac{P_{t}}{P_{t-1}}$ is indeterminate in the RBC model and has no real effect on any real variable in the model. This implies that living in a 2\% inflation world would be the same as living in a 200\% inflation world---there would be no need for a monetary authority. However, this is not what we observe in the real world. This section sketches some early attempts to incorporate money into macroeconomic analysis.
+
+The most straightforward approach to pin down the price level $P_t$ is to add another asset, money $M_t$, to the RBC model. This is the Money-in-Utility (MIU) model.
+
+\subsection{Money-in-utility Model}
+In this model, $u(t) = u(c_t, l_t, z_t)$, where $z_t = \frac{m_t}{p_t}$ denotes the household's real money holdings. Here, $m_t$ is the household's end-of-period money balance at time $t$.
+
+We also assume that:
+\begin{equation}
+	u_z(c, l, z)\leq 0, \forall z>\bar{z}
+\end{equation}
+and
+\begin{equation}
+	\lim_{z\rightarrow 0} u_z(c, l, z) = \infty
+\end{equation}
+for all $c$ along with other usual Inada conditions on $u_c$. We will do another variant where we put $z_t = \frac{m_{t-1}}{p_t}$ after this.
+
+\paragraph{Household Problem}
+For household, given $\{w_t, r_t, p_t, i_t , T_t\}$, the optimization problem is:
+\begin{equation}
+	\max_{\{c_t, h_t, k_t, b_t, m_t\}_{t=0}^\infty} \sum_{t=0}^\infty \beta^t u(c_t, 1-h_t, \frac{m_t}{p_t})
+\end{equation}
+subject to 
+\begin{equation} \label{eq:miu_budget}
+	w_th_t + r_t k_{t-1} + (1-\delta)k_{t-1} + \frac{1+i_{t-1}}{p_t}b_{t-1} + \frac{m_{t-1}}{p_t} + T_t = c_t + k_t + \frac{m_t}{p_t} + \frac{b_t}{p_t}
+\end{equation}
+Taking $\beta^t \lambda_t$ as multipliers, we get:
+\begin{equation}
+	\mathcal{L} = \sum_{t=0}^\infty \beta^t \Bigg\{u(c_t, 1-h_t, \frac{m_t}{p_t}) + \lambda_t \Big(w_th_t + r_t k_{t-1} + (1-\delta)k_{t-1} + \frac{1+i_{t-1}}{p_t}b_{t-1} + \frac{m_{t-1}}{p_t} + T_t - c_t - k_t - \frac{m_t}{p_t} - \frac{b_t}{p_t} \Big)\Bigg\}
+\end{equation}
+First order condition yields:
+\begin{align}
+	u_c(t) &= \lambda_t\\
+	u_l(t) &= w_t \lambda_t\\
+	\lambda_t &= \beta \lambda_{t+1}(1+r_{t+1} - \delta)\\
+	\frac{\lambda_t}{p_t} &= \frac{\beta\lambda_{t+1}(1+i_t)}{p_{t+1}}\\
+	\frac{\lambda_t}{p_t} &= \frac{\beta \lambda_{t+1}}{p_{t+1}} + \frac{u_z(t)}{p_t}
+\end{align}
+Replacing $\lambda_t$ by $u_c(t)$ yields:
+\begin{align}
+	u_l(t) &= u_c(t)w_t \label{eq:intra_miu}\\
+	u_c(t) &= \beta u_c(t+1)(1+r_{t+1} - \delta) \label{eq:euler_k_miu}\\
+	u_c(t) &= \beta u_c(t+1) (1+i_t) \frac{p_t}{p_{t+1}} \label{eq:euler_miu}\\
+	u_c(t) &= u_z(t) + \beta u_c(t+1) \frac{p_t}{p_{t+1}} \label{eq:euler_money}
+\end{align}
+%Note that for equation (\ref{eq:euler_miu}), we can do some algebra and put it under stochastic world:
+%\begin{equation}
+%	1 = \beta \mathrm{E}_t[\frac{u_c(t+1)}{u_c(t)}\frac{(1+i_t)p_t}{p_{t+1}}]=\beta \mathrm{E}_t[m_{t+1}\tilde{R}_{t+1}]
+%\end{equation}
+%where $m_{t+1}$ is the stochastic discount factor, and $\tilde{R}_{t+1}$ is the real return on bond.\\
+%We can also get:
+%\begin{equation}
+%	\mathrm{E}_t(\tilde{R}_{t+1}) = \frac{1- \mathrm{cov}(m_{t+1}, \tilde{R}_{t+1})}{\mathrm{E}_t(m_{t+1})}
+%\end{equation}
+%\begin{itemize}
+%	\item if $\mathrm{cov}(m_{t+1}, \tilde{R}_{t+1}) = 0$, this is a risk-free asset
+%	\item if $\mathrm{cov}(m_{t+1}, \tilde{R}_{t+1}) >0$, this asset has less return relative to risk-free asset
+%	\item if $\mathrm{cov}(m_{t+1}, \tilde{R}_{t+1}) < 0$, this asset has more return relative to risk-free asset
+%\end{itemize}
+As for the Transversality conditions, we have 3 state variables $k_t, \frac{b_t}{p_t}, \frac{m_t}{p_t}$:
+\begin{align}
+	\lim_{t\rightarrow \infty} \beta^t \lambda_t k_t &= 0 \nonumber\\
+	\lim_{t\rightarrow \infty} \beta^t \lambda_t \frac{b_t}{p_t} &= 0 \label{eq:trans_miu}\\
+	\lim_{t\rightarrow \infty} \beta^t \lambda_t \frac{m_t}{p_t} &= 0 \nonumber
+\end{align}
+We define $1+\pi_{t+1} = \frac{p_{t+1}}{p_t}$, where $\pi_{t+1}$ is the inflation rate from $t$ to $t+1$, and $1+r_{t+1}^k = (r_{t+1} + 1 - \delta)$ as the gross real return on capital in period $t+1$. Then combining (\ref{eq:euler_k_miu}) and (\ref{eq:euler_miu}) we get
+\begin{equation}
+	1+r^k_{t+1} = \frac{1+i_t}{1+\pi_{t+1}}
+\end{equation}
+This is known as the Fisher equation, showing there is no arbitrage: at the margin, the household should be indifferent between holding capital and bond.
+
+Combining (\ref{eq:euler_miu}) and (\ref{eq:euler_money}) we get the margin holding bond and holding cash:
+\begin{align} \label{eq:miu_cash}
+	\frac{u_z(t)}{u_c(t)} = 1-\frac{1}{1+i_t} = \frac{i_t}{1+ i_t}
+\end{align}
+Now we can define the solution to the competitive equilibrium.
+
+\begin{definition} (CE for MIU)
+	A sequence of allocations $\{c_t, h_t, k_t, H_t, K_t\}_{t=0}^\infty$, portfolio choices $\{b_t, m_t\}_{t=0}^\infty$, prices $\{p_t, i_t, w_t, r_t\}_{t=0}^\infty$ and policies $\{T_t, M_t\}_{t=0}^\infty$ such that given $M_{-1}$, $m_{-1}$, $b_{-1}$, $k_{-1}$ and $\mu_t$:
+	\begin{itemize}
+		\item $\{c_t, h_t, k_t, b_t, m_t\}_{t=0}^\infty$ solves household's problem by satisfying budget constraint (\ref{eq:miu_budget}), first-order conditions (\ref{eq:intra_miu}), (\ref{eq:euler_k_miu}), (\ref{eq:euler_miu}), (\ref{eq:euler_money}), and transversality conditions (\ref{eq:trans_miu}), given prices, policies and initial variables;
+		\item $\{H_t, K_t\}_{t=0}^\infty$ solves firm's profit max problem by satisfying (\ref{eq:firm_r}) and (\ref{eq:firm_w}), given prices.
+		\item Government sets money supply according to $M_t = (1+\mu_t)M_{t-1}$ and $T_t = \frac{u_t M_{t-1}}{p_t}$ given  $\{\mu_t\}$;
+		\item Market clearing: $b_t = 0$, $m_t = M_t$, $k_{t-1} = K_t$ and $h_t = H_t$.
+	\end{itemize}
+\end{definition}
+
+\underline{Note:} Similar as before, Walras's Law holds, and we get resource constraint:
+\begin{equation}
+	F(k_{t-1}, h_t) + (1-\delta)k_{t-1} = c_t + k_t
+\end{equation}
+
+\paragraph{Reduce the number of equations}
+In the exam, you may be asked to reduce the number of equations (or express the competitive equilibrium using the minimum number of equations/variables). The easiest way to do this is to use the FOC for capital and labor for firms to substitute $r_t$ and $w_t$, combine the government budget constraint and household budget constraint to drop $T_t$, and use market clearing conditions to drop $M_t, H_t, K_t, b_t$.
+
+After doing that, we end up with six variables $\{c_t, h_t, k_t, M_t, p_t, i_t\}$, whose sequence satisfy:
+\begin{align}
+	u_l(c_t, 1-h_t, \frac{M_t}{p_t}) &= u_c(c_t, 1-h_t, \frac{M_t}{p_t})F_H(k_{t-1}, h_t)\\
+	u_c(c_t, 1-h_t, \frac{M_t}{p_t}) &= \beta u_c(c_{t+1}, 1-h_{t+1}, \frac{M_{t+1}}{p_{t+1}})(F_K(k_t, h_{t+1}) + 1 - \delta)\\
+	\frac{u_z(c_t, 1-h_t, \frac{M_t}{p_t})}{u_c(c_t, 1-h_t, \frac{M_t}{p_t})} &= \frac{i_t}{1+i_t}\\
+	F(k_{t-1}, h_t) + (1-\delta)k_{t-1} &= c_t + k_t\\
+	F_K(k_t, h_{t+1}) + (1-\delta) &= \frac{(1+i_t)p_t}{p_{t+1}}\\
+	M_t &= (1+\mu_t) M_{t-1}
+\end{align}
+alongside with transversality conditions.
+
+Another way to do this, which may make defining stationary objects easier, is to ``detrend" the nominal variables using either money growth rate or inflation. For instance, we can detrend $M_t$ by defining $z_t \equiv \frac{M_t}{p_t}$, so that the sequence $\{c_t, h_t, k_t, z_t, \pi_t, i_t\}$ satisfy:
+\begin{align}
+	u_l(c_t, 1-h_t, z_t) &= u_c(c_t, 1-h_t, z_t)F_H(k_{t-1}, h_t)\\
+	u_c(c_t, 1-h_t, z_t) &= \beta u_c(c_{t+1}, 1-h_{t+1}, z_{t+1})(F_K(k_t, h_{t+1}) + 1 - \delta)\\
+	\frac{u_z(c_t, 1-h_t, z_t)}{u_c(c_t, 1-h_t, z_t)} &= \frac{i_t}{1+i_t}\\
+	F(k_{t-1}, h_t) + (1-\delta)k_{t-1} &= c_t + k_t\\
+	F_K(k_t, h_{t+1}) + (1-\delta) &= \frac{(1+i_t)}{1+\pi_t}\\
+	z_t &= (1+\mu_t) \frac{z_{t-1}}{1+\pi_t}
+\end{align}
+alongside with transversality conditions.\\
+Now, if we look for an equilibrium where all real variables are constant over time, i.e.
+\begin{align*}
+	c_{t+1} &= c_t = c\\
+	k_{t+1} &= k_t = k\\
+	h_{t+1} &= h_t = h\\
+	z_{t+1} &= z_t = z
+\end{align*}
+where $p_t$ is growing exactly at rate $\mu$, i.e. $\pi = \mu$ for all $t$.\\
+
+\noindent
+Then the \textbf{stationary equilibrium}, or the steady state of this economy is a list of scalars $(k, h, c, z, i)$ such that given $\mu$, they solve:
+\begin{align}
+	u_l(c, 1-h, z) &= u_c(c, 1-h, z)F_H(k, h)\\
+	1&= \beta (F_K(k, h) + 1 - \delta)\\
+	\frac{u_z(c, 1-h, z)}{u_c(c, 1-h, z)} &= \frac{i}{1+i}\\
+	F(k, h) -\delta k &= c\\
+	F_K(k, h) + (1-\delta) &= \frac{(1+i)}{1+\pi}\\
+	1+\mu &= \beta (1+i)
+\end{align}
+\begin{proposition}
+	In this model money is neutral but not super-neutral.
+\end{proposition}
+
+\paragraph{Social Planner's Problem \\ [6pt]}
+Note that assume labor is supplied inelastically, and leisure is not valued by agents, then by restricting $\frac{u_l}{u_c}$ to be independent of $z$, we should be able to get the model to be both neutral and super-neutral.\\
+
+\noindent
+Lastly, we consider the Social Planner's Problem:
+\begin{equation}
+	\max_{\{C_t, H_t, K_t, Z_t\}} \sum_{t=0}^\infty \beta^t u(C_t, 1-H_t, Z_t)
+\end{equation}
+subject to
+\begin{equation}
+	F(K_{t-1}, H_t) + (1-\delta)K_{t-1} = C_t + K_t
+\end{equation}
+Then the optimal conditions should be:
+\begin{align}
+	u_l(t) &= u_c(t)F_H(t)\\
+	u_c(t) &= \beta u_c(t+1)[F_K(t+1) + 1 - \delta]\\
+	u_z(t) &= 0\\
+	F(K_{t-1}, H_t) + (1-\delta)K_{t-1} &= C_t + K_t
+\end{align}
+Comparing with competitive equilibrium condition from earlier, we see that SPP and CE match when $i_t = 0$, i.e. \textbf{Friedman Rule}.
+
+\subsection{Transaction Cost Model}
+Another way to incorporate money into the RBC model is to assume that a physical transaction cost enters the household's budget constraint and decreases with the amount of cash held.
+
+Formally, the transaction cost $\phi(c,z)$ satisfies
+\begin{itemize}
+	\item $\phi(c,z)>0$
+	\item $\phi(0, z) = 0$
+	\item $\phi_c >0$, $\phi_z<0$
+	\item $\phi_{cz} <0$, $\phi_{cc}>0$, $\phi_{zz} >0$
+\end{itemize}
+Given $\{w_t, r_t, p_t, i_t, T_t\}$, the household's problem is
+\begin{equation}
+	\max_{\{c_t, h_t, k_t, b_t, m_t\}} \sum_{t=0}^\infty \beta^t u(c_t, 1-h_t)
+\end{equation}
+subject to
+\begin{equation}
+	w_th_t + r_t k_{t-1} + (1-\delta)k_{t-1} + \frac{1+i_{t-1}}{p_t}b_{t-1} + \frac{m_{t-1}}{p_t} + T_t = c_t + k_t + \frac{m_t}{p_t} + \frac{b_t}{p_t} + \phi(c_t, \frac{m_t}{p_t})
+\end{equation}
+With Lagrangian multiplier $\beta^t \lambda_t$, we take the FOC of the Lagrangian and we get:
+\begin{align}
+	u_c(t) &= \lambda_t(1+\phi_c(t))\\
+	u_l(t) &= \lambda_t w_t\\
+	\lambda_t &= \beta \lambda_{t+1}(r_{t+1} + 1 - \delta)\\
+	\frac{\lambda_t}{p_t} &= \frac{\beta \lambda_{t+1}(1 + i_t)}{p_{t+1}}\\
+	\frac{\lambda_t}{p_t}(1 + \phi_z (t)) &= \beta \frac{\lambda_{t+1}}{p_{t+1}}
+\end{align}
+Then the Euler equations are:
+\begin{align}
+	u_l(t) &= \frac{u_c(t)}{1 + \phi_c (t)}w_t\\
+	\frac{u_c(t)}{1 + \phi_c (t)} &= \beta \frac{u_c(t+1)}{1 + \phi_c (t+1)}(r_{t+1} + 1 - \delta)\\
+	\frac{u_c(t)}{(1 + \phi_c (t))p_t} &= \beta\frac{u_c(t+1)(1+i_{t})}{(1 + \phi_c (t+1))p_{t+1}}\\
+	\frac{1 + \phi_z(t)}{1 + \phi_c(t)}\frac{u_c(t)}{p_t} &= \beta \frac{u_c(t+1)}{(1+\phi_c(t+1))p_{t+1}}
+\end{align}
+And the Transversality conditions:
+\begin{align}
+	\lim_{t\rightarrow \infty}\beta \frac{u_c(t)k_t}{1+\phi_c(t)} &= 0\\
+	\lim_{t\rightarrow \infty}\beta \frac{u_c(t)b_t}{1+\phi_c(t)} &= 0\\
+	\lim_{t\rightarrow \infty}\beta \frac{u_c(t)m_t}{1+\phi_c(t)} &= 0
+\end{align}
+Note that we can combine the Euler equations for bond and cash holding, and get:
+\begin{align}
+	\frac{1}{1 + \phi_z(t)} = 1 + i_t \implies 	-\phi_z(t) = \frac{i_t}{1 + i_t}
+\end{align}
+This is similar to the MIU condition (\ref{eq:miu_cash}), setting the marginal benefit of having money to the opportunity cost of holding money.
+
+The firm's problem has the same structure as in the MIU model, so there is nothing new on the firm side.
+
+We can now define the equilibrium similarly to how we did in the MIU model:
+\begin{definition} (CE, Transaction Cost Model). 
+	Given $\{\mu_t\}$, the list of equilibrium sequences $\{c_t, h_t, k_t, M_t, p_t, i_t\}$ satisfies:
+	\begin{align}
+		u_l(c_t, 1-h_t) &= \frac{u_c(c_t, 1-h_t)}{1 + \phi_c(c_t, \frac{M_t}{p_t})}F_H(k_{t-1}, h_t)\\
+		\frac{u_c(c_t, 1-h_t)}{1 + \phi_c(c_t, \frac{M_t}{p_t})} &= \beta \frac{u_c(c_{t+1}, 1 - h_{t+1})}{1 + \phi_c(c_{t+1}, \frac{M_{t+1}}{p_{t+1}})}(F_K(k_{t}, h_{t+1}) + 1 - \delta)\\
+		\phi_z(c_t, \frac{M_t}{p_t}) &= -\frac{i_t}{1+i_t}\\
+		F(k_{t-1}, h_t) + (1-\delta) k_{t-1} &= c_t + k_t + \phi(c_t, \frac{M_t}{p_t})\\
+		F_K(k_t, h_{t+1}) + (1-\delta) &= \frac{1 + i_t}{1 + \pi_{t+1}}\\
+		M_t &= (1 + \mu_t) M_{t-1}
+	\end{align}
+\end{definition}
+
+Then, for a steady-state, the scalar $\{c, h, k, z, i\}$ satisfies:
+\begin{align}
+	u_l(c, 1-h) &= \frac{u_c(c, 1-h)}{1 + \phi_c(c, z)}F_H(k, h)\\
+	1 &= \beta (F_K(k, h) + 1 - \delta)\\
+	\phi_z(c, z) &= -\frac{i}{1+i}\\
+	F(k, h) -\delta k &= c + \phi(c, z)\\
+	F_K(k, h) + (1-\delta) &= \frac{1 + i}{1 + \pi}\\
+	1 + \mu &= \beta(1+i)
+\end{align}
+\begin{proposition}
+	In this model, money is neutral but not super-neutral.
+\end{proposition}
+
+\noindent
+For the social planner's problem,
+\begin{equation*}
+	\max_{\{C_t, H_t, K_t, Z_t\}} \sum_{t=0}^\infty u(C_t, 1-H_t)
+\end{equation*}
+subject to
+\begin{equation}
+	F(K_{t-1}, H_t) + (1-\delta) K_{t-1} = C_t + K_t + \phi(C_t, Z_t)
+\end{equation}
+The optimal conditions are:
+\begin{align}
+	u_l(t) &= \frac{u_c(t)}{1+\phi_c(t)}F_H(t)\\
+	\frac{u_c(t)}{1 + \phi_c(t)} &= \beta \frac{u_c(t+1)}{1 + \phi_c(t+1)}(F_K(t+1) + 1-\delta)\\
+	\phi_z(t) &= 0\\
+	F(K_{t-1}, H_t) + (1-\delta) K_{t-1} &= C_t + K_t + \phi(C_t, Z_t)
+\end{align}
+Compare to CE conditions, we see that CE achieves optimality if and only if $i_t = 0$, i.e. Friedman rule.
+
+\subsection{Cash-in-Advance Model}
+%The key idea is $p\cdot c \leq m$.\\
+The third reason that the household may want to hold cash is that there is a time mismatch between the bond market and the goods market, so that the consumer cannot liquidate the bond in time to finance his consumption. Hence, he needs some more liquid asset for him to carry out the transaction in the goods market, which is cash.
+
+In this simple version of the CIA model, we assume that $c$ is all consumption, and goods market open first. 
+
+For household, given $\{w_t, r_t, p_t, i_t, T_t\}$:
+\begin{equation}
+	\max_{\{c_t, h_t, k_t, b_t, m_t\}} \sum_{t=0}^\infty \beta^tu(c_t, 1-h_t)
+\end{equation}
+subject to
+\begin{align}
+	w_th_t + r_t k_{t-1} + (1-\delta)k_{t-1} + \frac{1+i_{t-1}}{p_t}b_{t-1} + \frac{m_{t-1}}{p_t} + T_t &= c_t + k_t + \frac{m_t}{p_t} + \frac{b_t}{p_t}\\
+	\frac{m_{t-1}}{p_t} &= c_t
+\end{align}
+We assign $\beta^t\mu_t$ for budget constraint, and $\beta^t\lambda_t$ for cash constraint, we get the Lagrangian:
+\begin{align*}
+	\mathcal{L} & = \sum_{t=0}^\infty \beta^t \Bigg\{ u(c_t, 1-h_t) + \lambda_t(\frac{m_{t-1}}{p_t} - c_t) \\ 
+	& + \mu_t(w_th_t + r_t k_{t-1} + (1-\delta)k_{t-1} + \frac{1+i_{t-1}}{p_t}b_{t-1} + \frac{m_{t-1}}{p_t} + T_t - c_t - k_t - \frac{m_t}{p_t} - \frac{b_t}{p_t}) \Bigg\}
+\end{align*}
+First order condition yields:
+\begin{align}
+	u_c(t) &= \lambda_t + \mu_t\\
+	u_l(t) &= \mu_t w_t\\
+	\mu_t &= \beta \mu_{t+1}(1 + r_{t+1} - \delta) \label{eq:cia_k}\\
+	\frac{\mu_t}{p_t} &= \frac{\beta \mu_{t+1}(1 + i_t)}{p_{t+1}} \label{eq:cia_b}\\
+	\frac{\mu_t}{p_t} &= \beta(\frac{\lambda_{t+1}}{p_{t+1}} + \frac{\mu_{t+1}}{p_{t+1}}) \label{eq:cia_m}
+\end{align}
+%Note that for the Lagrangian multipliers, we have:
+%\begin{align}
+%	\mu_t &= \frac{u_l(t)}{w_t}\\
+%	\lambda_t &= u_c(t) - \mu_t = u_c(t) - \frac{u_l(t)}{w_t}
+%\end{align}
+Try to reduce the number of variables/equations:
+\begin{itemize}
+	\item combining (\ref{eq:cia_k}) and (\ref{eq:cia_b}), we get the Fisher equation:
+	\begin{equation}
+		\frac{1 + i_t}{1 + \pi_{t+1}} = r_{t+1} + 1 - \delta
+	\end{equation}
+	\item combining (\ref{eq:cia_b}) and (\ref{eq:cia_m}), we get:
+	\begin{equation}
+		\frac{\mu_t}{p_t} = \frac{\beta \mu_{t+1}(1 + i_t)}{p_{t+1}} = \beta(\frac{\lambda_{t+1}}{p_{t+1}} + \frac{\mu_{t+1}}{p_{t+1}}) \implies \lambda_{t+1} = i_t \mu_{t+1}
+	\end{equation}
+and then we could replace all the $\lambda_t$'s in the system of equations with $\mu_t$ using the above equation. For instance, the tradeoff between consumption and leisure can be expressed as:
+	\begin{align}
+		u_c(t) = \mu_t + \lambda_t = \mu_t + i_{t-1} \mu_t = \frac{u_l(t)}{w_t}(1+i_{t-1}) 
+	\end{align}
+	\item Euler equation:
+	\begin{equation}
+		\frac{u_c(t)}{1+i_{t-1}} = \beta(r_{t+1} + 1-\delta)\frac{u_c(t+1)}{1+i_t}
+	\end{equation}
+%	which also leads to
+%	\begin{equation}
+%		\frac{u_c(t)}{\beta u_c(t+1)} = \frac{1 + i_{t-1}}{1 + i_t}
+%	\end{equation}
+\end{itemize}
+Hence, given $\{p_t, w_t, i_t\}$, the household's optimization problem $\{c_t, h_t, m_t, b_t, k_t\}$ can be summarized by 
+\begin{eqnarray}
+	\frac{u_l(t)}{u_c(t)} &=& \frac{w_t}{1+i_{t-1}} \\
+	\frac{u_c(t)}{1+i_{t-1}} &=& \beta \frac{u_c(t+1)}{1+i_t} (r_{t+1} + 1 - \delta) \\
+	\frac{u_c(t)}{1+i_{t-1}} &=& \beta \frac{u_c(t+1)}{1+\pi_{t+1}} \\
+	p_t c_t &=& m_{t-1} \\
+	w_th_t + r_t k_{t-1} + (1-\delta)k_{t-1} + \frac{1+i_{t-1}}{p_t}b_{t-1} + \frac{m_{t-1}}{p_t} + T_t &=&  c_t + k_t + \frac{m_t}{p_t} + \frac{b_t}{p_t}
+\end{eqnarray}
+
+The firm's problem is standard and given $\{w_t, r_t\}$, the labor and capital demand $H_t$ and $K_t$ are the same as before. 
+
+Government controls money supply $M_t$ by $M_{t+1} = (1+\nu_t) M_t$. Also, government budget constraint is given by
+\[T_t = \frac{b_t}{p_t} - \frac{1+i_{t-1}}{p_t} b_{t-1} + \frac{M_t}{p_t} - \frac{M_{t-1}}{p_t} \]
+so that, combining with the household budget constraint, gives us the standard resource constraint. Market clearing conditions are given by
+\[m_t = M_t, b_t = 0, k_{t-1} = K_t, H_t = h_t\]
+
+Now we can characterize the equilibrium. $\{c_t, h_t, k_t, b_t, M_t, i_t\}$ satisfies:
+\begin{align}
+	u_l(c_t, 1-h_t) &= \frac{F_H(k_{t-1}, h_t)}{1 + i_{t-1}}u_c(c_t, 1-h_t)\\
+	\frac{u_c(c_t, 1-h_t)}{1 + i_{t-1}} &= \beta (F_K(k_{t}, h_{t+1}) + 1 - \delta)\frac{u_c(c_{t+1}, 1-h_{t+1})}{1 + i_{t}}\\
+	F(k_{t-1}, h) + (1-\delta)k_{t-1} &= c_t + k_t\\
+	F_K(k_t, h_{t+1}) + (1-\delta) &= \frac{1 + i_t}{1 + \pi_{t+1}}\\
+	M_t &= (1 + \nu_t) M_{t-1}\\
+	p_tc_t &= M_{t-1}
+\end{align}
+\begin{proposition}
+	In this model, money is neutral but not superneutral.
+\end{proposition}
+
+\paragraph{Social Planner's Problem for CIA Model \\ [6pt]}
+For the CIA social planner's problem, the key point is that the social planner does not need to account for the cash-in-advance constraint. Hence, the problem is very simple:
+\begin{equation*}
+	\max_{\{C_t, H_t, K_t, Z_t\}} \sum_{t=0}^\infty \beta^t u(C_t, 1-H_t)
+\end{equation*}
+subject to
+\begin{equation}
+	F(K_{t-1}, H_t) + (1-\delta) K_{t-1} = C_t + K_t
+\end{equation}
+The optimal conditions are:
+\begin{align}
+	u_l(t) &= u_c(t)F_H(t)\\
+	u_c(t) &= \beta u_c(t+1)(F_K(t+1) + 1-\delta)\\
+	F(K_{t-1}, H_t) + (1-\delta) K_{t-1} &= C_t + K_t
+\end{align}
+Once again, CE is optimal at $i_{t} = 0$, Friedman rule.
+
+%\subsection{Cash-Good-Credit-Good Model}
+%Lucas and Stokey (1983, 1987) introduced the idea that the CIA constraint applies to only a subset of goods. The utility function is:
+%\begin{equation}
+%	u_t = u(c_{1,t}, c_{2,t}, 1-h_t)
+%\end{equation}
+%where $c_1$ is the cash-good portion of consumption, $c_2$ is the credit-good portion. The CIA constraint then should be
+%\begin{equation}
+%	p_t c_{1,t} \leq \tilde{m}_t
+%\end{equation}
+%where $\tilde{m}_t$ is a relative measure of money at the time CIA applies.\\
+%
+%\noindent
+%In this section, we follow the setup from Chari and Kehoe (1999):
+%\begin{itemize}
+%	\item no uncertainty for each period: $m_{t-1}$ and $b_{t-1}$ are known to household entering $t$
+%	\item bond market opens and household chooses $b_t$
+%	\item household pays nominal lump-sum taxes $T_t$(also it's possible to think this as a negative tax, i.e. lump-sum transfer), which leaves:
+%	\begin{equation*}
+%		\tilde{m}_t = m_{t-1} + (1+i_{t-1})b_{t-1} - b_t - p_{t-1}c_{2, t-1} - T_t
+%	\end{equation*}
+%	\item then household splits into the shopper and the worker
+%	\item shoppers uses $\tilde{m}_t$ for cash purchases, and issue nominal claims with zero interest (that the household will settle in the next bond market) for credit purchases
+%	\item worker works for the firm and get paid in cash at the end of the period
+%	\item the pair gets together: the money earned by the worker cannot be spent until next period; the money balances carried over to the next period is:
+%	\begin{equation}
+%		m_t = \tilde{m}_t - p_t c_{1,t} + p_t w_t h_t
+%	\end{equation}
+%\end{itemize}
+%This setup yields a CIA constraint:
+%\begin{equation}
+%	p_t c_{1,t} \leq \tilde{m}_t
+%\end{equation}
+%and the budget constraint is:
+%\begin{equation}
+%	\tilde{m}_t + b_t = (1 + i_{t-1})b_{t-1} + \tilde{m}_{t-1} + p_{t-1}w_{t-1}h_{t-1} - p_{t-1} c_{1, t-1} - p_{t-1}c_{2, t-1} - T_t
+%\end{equation}
+%where the decisions are made in the bonds market.\\
+%The household's problem given $\{w_t, r_t, i_t, T_t, p_t\}$:
+%\begin{equation}
+%	\max_{\{c_{1,t}, c_{2,t}, h_t, b_t, \tilde{m}_t\}} \sum_{t=0}^\infty \beta^t u(c_{1,t}, c_{2,t}, 1-h_t)
+%\end{equation}
+%subject to
+%\begin{align}
+%	\frac{\tilde{m}_t}{p_{t-1}} + \frac{b_t}{p_{t-1}} &= (1 + i_{t-1})\frac{b_{t-1}}{p_{t-1}} + \frac{\tilde{m}_{t-1}}{p_{t-1}} + w_{t-1}h_{t-1} - c_{1, t-1} - c_{2, t-1} - \frac{T_t}{p_{t-1}}\\
+%	c_{1,t} &= \frac{\tilde{m}_t}{p_t}
+%\end{align}
+%Giving the budget constraint multiplier $\beta^t\mu_t$ and cash constraint $\beta^t \lambda_t$, we get the FOC:
+%\begin{align}
+%	u_1(t) &= \beta \mu_{t+1} + \lambda_t\\
+%	u_2(t) &= \beta \mu_{t+1}\\
+%	u_l(t) &= \beta \mu_{t+1}w_t\\
+%	\frac{\mu_t}{p_{t-1}} &= \beta \frac{\mu_{t+1}}{p_t}(1 + i_t)\\
+%	\frac{\mu_t}{p_{t-1}} &= \beta \frac{\mu_{t+1}}{p_t} + \frac{\lambda_t}{p_t}
+%\end{align}
+%alongside with transversality conditions:
+%\begin{align}
+%	\lim_{t\rightarrow \infty}\beta^t \mu_t \frac{\tilde{m}_t}{p_{t-1}}\\
+%	\lim_{t\rightarrow \infty}\beta^t \mu_t \frac{b_t}{p_{t-1}}
+%\end{align}
+%Combining (3.133) and (3.134) we get:
+%\begin{equation}
+%	\lambda_t = \beta i_t \mu_{t+1}
+%\end{equation}
+%The competitive equilibrium is a list $\{c_{1,t}, c_{2,t}, h_t, i_t, p_t, \tilde{M}_t\}$ given by:
+%\begin{align}
+%	u_l(t) &= u_2(t)w_t\\
+%	u_1(t) &= u_2(t)(1+i_t)\\
+%	u_2(t-1) &= \beta \frac{u_2(t)(1+i_t)p_{t-1}}{p_t}\\
+%	F(h_t) &= c_{1,t} + c_{2,t}\\
+%	c_{1,t} &= \frac{\tilde{M}_{t}}{p_t}\\
+%	\tilde{M}_t &= (1 + \tau_t) \tilde{M}_{t-1}
+%\end{align}
+%alongside with transversality conditions (3.135) and (3.136).\\
+%Here, the interpretation of (3.139) is that the nominal interest rate $1+i_t$ is the relative price between cash goods and credit goods. In order to buy cash goods, one need to hold money in advance. By holding money, they give up the opportunity cost, which is the nominal interest rate $1+i$.
+	
+\end{document}

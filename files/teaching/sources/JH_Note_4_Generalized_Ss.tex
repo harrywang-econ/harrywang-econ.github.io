@@ -1,0 +1,438 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage{./files/mystyle_notes}
+\usepackage[longnamesfirst]{natbib} % keep it here for easy access to references links
+\bibliographystyle{./files/mybst}
+\graphicspath{{./files/}}
+
+\title{ECON602 TA Notes: Convex and Non-convex Adjustment Cost}
+\author{Haoran Wang}
+\date{February 17, 2025}
+\onehalfspacing
+
+\begin{document}
+	
+	\maketitle
+	
+	\tableofcontents
+	
+	This note discusses the details of Caballero and Engel (1999, Econometrica), ``Explaining Investment Dynamics in U.S. Manufacturing: A Generalized (S, s) Approach". 
+	
+		A brief review of the literature: the (S,s) model captures the extensive margin of adjustment---that is, the decision of whether to adjust. It does so by introducing a fixed cost that the agent pays upon adjusting. The resulting decision rule is nonlinear and discontinuous: there is a region, such as an interval $[s, S]$, within which the agent does not change its behavior (the ``inaction band"). The difference between the generalized and standard (S,s) models is that the fixed adjustment cost is heterogeneous across agents in the generalized model. Although Caballero and Engel (1999) apply the model to capital adjustment, its mathematical structure applies to many adjustment problems in economics, including labor, prices, and financial portfolios. ECON 702 discusses an application to price adjustment.
+	
+\section{Benchmark: Convex Adjustment Cost}
+Consider the following investment problem for a firm:
+\begin{equation}
+	\max_{I_t} \mathbb{E}_0 \sum_{t=0}^\infty \frac{1}{(1+r)^t} \left\{A_t F(K_t) - C(I_t, K_{t-1}) - p_t I_t \right\}
+\end{equation}
+where $A_t$ is a stochastic profit shock, $p_t$ is the price of capital, $I_t$ is the investment, defined as
+\begin{equation}
+	K_{t} = (1-\delta) K_{t-1} + I_t
+\end{equation}
+$F(K_t)$ is a profit function and $C(I_t, K_{t-1})$ is an adjustment cost function that is increasing and convex in $I_t$. 
+
+
+The Bellman equation is straightforward (treating $K \equiv K_{t-1}$ as the state and $K' \equiv K_t$ and $I \equiv I_t$ as controls):
+\begin{equation} \label{eq:value_func}
+	V(K; A, p) = \max_{I,K', \lambda} A F(K') - p I - \lambda (K'-(1-\delta) K - I)- C(I, K) + \frac{1}{1+r} \mathbb{E}[V(K'; A' , p')]
+\end{equation}
+As usual, we have the FOCs
+\begin{equation}
+	- p + \lambda - C_I(I, K) = 0
+\end{equation}
+\begin{equation}
+	A F_K(K') - \lambda + \frac{1}{1+r} \mathbb{E}[V_K(K'; A' , p')] = 0
+\end{equation}
+and the envelope condition
+\begin{equation}
+	V_K(K; A, p) = A F_K(K') (1-\delta) + C_K(I, K) + \frac{1}{1+r}  \mathbb{E}[V_K((1-\delta)K + I; A' , p')] (1-\delta)
+\end{equation}
+
+Euler equation
+\begin{equation}
+	\lambda = p + C_I(I,K) = A F_K(K') + \frac{1}{1+r} \mathbb{E}\left[\left(p' + C_I(I', K')\right) (1-\delta) + C_K(I', K')\right]
+\end{equation}
+
+\subsection{Q Theory of Investment}
+
+Define Tobin's marginal $q$ as the Lagrange multiplier divided by the price of the capital:
+\begin{equation}
+	q \equiv \frac{\lambda}{p}
+\end{equation}
+and Tobin's average $Q$ as the ratio of $V(K)$ and $p K$:
+\begin{equation}
+	Q \equiv \frac{V(K; A, p)}{p K}
+\end{equation}
+
+From the FOCs, we can see that the marginal benefit of investment is summarized by the Lagrange multiplier $\lambda$. We can see that the firm will invest if 
+\begin{equation}
+	\lambda > p + C_I(I,K)
+\end{equation}
+that is, the marginal benefit of investment exceeds its marginal cost. Dividing both sides by $p$ gives
+\begin{equation}
+	q > 1 + \frac{C_I(I, K)}{p}
+\end{equation}
+This gives us a very simple investment decision rule for the firms and is a one-sentence summary of Tobin's q theory. For more details, I refer you to the excellent slides by Isaac Baley (on ELMS).
+
+\subsection{Hayashi (1982)}
+
+A common problem when linking economic theory to data is that agents in theory act on marginal objects, such as marginal benefits and costs, but these objects are rarely observable. One solution is to use average objects as proxies. In the context of q theory, average $Q$ is easier to measure than marginal $q$: for a public firm, its value can be proxied by its stock-market value, while the denominator is the book value of its capital or assets. 
+
+Hayashi (1982, ECTA) established theoretically the following conditions under which the average $Q$ coincides with the marginal $q$:
+\begin{equation}
+	q = Q \Leftrightarrow \text{$F(K)$ is homogeneous of degree 1 in $K$ and $C(I, K)$ is homogeneous of degree 1 in $(I,K)$.} 
+\end{equation}
+This result is easy to show. Basically, we need to prove that
+\begin{equation*}
+	\frac{\lambda}{p} = \frac{V(K; A, p)}{pK'}
+\end{equation*}
+or equivalently
+\begin{equation} \label{eq:wts}
+	\lambda K'= A F_K(K') K' +  \frac{1}{1+r} \mathbb{E}[V_K(K'; A' , p') K'] = V(K; A, p)
+\end{equation}
+This is easy to show, since the function in the max of the right-hand side of (\ref{eq:value_func}),
+\[Q(K, I) \equiv AF(K(1-\delta) + I) - pI - C(I, K) + \frac{1}{1+r} \mathbb{E}[V(K'; A, p')]\]
+is homogeneous of degree 1 in $(K, I)$, which implies that its first order derivative is homogeneous of degree 0. Since FOC holds for $I$
+\begin{equation}
+	Q_I(K, I) = 0
+\end{equation} 
+and, by the fact that $Q_I$ is the homogeneous of degree 0, we get
+\begin{equation*}
+	Q_I(K, I) = Q_I( xK, xI) = 0 \text{ for all $x$}
+\end{equation*}
+Taking the first-order derivative with respect to $x$ gives
+\begin{equation}
+	Q_{II}(K, I) I + Q_{IK} (K, I) K = Q_{II}(xK, xI) I + Q_{IK} (xK, xI) K \big|_{x = 1} = 0
+\end{equation}
+and therefore
+\begin{equation}
+	I = - \frac{Q_{IK}}{Q_{II}} K
+\end{equation}
+that is, investment $I$ is linear in $K$. Substituting this result into (\ref{eq:value_func}), we can verify that $V$ is homogeneous of degree 1 in $K$; hence,
+\[V_K(K; A, p) K = V(K; A,  p)\]
+Substituting this expression into (\ref{eq:wts}) verifies that $q = Q$. 
+
+The following profit function and cost function satisfy the condition:
+\begin{equation} \label{eq:linear_quadratic}
+	F(K) = K \text{ and } C(I_t) = \frac{\gamma}{2} \left(\frac{I_t}{K_{t-1}}\right)^2 K_{t-1}
+\end{equation}
+
+%\subsection{Implications of Convex Cost}
+%If we use the cost function and profit function in (\ref{eq:linear_quadratic}), it is easy to show that optimal investment rate $I/K$ is (approximately) linear in profit shock $A$, so that
+%\begin{equation}
+%	\log I/K \approx \log A + \text{const.}
+%\end{equation}
+%Two important implications:
+%\begin{itemize}
+%	\item If we believe that the distribution of $\log A$ is symmetric (e.g. Gaussian), then $\log I/K$ should also be symmetric, so that we should not expect much skewness in the cross-sectional distribution of investment;
+%	\item The second moment of $\log A$ (interpreted as uncertainty/volatility/dispersion) should not matter for investment rate, due to the linearity of decision rule.  
+%\end{itemize}
+
+
+\section{Generalized (S,s): Caballero and Engel (1999, ECTA)}
+
+
+\subsection{Setup}
+
+The profit function of each individual firm is given by
+\begin{equation}
+	\Pi(K, \theta) = \theta K^\beta - (r+\delta) K
+\end{equation}
+where $\theta$ is the revenue shock and $r+\delta$ is the rental price of capital. $\theta$ follows some stochastic process (e.g. AR(1)).
+
+As long as the firm decides to invest, it pays an adjustment cost
+\begin{equation}
+	\mathcal{C}(I) = \omega \theta K^\beta \mathbf{1}\{I \neq 0\}
+\end{equation}
+where $I$ is the investment, which I will define later. In other words, the firm needs to spend a fraction $\omega$ of its revenue to carry out the adjustment. There is a technical reason to assume such a fixed cost structure - we will see in a minute.
+
+There are two sources of heterogeneity among firms:
+\begin{itemize}
+	\item Revenue shock $\theta$ is different across firms;
+		\item The fixed adjustment cost $\omega$ differs across firms. Specifically, assume that $\omega$ is drawn independently across firms and over time from a distribution $G(\omega)$, and that its realization is observed at the beginning of the period. In the standard (S,s) model, $\omega$ is fixed over time and is the same across firms.
+\end{itemize}
+
+The timing of the model is slightly different from what we have seen:
+\begin{enumerate}
+	\item At the beginning of period $t$, the firm enters the period with capital stock $K_t$;
+	\item Nature draws a new $\theta$ and $\omega$ for the firm; 
+		\item The firm decides whether to adjust its capital stock. If it adjusts, it pays a fixed adjustment cost $\omega \theta K_t^\beta$ (i.e., the fixed cost is paid using output from pre-adjustment capital, combined with the current-period technology and fixed cost). If it does not adjust, it skips the next step and proceeds directly to step 5.  
+	\item The firm makes investment $I_t$ in addition to the existing capital stock $K_t$. The capital that will be used to produce and earn profit is therefore
+	\[K_{t}^+ = I_t + K_t\]
+	\item After production, at the end of the period, $K_t^+$ depreciates at the rate $\delta$, and hence the capital stock at the end of period $t$/at the beginning of period $t+1$ is
+	\begin{equation}
+		K_{t+1} = (1-\delta) K_t^+ = (1-\delta) (K_t + I_t)
+	\end{equation}
+\end{enumerate}
+
+Taking everything together, we set up the firm's problem. Each firm $i$ chooses an investment series to maximize the expected lifetime profits net of adjustment costs:
+\begin{equation} \label{eq:obj}
+	\max_{\{I_{it}\}_{t=0}^\infty} \mathbb{E} \left[\sum_{t=1}^\infty \frac{1}{(1+r)^t} [\Pi(K_{it}, \theta_{it}) - \mathcal{C}(I_{it})]\right]
+\end{equation}
+subject to
+\begin{equation}
+	K_{i,t+1} = (1-\delta) (K_{it} + I_{it})
+\end{equation}
+with $K_0$ given.
+
+As usual, we can treat $K_t$ as an endogenous state variable and $(\omega_t, \theta_t)$ as exogenous state variables and then write the Bellman equation. 
+
+\subsection{A Trick of Reducing State Space}
+
+In the adjustment cost literature, it is common to use the following trick to reduce the dimension of state space. If the adjustment friction is shut off \textit{forever}, the dynamic optimization problem (\ref{eq:obj}) reduces to a static one, for which the optimal solution of capital is given by
+\begin{equation}
+	K^* = \arg \max_{K} \Pi(K, \theta) = \left(\frac{r+\delta}{\theta \beta}\right)^{\frac{1}{\beta-1}}
+\end{equation}
+and therefore
+\begin{equation}
+	\theta = \frac{r+\delta}{\beta} (K^*)^{1-\beta}
+\end{equation}
+We can rewrite the profit function by replacing $\theta$ with $K^*$:
+\begin{equation*}
+	\Pi(K, K^*) = \frac{r+\delta}{\beta} (K^*)^{1-\beta} K^\beta - (r+\delta) K
+\end{equation*}
+Define $z \equiv \log K - \log K^*$ as the log deviation of capital stock from the frictionless optimum (it is called ``disequilibrium capital"). The profit function can be further rewritten by treating $z$ as the control:
+\begin{equation}
+	\Pi(z, K^*) = \frac{r+\delta}{\beta} K^* \exp(\beta z) - (r+\delta) K^* \exp(z) \equiv \pi(z) K^*
+\end{equation}
+where $\pi(z) = \frac{r+\delta}{\beta} \exp(\beta z) - (r+\delta) \exp(z)$.
+
+Similarly, we can rewrite the adjustment cost as
+\begin{equation}
+	\mathcal{C}(I) = \omega \frac{r+\delta}{\beta} K^* \exp(\beta z) \mathbf{1}\{I \neq 0\} = \omega \frac{r+\delta}{\beta} K^* \exp(\beta z) \mathbf{1}\left\{\frac{K_{t+1}^*}{K_t^*} \neq (1-\delta)\exp(z' - z)\right\} 
+\end{equation}
+where the last equality comes from the fact that 
+\[I_t = 0 \implies K_{t+1} = (1-\delta) K_t \implies \exp(z_{t+1}) K_{t+1}^* = (1-\delta) \exp(z_t) K_t^*\]
+The profit function $\pi(z, K^*)$ and the cost function are now homogeneous of degree 1 in the state $K^*$. This implies that the value function is also homogeneous of degree 1 in $K^*$, so this state can be dropped from the optimization. 
+
+
+\subsection{Value Functions}
+We now treat the beginning-of-period disequilibrium $z$ as the endogenous state and $(\omega, K^*)$ as the exogenous states. For simplicity, I drop the firm index $i$ and time index $t$ and represent each firm by its state vector $(z, \omega, K^*)$. The control variable is $z^+$, the disequilibrium capital in the middle of the current period.
+
+The value of a firm in state $(z, \omega, K^*)$ is denoted by $V(z, \omega, K^*)$ and equals the maximum of its value from adjusting and not adjusting capital.
+
+If the firm adjusts its capital, its value is
+\begin{equation} \label{eq:Va}
+	V^a(z, K^*) = \max_{z^+} \Pi(z^+, K^*) + \frac{1}{1+r} \mathbb{E}[V(z', \omega', (K^*)')]
+\end{equation} 
+where 
+\begin{equation}
+	z' = - \log \frac{(K^*)'}{K^*} + \log (1-\delta) + z^+
+\end{equation}
+
+If the firm does not adjust its capital, its value is
+\begin{equation} \label{eq:Vn}
+	V^n(z, K^*) = \Pi(z, K^*)  + \frac{1}{1+r} \mathbb{E}[V(z', \omega', (K^*)')]
+\end{equation}
+where 
+\[z' = - \log \frac{(K^*)'}{K^*} + \log (1-\delta) + z \]
+The firm's value is defined as
+\begin{equation} \label{eq:value}
+V(z, \omega, K^*) = \max\left\{V^a(z, K^*) - \omega \frac{r+\beta}{\beta} K^* \exp(\beta z), V^n(z, K^*)\right\}
+\end{equation}
+These equations are not different from the standard (S,s) model.
+
+\subsection{Micro Adjustment}
+
+\paragraph{Characterizing Value Function \\ [6pt]}
+
+The first observation is that $V^a$ and $V^n$ are related. More precisely,
+\begin{equation}
+	V^a(z, K^*) = \max_{z^+} \underbrace{\Pi(z^+, K^*) + \frac{1}{1+r} \mathbb{E}[V(z', \omega', (K^*)')]}_{= V^n(z^+, K^*)} =  \max_{z^+} V^n(z^+, K^*)
+\end{equation} 
+Hence, the value function (\ref{eq:value}) can be written as
+\begin{equation} \label{eq:modified_V}
+	V(z, \omega, K^*) = \max\left\{\max_{z^+} V^n(z^+, K^*) - \omega \frac{r+\beta}{\beta} K^* \exp(\beta z), V^n(z, K^*)\right\}
+\end{equation}
+
+Second, the value of nonadjustment (\ref{eq:Vn}) is homogeneous of degree 1 in $K^*$ because $\Pi(z, K^*)$ has this property. Therefore,
+\begin{equation}
+	V^n(z, K^*) = v(z) K^*
+\end{equation}
+Moreover, because the adjustment cost is also homogeneous of degree 1 in $K^*$, (\ref{eq:modified_V}) implies that $V(z,\omega, K^*)$ has the same property. We can therefore simplify (\ref{eq:modified_V}) to
+\begin{equation} \label{eq:v_star}
+	v^*(z, \omega) = \max \left\{\max_{z^+} v(z^+) - \omega \frac{\beta + r}{\beta} \exp(\beta z), v(z)\right\}
+\end{equation}
+and $v(z)$ can be defined recursively as
+\begin{equation} \label{eq:v}
+	v(z) = \pi(z) + \frac{1}{1+r} \mathbb{E}\left[v^*(z', \omega')\frac{(K^*)'}{K^*}\right] =  \pi(z) + \frac{1-\delta}{1+r} \mathbb{E}\left[v^*(z', \omega')\exp(z-z')\right]
+\end{equation}
+Equations (\ref{eq:v_star}) and (\ref{eq:v}) give a policy function $z^*(z, \omega)$, which depends on the current disequilibrium $z$ and fixed cost $\omega$.
+
+\paragraph{Characterizing (S,s) Policy \\ [6pt]}
+
+Now we move on to characterize the policy function. We are most interested in when the firm would choose to adjust capital. From (\ref{eq:v_star}), we know that a firm entering the period with disequilibrium $z$ will invest iff
+\begin{equation} 
+	\max_{z^+} v(z^+) - \omega \frac{\beta + r}{\beta} \exp(\beta z) \geq v(z)
+\end{equation}
+Hence, we can define the maximum fixed cost under which the firm will adjust, which we denote as $\Omega(z)$:
+\begin{equation} \label{eq:range_omega}
+	\omega \leq \underbrace{\frac{\beta}{\beta + r}\left[\max_{z^+} v(z^+) - v(z)\right] \exp(-\beta z)}_{\equiv \Omega(z)}
+\end{equation}  
+\underline{Notes}:
+\begin{itemize}
+	\item The reason why we can write the threshold as $\Omega(z)$ follows from the fact that the optimal adjustment disequilibrium $c \equiv \arg \max_{z^+} v(z^+)$ does not depend on adjustment cost $\omega$. This can be seen from the definition of $V^a$ and $V^n$ above: fixed cost $\omega$ is not argument in the value function, and hence it should not be an argument in the policy function. Intuitively, if the firm has decided to adjust, then the fixed cost is considered a sunk cost and should not show up in the FOC for the firm. 
+	\item In Caballero, Engel and Haltiwanger (1995) and the lecture note 3, there is something called ``mandated investment" --- in the model, it is $z-c$, the gap between capital and desired capital. Note that desired capital $K^* \exp(c)$ is not the same as frictionless capital $K^*$: the latter is the optimal solution when the adjustment friction is shut off \textit{permanently}, whereas the former is the optimal solution when the fixed cost of adjustment is shut off \textit{temporarily} (so that in equation (\ref{eq:Va}), the continuation value is $\mathbb{E}V$, not $\mathbb{E}V^a$).
+		\item We now characterize the properties of the threshold $\Omega(z)$. First, $\Omega(z) \geq 0$, with equality at $z = c = \arg \max_{z^+} v(z^+)$. Second, taking the first-order derivative with respect to $z$ gives
+	\[\Omega'(z) = \frac{\beta}{\beta + r} (-v'(z)) \exp(-\beta z) + \frac{\beta}{\beta + r} \underbrace{(v(c) - v(z))}_{\geq 0} (-\beta) \exp(-\beta z)\]
+	we can see immediately that
+	\[\Omega'(c) = 0 \text{ and } \Omega'(z) < 0 \text{ if } z< c\]
+		Hence, it follows a U-shaped pattern (as in Figure 3A of the paper). $\Omega(z)$ is increasing in $|z-c|$.
+	\item The inverse of this $\Omega(z)$ mapping, denoted as $\Omega^{-1}(\omega)$, gives us the inaction band for each given fixed cost $\omega$. See Figure 3B of the paper. If the current disequilibrium $z$ is not too far from the desired disequilibrium $c$, then the gain of reoptimizing is small and falls short of the fixed cost, and therefore the firm will not choose to adjust. 
+\end{itemize}
+All of the above statements are true for standard (S,s) model as well.
+
+\subsection{Aggregation}
+
+Now we aggregate the micro adjustment. 
+
+\paragraph{Hazard Function \\ [6pt]}
+The most important object in the aggregation is hazard function $\Lambda(z)$, which is defined as the probability of a firm with disequilibrium $z$ adjusting its price. 
+
+In standard (S,s), all firms face the same fixed cost $\omega$, and therefore at each beginning-of-period disequilibrium $z$, the probability of adjusting is either 0 or 1:
+\begin{equation}
+	\Lambda(z) = \begin{cases}
+		0 & \text{ if $z \in [L, U]$} \\
+		1 & \text{ otherwise}
+	\end{cases}
+\end{equation} 
+where $[L,U]$ is the inaction band that contains the optimal adjustment disequilibrium $c$.
+
+In the generalized (S,s) model, firms that start the period with $z$ need not have the same realization of the fixed cost $\omega$. Because (\ref{eq:range_omega}) establishes the range of fixed costs for which a firm invests, the probability of adjustment is
+\begin{equation}
+	\Lambda(z) = Pr(\omega \leq \Omega(z)) = G(\Omega(z))
+\end{equation}
+This is no longer a bang-bang function. If $G$ is smooth, the hazard function is also smooth. Because $G(\cdot)$ is a probability measure, it is weakly increasing, so the hazard function has a shape similar to that of the threshold $\Omega(z)$. Specifically,
+\[\Lambda(c) = G(\Omega(c)) = G(0) = 0\]
+i.e. if the disequilibrium is already at the optimum, the adjustment probability is equal to 0. Additionally,
+\[\Lambda'(z) = G'(\Omega) \Omega'(z)\]
+and hence $\Lambda(z)$ is decreasing for $z \leq c$, flat at $z = c$, and increasing for $z > c$. If $|z -c| \to \infty$, we know that $\Omega(z) \to \infty$, and hence we get
+\[\lim_{|z-c|\to \infty} \Lambda(z) \to G(\infty) = 1\]
+i.e. if the distance of disequilibrium capital from the optimum is very large, the adjustment probability gets larger and approaches 1 from below.
+
+\paragraph{Distribution of Firms \\ [6pt]}
+
+We can characterize the distribution of firms as we did in the heterogeneous-agent sessions last semester. Let $\lambda(z, \omega)$ denote the mass of firms with disequilibrium $z$ and fixed cost $\omega$. The probability that a firm in state $(z, \omega)$ transitions to a new state $(z',\omega')$ is 
+\begin{equation}
+	\lambda(z', \omega'|z,\omega) = \Lambda(z) \mathbf{1}\{z' = \arg \max_{z^+} v(z^+)\} G(\omega')
+\end{equation} 
+and the mass of firms that remain in state $(z', \omega')$ is given by
+\[(1-\Lambda(z')) G'(\omega')\]
+Hence
+\begin{equation} \label{eq:lom_dist}
+	\lambda'(z', \omega') = \int \lambda(z', \omega'|z,\omega) \, d\lambda(z, \omega) + (1-\Lambda(z')) G'(\omega')
+\end{equation}
+A stationary equilibrium is the fixed point of (\ref{eq:lom_dist}); denote it as $\bar{\lambda}(z, \omega)$. 
+
+%It must be true that the marginal probability on $z$ is the hazard function:
+%\begin{equation}
+%	\int \bar{\lambda}(z, \omega) \, d \omega = \Lambda (z)
+%\end{equation} 
+%since $\Lambda(z)$ is by definition the mass of firms with state $z$ that will invest, and the marginal probability on $\omega$ is the density of $G$:
+%\begin{equation}
+%	\int \bar{\lambda}(z, \omega) \, dz = G'(\omega)
+%\end{equation}
+
+\paragraph{Distribution of Investment \\ [6pt]}
+We are interested in the distribution of investment in the economy, i.e. the mass of firms investing 0 dollars, 1000 dollars, and so on. The mass of zero investment is given by aggregating the inaction firms for all state $z$:
+\begin{equation}
+	Pr(I = 0) = \int (1-\Lambda(z)) \bar{\lambda}(z, \omega) \,d\omega \,dz 
+\end{equation}
+and the mass of investment being $i$ is given by
+\begin{equation*}
+	Pr(I = i) = \int \Lambda(z) \mathbf{1} \left\{K^*(\exp(c) - \exp(z)) = i \right\}  \bar{\lambda}(z, \omega) \,d\omega \, dz
+\end{equation*}
+Translating it to investment rate $\frac{I}{K}$, we get
+\begin{equation}
+	Pr(I/K = i/K) = \int \Lambda(z) \mathbf{1} \left\{(\exp(c-z) - 1) = i/K \right\}  \bar{\lambda}(z, \omega) \,d\omega \, dz
+\end{equation}
+This is also useful to map theory to data.
+
+\paragraph{Aggregate Investment \\ [6pt]}
+
+For the firms that enter the period with $z$, the aggregate investment $I(z)$ is 
+\begin{equation}
+	I(z) = \Lambda(z) \cdot (K^* \exp(c) - K^*\exp(z)) + (1-\Lambda(z)) \cdot 0 = \Lambda(z) K^* (\exp(c) - \exp(z))
+\end{equation}
+We can see that the extensive margin, described by the hazard function, plays a key role in the aggregate investment. Aggregating over $z$ gives us aggregate investment $I$:
+\begin{equation}
+	I = \int I(z) \bar{\lambda}(z, \omega) \,d\omega \, dz = \int \Lambda(z) K^* \exp(c) (1- \exp(z - c)) \bar{\lambda}(z, \omega) \, d\omega \, dz
+\end{equation}
+This is a variant of the equation in page 12 of the lecture note.
+
+\section{Empirics: Cooper and Haltiwanger (2006, RES)}
+
+Using the Census Longitudinal Business Database (LBD), Cooper and Haltiwanger (2006, RES) investigated the pattern of investment for US firms. 
+
+Some notable stylized facts from the cross-sectional distribution of investment:
+\begin{itemize}
+	\item Lots of inaction (in favor of (S,s));
+	\item Existence of large spikes (in favor of (S,s));
+		\item Highly skewed, with more positive investments than negative investments (in favor of irreversibility and/or generalized (S,s); definitely not convex cost plus CRTS);
+	\item Lots of small adjustments (inconsistent with standard (S,s) but may be consistent with generalized (S,s) if we believe many firms face a small fixed cost; consistent with convex adjustment/correlated distortion/information friction). 
+\end{itemize}
+
+Other important moments:
+\begin{itemize}
+	\item Low correlation between profit shock and investment;
+	\begin{itemize}
+		\item in favor of nearly all adjustment frictions mentioned above, but the reasons are different;
+		\item (S,s) models: conditional on adjustment, always adjust to the desired level, hence the correlation should be 1 for the adjusting firms --- may not hold in data.
+		\item Convex adjustment cost: spread the response to the shock over time (hence, usually associated with high serial correlation of investment due to the persistence).
+		\item Correlated distortion: concurrent attenuation of responsiveness;
+		\item Uncorrelated distortion: increase the dispersion/volatility of investment series;
+		\item Information friction: Correlated + Uncorrelated distortion, due to signal extraction from noisy information.
+	\end{itemize}
+		\item Serial correlation in investment seems low, which helps distinguish convex adjustment costs from other attenuation mechanisms (in this case, the evidence does not favor convex costs); however, the results may change with the frequency of observation.
+	\item How to disentangle these competing mechanisms? Check out David and Venkestwaran (2019, AER) and Asker, Collard-Wexler and De Loecker (2014, JPE).  
+\end{itemize}
+
+The paper builds a model for capital adjustment with a combination of adjustment frictions for a representative firm (hence, no generalized (S,s); the results can be viewed as the average degree of adjustment frictions for US firms):
+\begin{itemize}
+	\item Convex cost (parameter $\gamma$ in the paper);
+	\item Two types of fixed adjustment cost (parameter $\lambda$ or $F$ in the paper);
+	\item Irreversibility (prices of selling capital and acquiring capital are not the same; parameter $p_s$ in the paper).
+\end{itemize}
+The paper used simulated method of moments to uncover the parameters for different adjustment cost specifications. Parameters are estimated to match four targeted moments:
+\begin{itemize}
+	\item Frequency of spikes for both positive and negative investments (informative about fixed cost and irreversibility);
+	\item Serial correlation of investment (informative about convex cost);
+	\item Correlation between investment and profit shock (informative about convex cost). 
+\end{itemize}
+You have already worked on the equations in the numerical exercise last semester. Read the paper to see the conclusion.
+
+\section{Extension: Bloom (2009) Uncertainty}
+
+The non-linearity of decision rules makes the way for the second moment of the shock to affect the decision rule because certainty equivalence no longer holds. Bloom (2009, Econometrica) explores the channel that uncertainty affects capital and labor adjustment, by affecting both the intensive and extensive margin. I briefly sketch the paper.
+
+A representative firm faces a profit function
+\begin{equation}
+	S(A, K, L) = A^{1-a-b} K^a L^b
+\end{equation}
+where $A$ is the profit shock (called ``business condition" in the paper), $K$ is capital and $L$ is the labor (here, I abstract from the labor hours $H$ in the paper). The logged profit shock $\log A$ follows a random walk
+\begin{equation}
+	\log A_t = \log A_{t-1} + \sigma_{t-1} W_t
+\end{equation} 
+where $W_t \sim N(0,1)$, and $\sigma_{t-1}$ is the volatility. Here I simplify from the model setup in the paper by muting the distinction between aggregate, firm-level and establishment-level business condition. 
+
+To model uncertainty, the author assumes that $\sigma_t$ fluctuates over time, following a two-point Markov chain
+\begin{equation}
+	\sigma_t \in \{\sigma_H, \sigma_L\}, \text{ where } Pr(\sigma_t = \sigma_k|\sigma_{t-1} = \sigma_j) = \pi^\sigma_{jk} \text{ for $j,k \in \{H, L\}$}
+\end{equation}
+In this problem, $\sigma_t$ is an exogenous state variable.
+
+The adjustment costs are similar to the specifications in Cooper and Haltiwanger (2006), with both capital and labor:
+\begin{align}
+C(A, K, L, I, E) & = w C_L^P (E^+ + E^-) + p^K(I^+ - (1-C_K^P) I^-) \\
+& + (C_L^F \mathbf{1}\{E \neq 0\} + C_K^F \mathbf{1}\{I \neq 0\}) S(A, K, L) \\
+& + C_L^Q \left(\frac{E}{L}\right)^2 L + C_K^Q \left(\frac{I}{K}\right)^2 K 
+\end{align}
+The second and third lines represent fixed and quadratic adjustment costs, respectively. The first line captures partial irreversibility. $E^+$ and $E^-$ denote the absolute values of positive and negative hiring, respectively, and similarly for $I^+$ and $I^-$. On the labor side, both layoffs ($E^+ = 0$ and $E^{-} > 0$) and hiring ($E^- = 0$ and $E^{+} > 0$) incur a unit cost $w_L^P$. On the capital side, the unit cost of purchasing capital ($I^+ > 0, I^-=0$) is $p^K$, while the unit price of selling capital ($I^+ = 0, I^- > 0$) is $p^K(1-C_k^P)$. 
+
+The Bellman equation of the firm can therefore be written as
+\begin{equation}
+	V(A, K, L; \sigma) = \max_{I, E} S(A, K, L) - w L - C(A, K, L, I, E) + \frac{1}{1+r} \mathbb{E}[V(A', (1-\delta_K)K + I, (1-\delta_L) L + E; \sigma')]
+\end{equation}
+In discrete time, this problem can only be solved numerically. The paper shows that the inaction band widens as the volatility $\sigma$ transits from $\sigma_L$ to $\sigma_H$ (from Figure 4 to Figure 5 of the paper): the non-linearity of the decision rule introduced by irreversibility and fixed adjustment cost gives the firm additional precautionary motive, so that when the environment becomes more volatile, the firm takes a ``wait-and-see" strategy.
+
+\end{document}
