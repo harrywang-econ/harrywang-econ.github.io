@@ -18,15 +18,15 @@ I am a macroeconomist with a focus on the implications of behavioral and informa
 Job Market Paper
 -------------
 Communication Frictions, Managerial Expectations, and Firm Dynamics <br>
-[[Draft]](files/NF_draft_20260407.pdf)
+[Paper](files/NF_draft_20260407.pdf). April 2026.
 
 Working Paper
 -------------
 Endogenous Innovation with Knightian Uncertainty: Perspectives from Reinforcement Learning <br>
-[[Draft]](files/RL_draft_20260810.pdf)
+[Paper](files/RL_draft_20260810.pdf). August 2026.
 
 Setting the Wrong Price for the Right Reason: Consequences for Inflation and Monetary Policy (with Camilo Morales-Jimenez and Luminita Stevens) <br>
-[Draft] 
+[Paper]. August 2026. 
 
 Work In Progress
 ----------------
