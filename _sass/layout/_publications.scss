@@ -1,7 +1,26 @@
+.paper-meta {
+  display: grid;
+  grid-template-columns: max-content max-content max-content max-content minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.35em;
+  row-gap: 0.6em;
+  margin: 0.25em 0 1.25em;
+
+  time {
+    white-space: nowrap;
+  }
+}
+
+.paper-meta__separator {
+  color: var(--global-text-color-light);
+}
+
 .paper-abstract {
-  margin: 0.5em 0 1.25em;
+  display: contents;
 
   summary {
+    grid-column: 1;
+    grid-row: 1;
     width: fit-content;
     color: var(--global-link-color);
     font-weight: 600;
@@ -17,9 +36,14 @@
     }
   }
 
-  &[open] summary {
-    margin-bottom: 0.6em;
+  &:not([open]) > .paper-abstract__content {
+    display: none;
   }
+}
+
+.paper-abstract__content {
+  grid-column: 1 / -1;
+  grid-row: 2;
 
   p {
     margin: 0;
