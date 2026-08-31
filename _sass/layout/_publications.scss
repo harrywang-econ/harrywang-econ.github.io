@@ -1,0 +1,29 @@
+.paper-abstract {
+  margin: 0.5em 0 1.25em;
+
+  summary {
+    width: fit-content;
+    color: var(--global-link-color);
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--global-link-color-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--global-link-color);
+      outline-offset: 3px;
+    }
+  }
+
+  &[open] summary {
+    margin-bottom: 0.6em;
+  }
+
+  p {
+    margin: 0;
+    padding-left: 1em;
+    border-left: 2px solid var(--global-border-color);
+  }
+}
