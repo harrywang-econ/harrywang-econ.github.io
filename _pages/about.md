@@ -18,7 +18,7 @@ I am a macroeconomist with a focus on the implications of behavioral and informa
 Job Market Paper
 -------------
 Communication Frictions, Managerial Expectations, and Firm Dynamics <br>
-[Paper](files/NF_draft.pdf). April 2026.
+[Paper](files/NF_draft.pdf). August 2026.
 
 Working Paper
 -------------
