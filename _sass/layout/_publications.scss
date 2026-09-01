@@ -22,9 +22,18 @@
     grid-column: 1;
     grid-row: 1;
     width: fit-content;
+    list-style: none;
     color: var(--global-link-color);
     font-weight: 600;
     cursor: pointer;
+
+    &::marker {
+      content: "";
+    }
+
+    &::-webkit-details-marker {
+      display: none;
+    }
 
     &:hover {
       color: var(--global-link-color-hover);
@@ -39,11 +48,16 @@
   &:not([open]) > .paper-abstract__content {
     display: none;
   }
+
+  &[open] > .paper-abstract__content {
+    display: block;
+  }
 }
 
 .paper-abstract__content {
   grid-column: 1 / -1;
   grid-row: 2;
+  width: 100%;
 
   p {
     margin: 0;
