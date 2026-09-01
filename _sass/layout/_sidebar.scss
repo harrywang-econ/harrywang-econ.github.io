@@ -98,8 +98,15 @@
     border-radius: 0;
 
     @include breakpoint($large) {
+      width: 190px;
+      max-width: 190px;
       padding: 5px;
       border: 1px solid var(--global-border-color);
+    }
+
+    @include breakpoint($x-large) {
+      width: 210px;
+      max-width: 210px;
     }
   }
 }
