@@ -13,7 +13,7 @@ I am a Ph.D. candidate in Economics at University of Maryland and a Special Swor
 
 I am a macroeconomist with a focus on the implications of behavioral and informational frictions for firm dynamics and macroeconomic policy. 
 
-<b> I am on the job market in the 2026-2027 cycle. </b>
+<b> I am on the 2026-2027 job market. </b>
 
 [CV](files/Haoran_Wang_CV.pdf) (Last updated: August 2026) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
 
