@@ -15,7 +15,7 @@ I am a macroeconomist with a focus on the implications of behavioral and informa
 
 <b> I am on the 2026-2027 job market. </b>
 
-[CV](files/Haoran_Wang_CV.pdf) (Last updated: August 2026) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
+[CV](files/CV_Wang.pdf) (Last updated: August 2026) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
 
 Job Market Paper
 -------------
