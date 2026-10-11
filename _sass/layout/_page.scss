@@ -39,6 +39,13 @@
   }
 }
 
+/* Give course descriptions room without reducing the body font size. */
+.page--teaching {
+  @include breakpoint($large) {
+    padding-right: 0;
+  }
+}
+
 .page__title {
   margin-top: 0;
   line-height: 1;
