@@ -33,7 +33,7 @@ Communication Frictions, Managerial Expectations, and Firm Dynamics <br>
   </div>
 </div>
 
-Working Paper
+Working Papers
 -------------
 Endogenous Innovation with Uncertainty: Perspectives from Reinforcement Learning <br>
 <div class="paper-entry">
@@ -51,6 +51,8 @@ Endogenous Innovation with Uncertainty: Perspectives from Reinforcement Learning
 
 Setting the Wrong Price for the Right Reason: Consequences for Inflation and Monetary Policy (with Camilo Morales-Jimenez and Luminita Stevens) <br>
 [Updated Draft Coming Soon]
+
+Narrow Framing and Business Cycle Dynamics
 
 Work In Progress
 ----------------
