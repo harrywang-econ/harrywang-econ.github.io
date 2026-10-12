@@ -33,7 +33,6 @@ ECON602 Macroeconomic Theory II (First-year PhD), Spring 2025 & 2026 [[Evaluatio
 <div class="paper-abstract section-notes" id="section-notes-econ602" hidden>
   <ul>
     <li><a href="/files/teaching/JH_Note_1_Signal_Extraction.pdf">Signal Extraction and Lucas Island Model</a></li>
-    <li><a href="/files/teaching/JH_Note_2_Inventory.pdf">Inventory</a></li>
     <li><a href="/files/teaching/JH_Note_3_Misallocation.pdf">Misallocation: Hsieh and Klenow</a></li>
     <li><a href="/files/teaching/JH_Note_4_Generalized_Ss.pdf">Generalized (S,s) Model: Caballero and Engel</a></li>
     <li><a href="/files/teaching/JH_Note_5_Coordination_Friction.pdf">Coordination Frictions</a></li>
