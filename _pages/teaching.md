@@ -13,7 +13,21 @@ ECON325 Intermediate Macroeconomic Analysis (undergraduate), Summer 2024 & 2025 
 
 Teaching Assistant
 -------------
-ECON325 Intermediate Macroeconomic Analysis, Fall 2021, Fall 2022, Spring 2024 [[Evaluation](/files/teaching/ECON325_TA_Evaluation_Spring_2024.pdf)]
+ECON325 Intermediate Macroeconomic Analysis, Fall 2021, Fall 2022, Spring 2024 [[Evaluation](/files/teaching/ECON325_TA_Evaluation_Spring_2024.pdf)] <span class="section-notes-control">[<button class="paper-abstract__toggle section-notes__toggle" type="button" aria-label="Section Notes for ECON325" aria-expanded="false" aria-controls="section-notes-econ325">Section Notes</button>]</span>
+
+<div class="paper-abstract section-notes" id="section-notes-econ325" hidden>
+  <ul>
+    <li><a href="/files/teaching/econ325/Consumer_Static_Optimization.pdf">Consumer Static Optimization</a></li>
+    <li><a href="/files/teaching/econ325/Firm_Static_Optimization.pdf">Firm Static Optimization</a></li>
+    <li><a href="/files/teaching/econ325/Market_Clearing_Conditions.pdf">Market Clearing Conditions</a></li>
+    <li><a href="/files/teaching/econ325/Two_Period_Consumer_Optimization.pdf">Two-period Consumer Optimization</a></li>
+    <li><a href="/files/teaching/econ325/Two_Period_Firm_Optimization.pdf">Two-period Firm Optimization</a></li>
+    <li><a href="/files/teaching/econ325/Two_Period_Competitive_Equilibrium.pdf">Two-period Competitive Equilibrium</a></li>
+    <li><a href="/files/teaching/econ325/Solow_Growth_Model.pdf">Solow Growth Model</a></li>
+    <li><a href="/files/teaching/econ325/Growth_Accounting.pdf">Growth Accounting</a></li>
+    <li><a href="/files/teaching/econ325/Monetary_Policy_under_Price_Rigidity.pdf">Monetary Policy under Price Rigidity</a></li>
+  </ul>
+</div>
 
 ECON601 Macroeconomic Theory I (First-year PhD), Fall 2024 & 2025 [[Evaluation](/files/teaching/202408-ECON601-0101-MACROECON%20ANLYS%20I%20%20%28Haoran%20Wang%29-%20TA%20Report%20-%20Fall%202024_3fe558f2-c868-4641-9f58-ef6bc022eea7en-US.pdf)] <span class="section-notes-control">[<button class="paper-abstract__toggle section-notes__toggle" type="button" aria-label="Section Notes for ECON601" aria-expanded="false" aria-controls="section-notes-econ601">Section Notes</button>]</span>
 
