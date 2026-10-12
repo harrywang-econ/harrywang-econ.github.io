@@ -11,7 +11,7 @@ redirect_from:
 
 I am a Ph.D. candidate in Economics at University of Maryland and a Special Sworn Status (SSS) researcher at U.S. Census Bureau. 
 
-I am a macroeconomist with a focus on the implications of behavioral and informational frictions for firm dynamics and macroeconomic policy. 
+My research interests include macroeconomics, behavioral economics, firm dynamics, and monetary economics.
 
 <b> I am on the 2026-2027 job market. </b>
 
