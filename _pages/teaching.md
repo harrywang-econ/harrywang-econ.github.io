@@ -34,10 +34,10 @@ ECON601 Macroeconomic Theory I (First-year PhD), Fall 2024 & 2025 [[Evaluation](
 <div class="paper-abstract section-notes" id="section-notes-econ601" hidden>
   <ul>
     <li><a href="/files/teaching/JS_Note_2_updated.pdf">Consumption and Saving</a></li>
-    <li><a href="/files/teaching/BA_Notes_1.pdf">RBC and Reduced-form Money Models</a></li>
-    <li><a href="/files/teaching/BA_Notes_2.pdf">Canonical New-Keynesian Model</a></li>
-    <li><a href="/files/teaching/BA_Notes_3.pdf">Optimal Monetary and Fiscal Policy: Primal Approach</a></li>
-    <li><a href="/files/teaching/BA_Notes_6.pdf">Heterogeneous Household: Aiyagari</a></li>
+    <li><a href="/files/teaching/BA_Notes_1.pdf">Neo-classical Monetary Models</a></li>
+    <li><a href="/files/teaching/BA_Notes_2.pdf">The Canonical New-Keynesian Model</a></li>
+    <li><a href="/files/teaching/BA_Notes_3.pdf">Optimal Monetary and Fiscal Policy: the Primal Approach</a></li>
+    <li><a href="/files/teaching/BA_Notes_6.pdf">Heterogeneous Household: Aiyagari, Krusell-Smith</a></li>
     <li><a href="/files/teaching/BA_Notes_7.pdf">Heterogeneous Firms: Hopenhayn</a></li>
   </ul>
 </div>
@@ -49,7 +49,7 @@ ECON602 Macroeconomic Theory II (First-year PhD), Spring 2025 & 2026 [[Evaluatio
     <li><a href="/files/teaching/JH_Note_1_Signal_Extraction.pdf">Signal Extraction and Lucas Island Model</a></li>
     <li><a href="/files/teaching/JH_Note_3_Misallocation.pdf">Misallocation: Hsieh and Klenow</a></li>
     <li><a href="/files/teaching/JH_Note_4_Generalized_Ss.pdf">Generalized (S,s) Model: Caballero and Engel</a></li>
-    <li><a href="/files/teaching/JH_Note_5_Coordination_Friction.pdf">Coordination Frictions</a></li>
+    <li><a href="/files/teaching/JH_Note_5_Coordination_Friction.pdf">Imperfect Coordination in Macroeconomics</a></li>
     <li><a href="/files/teaching/JH_Note_6_Search_Matching.pdf">Search and Matching in Labor Market: DMP Framework</a></li>
     <li><a href="/files/teaching/JH_Note_7_Wage.pdf">Models of Wage Determination</a></li>
     <li><a href="/files/teaching/PO_Note_1_Continuous_Time.pdf">Continuous-time Methods</a></li>
