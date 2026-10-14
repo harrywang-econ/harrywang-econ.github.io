@@ -1,20 +1,29 @@
+.page--research {
+  @include breakpoint($large) {
+    padding-right: 0;
+  }
+}
+
 .paper-entry {
   margin: 0.25em 0 1.25em;
 }
 
-.paper-meta {
-  display: flex;
-  flex-wrap: nowrap;
+.paper-actions {
+  display: inline-flex;
   align-items: baseline;
   gap: 0.35em;
+  margin-left: 0.35em;
+  white-space: nowrap;
+}
+
+.paper-actions a,
+.paper-actions .paper-abstract__toggle {
+  font-weight: 600;
+  text-decoration: underline;
 }
 
 .paper-meta time {
   white-space: nowrap;
-}
-
-.paper-meta__separator {
-  color: var(--global-text-color-light);
 }
 
 .paper-abstract__toggle {
