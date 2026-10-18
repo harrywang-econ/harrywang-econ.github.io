@@ -7,7 +7,7 @@ classes: page--teaching
 
 -----------
 
-[Teaching Statement](/files/Teaching_Statement.pdf?v=20261018)
+Here is my [teaching statement](/files/Teaching_Statement.pdf?v=20261018).
 
 Instructor
 -------------
