@@ -16,7 +16,7 @@ My research interests include macroeconomics, behavioral economics, firm dynamic
 
 <b> I am on the 2026-2027 job market. </b>
 
-[CV](/files/CV_Wang.pdf?v=20261014) (Last updated: October 2026) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
+[CV](/files/CV_Wang.pdf?v=20261018) (Last updated: October 2026) | [Research Statement](/files/Research_Statement.pdf?v=20261018) | Email: [hw2688@umd.edu](mailto:hw2688@umd.edu)
 
 Job Market Paper
 -------------

@@ -7,6 +7,8 @@ classes: page--teaching
 
 -----------
 
+[Teaching Statement](/files/Teaching_Statement.pdf?v=20261018)
+
 Instructor
 -------------
 ECON325 Intermediate Macroeconomic Analysis (undergraduate), Summer 2024 & 2025 [[Syllabus](/files/teaching/325%20Syllabus%20Summer%202024.pdf)]
