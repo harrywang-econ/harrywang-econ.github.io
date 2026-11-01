@@ -57,7 +57,21 @@ Working Papers
 Setting the Wrong Price for the Right Reason: Consequences for Inflation and Monetary Policy (with Camilo Morales-Jimenez and Luminita Stevens) <br>
 [Updated Draft Coming Soon]
 
-Narrow Framing and Business Cycle Dynamics
+<div class="paper-entry">
+  <div class="paper-heading">
+    <span class="paper-title">Narrow Framing and Business Cycle Dynamics</span>
+    <span class="paper-actions">
+      <button class="paper-abstract__toggle" type="button" aria-expanded="false" aria-controls="abstract-nf-dynamics">[Abstract]</button>
+      <a href="/files/NF_dynamics.pdf">[Paper]</a>
+    </span>
+  </div>
+  <div class="paper-meta">
+    [Latest version: <time datetime="2023-08-28">August 2023</time>]
+  </div>
+  <div class="paper-abstract" id="abstract-nf-dynamics" hidden>
+    <p>This paper studies how segmented information within firms affects the transmission of aggregate shocks. I develop a model in which each input manager observes their own input price but receives noisy signals about the other input manager’s price and firm demand, which I refer to as “narrow framing”. Although these frictions dampen firms’ responses to input prices in partial equilibrium, they can amplify aggregate fluctuations by weakening offsetting general equilibrium feedback. In illustrative numerical exercises, capital managers’ uncertainty about wages magnifies rental-rate movements and generates larger, more persistent capital responses to productivity shocks. Consumption responds less initially and more subsequently than under full information. Uncertainty about demand instead dampens the transmission of productivity shocks. These results show that the aggregate effects of information frictions depend on which decisions and feedback channels they affect.</p>
+  </div>
+</div>
 
 Work In Progress
 ----------------
