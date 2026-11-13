@@ -47,7 +47,7 @@ Working Papers
     </span>
   </div>
   <div class="paper-meta">
-    [Latest version: <time datetime="2026-08">August 2026</time>]
+    [Latest version: <time datetime="2026-11">November 2026</time>]
   </div>
   <div class="paper-abstract" id="abstract-rl" hidden>
     <p>I incorporate reinforcement learning into a quality-ladder model to study how firms innovate when the distribution of innovation returns across technological fields is unknown. Firms learn value functions from noisy market feedback following successful innovations and use these estimates to determine innovation expenditure and directions of external innovation. Learning makes innovation decisions path dependence conditional on firms' experience: favorable feedback reinforces innovation in existing fields and encourages expansion into nearby technologies, while unfavorable feedback redirects search toward more distant fields. Patent-level evidence from U.S. public firms is consistent with these predictions. Simulations of the calibrated model show that temporary market optimism produces persistent changes in the level and technological composition of patenting. Field-specific optimism redirects innovation toward favored technologies, while broad optimism raises patenting primarily through internal innovation, reducing the share of external innovation.</p>
