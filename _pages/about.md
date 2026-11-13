@@ -40,7 +40,7 @@ Working Papers
 -------------
 <div class="paper-entry">
   <div class="paper-heading">
-    <span class="paper-title">Endogenous Innovation with Uncertainty: Perspectives from Reinforcement Learning</span>
+    <span class="paper-title">Innovation under Uncertainty: Perspectives from Reinforcement Learning</span>
     <span class="paper-actions">
       <button class="paper-abstract__toggle" type="button" aria-expanded="false" aria-controls="abstract-rl">[Abstract]</button>
       <a href="files/RL_draft.pdf">[Paper]</a>
